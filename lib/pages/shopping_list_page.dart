@@ -12,9 +12,23 @@ class _ShoppingListAppPageState extends State<ShoppingListAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         centerTitle: true,
-        title: const Text("Lista de compras", style: TextStyle(color: Colors.white),),
-        backgroundColor: const Color.fromARGB(255, 130, 78, 220),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.list_alt_sharp,
+              color: Colors.white,
+              size: 45,
+            ),
+            Text(
+              "Lista de compras",
+              style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: const Center(
         child: Text("Minha lista de compras"),

@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shopping List',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 130, 78, 220)),
+        primaryColor: const Color.fromARGB(255, 73, 133, 206),
+        // colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 130, 78, 220)),
         useMaterial3: true,
       ),
       home: const ShoppingListAppPage(),
     );
   }
 }
-
