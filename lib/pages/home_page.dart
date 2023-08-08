@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_app/pages/product_page.dart';
 import 'package:shopping_list_app/template/shopping_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,36 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool screenShoppingListActived = true;
   List<Map<String, dynamic>> menuActived = [
     {"name": "list", "isActive": true},
     {"name": "shopp", "isActive": false},
   ];
+  Color color(bool isActive) {
+    return isActive ? const Color.fromARGB(255, 94, 31, 202) : Colors.white;
+  }
+
   changeActiveMenu(int index) {
     setState(() {
       for (var menu in menuActived) {
         menu["isActive"] = false;
       }
       menuActived[index]["isActive"] = true;
+      screenShoppingListActived = !screenShoppingListActived;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        centerTitle: true,
-        title: const Text(
-          "Minha lista",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
+      body: AnimatedSwitcher(
+        duration: const Duration(seconds: 1),
+        reverseDuration: const Duration(milliseconds: 2),
+        switchInCurve: Curves.easeIn,
+        switchOutCurve: Curves.easeOut,
+        child: screenShoppingListActived
+            ? const ShoppingList()
+            : const ProductPage(),
       ),
-      body: const ShoppingList(),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -59,29 +61,53 @@ class _HomePageState extends State<HomePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(
-                  onPressed: () {
-                    changeActiveMenu(0);
-                  },
-                  icon: Icon(
-                    Icons.list,
-                    size: 40,
-                    color: menuActived[0]["isActive"]
-                        ? const Color.fromARGB(255, 130, 78, 220)
-                        : Colors.white,
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        changeActiveMenu(0);
+                      },
+                      icon: Icon(
+                        Icons.list,
+                        size: 40,
+                        color: color(menuActived[0]["isActive"]),
+                      ),
+                    ),
+                    Text(
+                      "Minha Lista",
+                      style: TextStyle(
+                        color: color(menuActived[0]["isActive"]),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
-                IconButton(
-                  onPressed: () {
-                    changeActiveMenu(1);
-                  },
-                  icon: Icon(
-                    Icons.shopping_bag_outlined,
-                    size: 40,
-                    color: menuActived[1]["isActive"]
-                        ? const Color.fromARGB(255, 130, 78, 220)
-                        : Colors.white,
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        changeActiveMenu(1);
+                      },
+                      icon: Icon(
+                        Icons.shopping_bag_outlined,
+                        size: 40,
+                        color: color(menuActived[1]["isActive"]),
+                      ),
+                    ),
+                    Text(
+                      "Produtos",
+                      style: TextStyle(
+                        color: color(menuActived[1]["isActive"]),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ],
                 ),
               ],
             ),
