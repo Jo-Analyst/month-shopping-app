@@ -44,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {},
         child: const Icon(
           Icons.shopping_cart_outlined,
