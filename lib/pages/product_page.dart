@@ -6,9 +6,19 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const Column(
+    return  Column(
       children: [
-      AppBarComponent(title: "Meus produtos", )
+        AppBarComponent(
+          title: "Meus produtos",
+          action: Container(
+            margin: const EdgeInsets.only(right: 30),
+            child: const Icon(
+              Icons.add,
+              size: 40,
+              color: Colors.white,
+            ),
+          ),
+        )
       ],
     );
   }

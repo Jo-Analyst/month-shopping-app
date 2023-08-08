@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list_app/pages/product_page.dart';
-import 'package:shopping_list_app/template/shopping_list.dart';
+import 'package:shopping_list_app/pages/shopping_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         menu["isActive"] = false;
       }
       menuActived[index]["isActive"] = true;
-      screenShoppingListActived = !screenShoppingListActived;
+      screenShoppingListActived = index == 0 ? true : false;
     });
   }
 
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         switchInCurve: Curves.easeIn,
         switchOutCurve: Curves.easeOut,
         child: screenShoppingListActived
-            ? const ShoppingList()
+            ? const ShoppingListPage()
             : const ProductPage(),
       ),
       extendBody: true,
