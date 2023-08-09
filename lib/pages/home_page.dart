@@ -52,66 +52,63 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        height: 100,
+        height: 80,
         shape: const CircularNotchedRectangle(),
         color: Theme.of(context).primaryColor,
         child: IconTheme(
           data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        changeActiveMenu(0);
-                      },
-                      icon: Icon(
-                        Icons.list,
-                        size: 40,
-                        color: color(menuActived[0]["isActive"]),
-                      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      changeActiveMenu(0);
+                    },
+                    icon: Icon(
+                      Icons.list,
+                      size: 40,
+                      color: color(menuActived[0]["isActive"]),
                     ),
-                    Text(
-                      "Minha Lista",
-                      style: TextStyle(
-                        color: color(menuActived[0]["isActive"]),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        changeActiveMenu(1);
-                      },
-                      icon: Icon(
-                        Icons.shopping_bag_outlined,
-                        size: 40,
-                        color: color(menuActived[1]["isActive"]),
-                      ),
+                  ),
+                  Text(
+                    "Minha Lista",
+                    style: TextStyle(
+                      color: color(menuActived[0]["isActive"]),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Text(
-                      "Produtos",
-                      style: TextStyle(
-                        color: color(menuActived[1]["isActive"]),
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                  )
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      changeActiveMenu(1);
+                    },
+                    icon: Icon(
+                      Icons.shopping_bag_outlined,
+                      size: 40,
+                      color: color(menuActived[1]["isActive"]),
+                    ),
+                  ),
+                  Text(
+                    "Produtos",
+                    style: TextStyle(
+                      color: color(menuActived[1]["isActive"]),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

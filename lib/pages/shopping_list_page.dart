@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../components/app_bar.dart';
-
 class ShoppingListPage extends StatefulWidget {
   const ShoppingListPage({super.key});
 
@@ -50,23 +48,25 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         AppBar(
           actions: [
             Container(
-              margin: const EdgeInsets.only(right: 20),
+              margin: EdgeInsets.only(
+                  right: 0.05 * MediaQuery.of(context).size.width),
               child: IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.manage_search_outlined,
-                  size: 40,
+                  size: 0.08 * MediaQuery.of(context).size.width,
                   color: Colors.white,
                 ),
                 onPressed: () => toggleShowInputSearch(),
               ),
             ),
           ],
-          toolbarHeight: 100,
+          toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             "Minha lista de compras",
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+            ),
           ),
         ),
         Padding(
@@ -76,48 +76,54 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
           child: Column(
             children: [
-              Visibility(
-                visible: showInputSearch,
-                child: TextFormField(
-                  keyboardType: TextInputType.text,
-                  controller: _searchProduct,
-                  decoration: const InputDecoration(
-                    label: Text("Produto"),
-                    suffixIcon: Icon(Icons.search),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
               SizedBox(
                 height: showInputSearch
-                    ? MediaQuery.of(context).size.height - 350
-                    : MediaQuery.of(context).size.height - 290,
+                    ? 0.62 * MediaQuery.of(context).size.height
+                    : 0.685 * MediaQuery.of(context).size.height,
                 child: Card(
                   elevation: 5,
                   child: products.isNotEmpty
                       ? SingleChildScrollView(
                           child: Column(
-                            children: products.map((product) {
-                              return Column(
-                                children: [
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: Colors.black54,
-                                      maxRadius: 20,
-                                      child: Icon(
-                                        product["isChecked"]
-                                            ? Icons.check
-                                            : Icons.shopping_bag_outlined,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    title: Text(
-                                        "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
+                            children: [
+                              Visibility(
+                                visible: showInputSearch,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.text,
+                                  controller: _searchProduct,
+                                  decoration: const InputDecoration(
+                                    label: Text("Produto"),
+                                    suffixIcon: Icon(Icons.search),
                                   ),
-                                  const Divider(),
-                                ],
-                              );
-                            }).toList(),
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 0.02 *
+                                      MediaQuery.of(context).size.height),
+                              Column(
+                                children: products.map((product) {
+                                  return Column(
+                                    children: [
+                                      ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundColor: Colors.black54,
+                                          maxRadius: 20,
+                                          child: Icon(
+                                            product["isChecked"]
+                                                ? Icons.check
+                                                : Icons.shopping_bag_outlined,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        title: Text(
+                                            "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
+                                      ),
+                                      const Divider(),
+                                    ],
+                                  );
+                                }).toList(),
+                              ),
+                            ],
                           ),
                         )
                       : const Center(
