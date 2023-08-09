@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_app/templates/product_list.dart';
 
 class ShoppingListPage extends StatefulWidget {
   const ShoppingListPage({super.key});
@@ -8,7 +9,8 @@ class ShoppingListPage extends StatefulWidget {
 }
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
-  bool showInputSearch = false;
+  bool showInputSearch = false, isExpanded = false;
+  List<bool> cardTriggeredList = [];
 
   toggleShowInputSearch() {
     setState(() {
@@ -16,30 +18,39 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     });
   }
 
-  final List<Map<String, dynamic>> products = [
-    {"name": "Arroz", "quantity": 1, "unit": "ML", "isChecked": false},
-    {"name": "Feijão", "quantity": 3, "unit": "kg", "isChecked": false},
-    {"name": "Macarrão", "quantity": 1, "unit": "PC", "isChecked": false},
-    {"name": "Óleo", "quantity": 3, "unit": "PET", "isChecked": false},
-    {"name": "Sal", "quantity": 1, "unit": "PC", "isChecked": false},
-    {"name": "Açucar", "quantity": 1, "unit": "ML", "isChecked": false},
-    {
-      "name": "Farinha de Mandioca",
-      "quantity": 1,
-      "unit": "PC",
-      "isChecked": false
-    },
-    {
-      "name": "Farinha de milho",
-      "quantity": 1,
-      "unit": "PC",
-      "isChecked": false
-    },
-    {"name": "Colorau", "quantity": 1, "unit": "PC", "isChecked": false},
-    {"name": "Biscoito", "quantity": 1, "unit": "PC", "isChecked": false},
+  void setListCardTriggered() {
+    for (int i = 0; i < shelves.length; i++) {
+      setState(() {
+        cardTriggeredList.add(false);
+      });
+    }
+  }
+
+  updateListCardTriggered(int index, bool expanded) {
+    setState(() {
+      cardTriggeredList[index] = expanded;
+    });
+  }
+
+  // prateleiras
+  final List<Map<String, dynamic>> shelves = [
+    {"id": 1, "name": "Congelados"},
+    {"id": 2, "name": "Alimentos"},
+    {"id": 3, "name": "Guloseima"},
+    {"id": 4, "name": "Limpeza"},
+    {"id": 5, "name": "Utensilios"},
+    {"id": 6, "name": "Padaria"},
+    {"id": 7, "name": "Beleza"},
+    {"id": 8, "name": "Feira"},
+    {"id": 9, "name": "Laticínios"},
   ];
 
-  final _searchProduct = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setListCardTriggered();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +60,11 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           actions: [
             Container(
               margin: EdgeInsets.only(
-                  right: 0.05 * MediaQuery.of(context).size.width),
+                right: 0.05 * MediaQuery.of(context).size.width,
+              ),
               child: IconButton(
                 icon: Icon(
-                  Icons.manage_search_outlined,
+                  Icons.shopping_cart_outlined,
                   size: 0.08 * MediaQuery.of(context).size.width,
                   color: Colors.white,
                 ),
@@ -69,70 +81,46 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 10,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: showInputSearch
-                    ? 0.62 * MediaQuery.of(context).size.height
-                    : 0.685 * MediaQuery.of(context).size.height,
-                child: Card(
-                  elevation: 5,
-                  child: products.isNotEmpty
-                      ? SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Visibility(
-                                visible: showInputSearch,
-                                child: TextFormField(
-                                  keyboardType: TextInputType.text,
-                                  controller: _searchProduct,
-                                  decoration: const InputDecoration(
-                                    label: Text("Produto"),
-                                    suffixIcon: Icon(Icons.search),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                  height: 0.02 *
-                                      MediaQuery.of(context).size.height),
-                              Column(
-                                children: products.map((product) {
-                                  return Column(
-                                    children: [
-                                      ListTile(
-                                        leading: CircleAvatar(
-                                          backgroundColor: Colors.black54,
-                                          maxRadius: 20,
-                                          child: Icon(
-                                            product["isChecked"]
-                                                ? Icons.check
-                                                : Icons.shopping_bag_outlined,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        title: Text(
-                                            "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
-                                      ),
-                                      const Divider(),
-                                    ],
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          ),
-                        )
-                      : const Center(
-                          child: Text(
-                              "Não há produtos selecionados para a compra"),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          height: MediaQuery.of(context).size.height * 0.7,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 8,
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding: const EdgeInsets.all(15),
+                      title: Text(
+                        shelves[index]["name"],
+                        style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyLarge!.fontSize,
                         ),
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(
+                          Icons.keyboard_arrow_right,
+                          color: Theme.of(context).primaryColor,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          isExpanded = !isExpanded;
+                          updateListCardTriggered(index, isExpanded);
+                        },
+                      ),
+                    ),
+                    ProductsList(
+                      sheveId: shelves[index]["id"],
+                      isExpanded: isExpanded,
+                    ),
+                  ],
                 ),
-              )
-            ],
+              );
+            },
+            itemCount: shelves.length,
           ),
         ),
       ],

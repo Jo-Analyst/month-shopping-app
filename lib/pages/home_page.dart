@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
     {"name": "shopp", "isActive": false},
   ];
   Color color(bool isActive) {
-    return isActive ? const Color.fromARGB(255, 94, 31, 202) : Colors.white;
+    return isActive ? Colors.black : Colors.white;
   }
 
   changeActiveMenu(int index) {
@@ -44,10 +44,11 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        // backgroundColor: Colors.black87,
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {},
         child: const Icon(
-          Icons.shopping_cart_outlined,
+          Icons.brightness_6_sharp,
           size: 35,
         ),
       ),
