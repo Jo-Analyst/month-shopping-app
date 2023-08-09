@@ -85,6 +85,27 @@ class ProductsList extends StatelessWidget {
         "isChecked": false,
         "shelve_id": 9
       },
+      {
+        "name": "Leite condesado",
+        "quantity": 2,
+        "unit": "CX",
+        "isChecked": false,
+        "shelve_id": 9
+      },
+      {
+        "name": "Leite em pó",
+        "quantity": 2,
+        "unit": "CX",
+        "isChecked": false,
+        "shelve_id": 9
+      },
+      {
+        "name": "Sabonete lafrore",
+        "quantity": 3,
+        "unit": "CX",
+        "isChecked": false,
+        "shelve_id": 10
+      },
     ];
 
     return Container(

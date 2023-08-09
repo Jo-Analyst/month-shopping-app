@@ -43,6 +43,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     {"id": 7, "name": "Beleza"},
     {"id": 8, "name": "Feira"},
     {"id": 9, "name": "Laticínios"},
+    {"id": 10, "name": "Higiene"},
   ];
 
   @override
@@ -58,20 +59,20 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         AppBar(
           actions: [
             Container(
-              margin: EdgeInsets.only(
-                right: 0.05 * MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.only(
+                right: 10,
               ),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.shopping_cart_outlined,
-                  size: 0.08 * MediaQuery.of(context).size.width,
+                  size: 30,
                   color: Colors.white,
                 ),
                 onPressed: () => toggleShowInputSearch(),
               ),
             ),
           ],
-          toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
+          toolbarHeight: 100,
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             "Minha lista de compras",
@@ -83,7 +84,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           height: MediaQuery.of(context).size.height * 0.7,
-          child: ListView.builder(
+          child: shelves.isNotEmpty ?  ListView.builder(
             itemBuilder: (context, index) {
               return Card(
                 elevation: 8,
@@ -91,6 +92,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () {
+                        updateListCardTriggered(index);
+                      },
                       contentPadding: const EdgeInsets.all(15),
                       title: Text(
                         shelves[index]["name"],
@@ -100,8 +104,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ),
                       ),
                       trailing: IconButton(
-                        icon: Icon( cardTriggeredList[index] ?
-                          Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
+                        icon: Icon(
+                          cardTriggeredList[index]
+                              ? Icons.keyboard_arrow_down
+                              : Icons.keyboard_arrow_right,
                           color: Theme.of(context).primaryColor,
                           size: 30,
                         ),
@@ -119,7 +125,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               );
             },
             itemCount: shelves.length,
-          ),
+          ): const Center(child: Text("Você ainda não listou os produtos para compra.")),
         ),
       ],
     );

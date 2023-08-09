@@ -75,14 +75,14 @@ class _HomePageState extends State<HomePage> {
                       color: color(menuActived[0]["isActive"]),
                     ),
                   ),
-                  Text(
-                    "Minha Lista",
-                    style: TextStyle(
-                      color: color(menuActived[0]["isActive"]),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
+                  // Text(
+                  //   "Minha Lista",
+                  //   style: TextStyle(
+                  //     color: color(menuActived[0]["isActive"]),
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // )
                 ],
               ),
               Column(
@@ -99,14 +99,14 @@ class _HomePageState extends State<HomePage> {
                       color: color(menuActived[1]["isActive"]),
                     ),
                   ),
-                  Text(
-                    "Produtos",
-                    style: TextStyle(
-                      color: color(menuActived[1]["isActive"]),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )
+                  // Text(
+                  //   "Produtos",
+                  //   style: TextStyle(
+                  //     color: color(menuActived[1]["isActive"]),
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.bold,
+                  //   ),
+                  // )
                 ],
               ),
             ],
