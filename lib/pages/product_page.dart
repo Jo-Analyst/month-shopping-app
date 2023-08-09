@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_app/pages/components/app_bar.dart';
+import 'package:shopping_list_app/components/app_bar.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         AppBarComponent(
           title: "Meus produtos",
@@ -18,7 +18,7 @@ class ProductPage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-        )
+        ),
       ],
     );
   }
