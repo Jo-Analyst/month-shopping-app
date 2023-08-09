@@ -26,9 +26,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     }
   }
 
-  updateListCardTriggered(int index, bool expanded) {
+  updateListCardTriggered(int index) {
     setState(() {
-      cardTriggeredList[index] = expanded;
+      cardTriggeredList[index] = !cardTriggeredList[index];
     });
   }
 
@@ -47,7 +47,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setListCardTriggered();
   }
@@ -101,20 +100,19 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                         ),
                       ),
                       trailing: IconButton(
-                        icon: Icon(
-                          Icons.keyboard_arrow_right,
+                        icon: Icon( cardTriggeredList[index] ?
+                          Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
                           color: Theme.of(context).primaryColor,
                           size: 30,
                         ),
                         onPressed: () {
-                          isExpanded = !isExpanded;
-                          updateListCardTriggered(index, isExpanded);
+                          updateListCardTriggered(index);
                         },
                       ),
                     ),
                     ProductsList(
                       sheveId: shelves[index]["id"],
-                      isExpanded: isExpanded,
+                      isExpanded: cardTriggeredList[index],
                     ),
                   ],
                 ),
