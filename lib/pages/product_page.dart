@@ -53,6 +53,7 @@ class ProductPage extends StatelessWidget {
                   ),
                 )
               : ListView.builder(
+                  itemCount: products.length,
                   itemBuilder: (ctx, index) {
                     return Card(
                       elevation: 8,
@@ -68,6 +69,29 @@ class ProductPage extends StatelessWidget {
                           products[index]["shelve"],
                           style: const TextStyle(
                             fontSize: 18,
+                          ),
+                        ),
+                        trailing: SizedBox(
+                          width: 100,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.edit,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 25,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
