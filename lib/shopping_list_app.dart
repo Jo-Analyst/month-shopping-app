@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/home_page.dart';
+import 'pages/screen_app_page.dart';
 
 class ShoppingListApp extends StatelessWidget {
   const ShoppingListApp({super.key});
@@ -17,7 +17,7 @@ class ShoppingListApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 130, 78, 220)),
         // useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const ScreenAppPage(),
     );
   }
 }

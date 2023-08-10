@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:shopping_list_app/pages/product_page.dart';
 import 'package:shopping_list_app/pages/shopping_list_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ScreenAppPage extends StatefulWidget {
+  const ScreenAppPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ScreenAppPage> createState() => _ScreenAppPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ScreenAppPageState extends State<ScreenAppPage> {
   bool screenShoppingListActived = true;
   List<Map<String, dynamic>> menuActived = [
     {"name": "list", "isActive": true},
