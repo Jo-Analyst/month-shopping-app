@@ -32,13 +32,15 @@ class ProductPage extends StatelessWidget {
           ),
           actions: [
             Container(
-              margin: const EdgeInsets.only(right: 30),
-              child: const Icon(
-                Icons.add,
-                size: 40,
-                color: Colors.white,
-              ),
-            ),
+                margin: const EdgeInsets.only(right: 30),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.add,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                )),
           ],
           toolbarHeight: 100,
         ),
