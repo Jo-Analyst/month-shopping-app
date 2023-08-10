@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_app/pages/product_form_page.dart';
 
 class ProductPage extends StatelessWidget {
   const ProductPage({super.key});
@@ -34,7 +35,14 @@ class ProductPage extends StatelessWidget {
             Container(
                 margin: const EdgeInsets.only(right: 30),
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProductFormPage(),
+                      ),
+                    );
+                  },
                   icon: const Icon(
                     Icons.add,
                     size: 40,
