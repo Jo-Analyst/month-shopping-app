@@ -15,7 +15,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
     {"name": "list", "isActive": true},
     {"name": "shopp", "isActive": false},
   ];
-  Color color(bool isActive) {
+  Color changeColor(bool isActive) {
     return isActive ? Colors.black : Colors.white;
   }
 
@@ -72,17 +72,10 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
                     icon: Icon(
                       Icons.list,
                       size: 40,
-                      color: color(menuActived[0]["isActive"]),
+                      color: changeColor(menuActived[0]["isActive"]),
                     ),
                   ),
-                  // Text(
-                  //   "Minha Lista",
-                  //   style: TextStyle(
-                  //     color: color(menuActived[0]["isActive"]),
-                  //     fontSize: 18,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // )
+                
                 ],
               ),
               Column(
@@ -96,13 +89,13 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
                     icon: Icon(
                       Icons.shopping_bag_outlined,
                       size: 40,
-                      color: color(menuActived[1]["isActive"]),
+                      color: changeColor(menuActived[1]["isActive"]),
                     ),
                   ),
                   // Text(
                   //   "Produtos",
                   //   style: TextStyle(
-                  //     color: color(menuActived[1]["isActive"]),
+                  //     color: changeColor(menuActived[1]["isActive"]),
                   //     fontSize: 18,
                   //     fontWeight: FontWeight.bold,
                   //   ),
