@@ -47,8 +47,8 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
         // backgroundColor: Colors.black87,
         backgroundColor: Theme.of(context).primaryColor,
         onPressed: () {},
-        child: const Icon(
-          Icons.brightness_6_sharp,
+        child:  Icon(
+         screenShoppingListActived ? Icons.brightness_6_sharp : Icons.add,
           size: 35,
         ),
       ),
