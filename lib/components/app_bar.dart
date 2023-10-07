@@ -9,12 +9,12 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [action!],
-      toolbarHeight: 100,
       backgroundColor: Theme.of(context).primaryColor,
       title: Text(
         title,
         style: TextStyle(
-            fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+          fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+        ),
       ),
     );
   }

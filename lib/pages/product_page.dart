@@ -18,24 +18,26 @@ class ProductPage extends StatelessWidget {
       {"name": "Biscoito", "id": 10, "shelve": "Guloseima"},
       {"name": "Leite integral", "id": 11, "shelve": "laticionius"},
       {"name": "Leite condensado", "id": 12, "shelve": "laticionius"},
-      {"name": "Leite em pó", "id": 13, "shelve": "laticionius"},
+      {"name": "Leite em pó", "id": 13, "shelve": "laticionios"},
       {"name": "Sabonete lafrore", "id": 14, "shelve": "higiene"},
     ];
 
-    return Column(
+    return ListView(
       children: [
         AppBar(
           title: Text(
             "Produtos",
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize),
+              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+            ),
           ),
-         
-          toolbarHeight: 100,
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          height: MediaQuery.of(context).size.height * 0.7,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 25,
+          ),
+          height: MediaQuery.of(context).size.height * 0.8,
           child: products.isEmpty
               ? const Center(
                   child: Text(
@@ -43,52 +45,62 @@ class ProductPage extends StatelessWidget {
                     style: TextStyle(fontSize: 18),
                   ),
                 )
-              : ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: (ctx, index) {
-                    return Card(
-                      elevation: 8,
-                      child: ListTile(
-                        title: Text(
-                          products[index]["name"],
-                          style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyLarge!.fontSize,
-                          ),
-                        ),
-                        subtitle: Text(
-                          products[index]["shelve"],
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        trailing: SizedBox(
-                          width: 100,
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.edit,
-                                  color: Theme.of(context).primaryColor,
-                                  size: 25,
+              : ListView(
+                  children: products
+                      .map(
+                        (product) => Card(
+                          elevation: 8,
+                          child: ListTile(
+                            title: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                product["name"],
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .fontSize,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                  size: 25,
+                            ),
+                            subtitle: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                product["shelve"],
+                                style: const TextStyle(
+                                  fontSize: 18,
                                 ),
                               ),
-                            ],
+                            ),
+                            trailing: SizedBox(
+                              width: 100,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Theme.of(context).primaryColor,
+                                      size: 25,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: 25,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      )
+                      .toList()),
         ),
       ],
     );

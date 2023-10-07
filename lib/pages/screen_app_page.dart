@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_app/pages/product_form_page.dart';
 import 'package:shopping_list_app/pages/product_page.dart';
 import 'package:shopping_list_app/pages/shopping_list_page.dart';
 
@@ -25,7 +26,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
         menu["isActive"] = false;
       }
       menuActived[index]["isActive"] = true;
-      screenShoppingListActived = index == 0 ? true : false;
+      screenShoppingListActived = index == 0;
     });
   }
 
@@ -46,9 +47,18 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
       floatingActionButton: FloatingActionButton(
         // backgroundColor: Colors.black87,
         backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () {},
-        child:  Icon(
-         screenShoppingListActived ? Icons.brightness_6_sharp : Icons.add,
+        onPressed: () {
+          if (screenShoppingListActived) {
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const ProductFormPage(),
+              ),
+            );
+          }
+        },
+        child: Icon(
+          screenShoppingListActived ? Icons.brightness_6_sharp : Icons.add,
           size: 35,
         ),
       ),
@@ -75,7 +85,6 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
                       color: changeColor(menuActived[0]["isActive"]),
                     ),
                   ),
-                
                 ],
               ),
               Column(

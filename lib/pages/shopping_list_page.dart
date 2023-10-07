@@ -54,7 +54,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         AppBar(
           actions: [
@@ -72,7 +72,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               ),
             ),
           ],
-          toolbarHeight: 100,
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(
             "Minha lista de compras",
@@ -82,50 +81,59 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          height: MediaQuery.of(context).size.height * 0.7,
-          child: shelves.isNotEmpty ?  ListView.builder(
-            itemBuilder: (context, index) {
-              return Card(
-                elevation: 8,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    ListTile(
-                      onTap: () {
-                        updateListCardTriggered(index);
-                      },
-                      contentPadding: const EdgeInsets.all(15),
-                      title: Text(
-                        shelves[index]["name"],
-                        style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.bodyLarge!.fontSize,
-                        ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 25,
+          ),
+          height: MediaQuery.of(context).size.height * 0.8,
+          child: shelves.isNotEmpty
+              ? ListView.builder(
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 8,
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          ListTile(
+                            onTap: () {
+                              updateListCardTriggered(index);
+                            },
+                            contentPadding: const EdgeInsets.all(15),
+                            title: Text(
+                              shelves[index]["name"],
+                              style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .fontSize,
+                              ),
+                            ),
+                            trailing: IconButton(
+                              icon: Icon(
+                                cardTriggeredList[index]
+                                    ? Icons.keyboard_arrow_down
+                                    : Icons.keyboard_arrow_right,
+                                color: Theme.of(context).primaryColor,
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                updateListCardTriggered(index);
+                              },
+                            ),
+                          ),
+                          ProductsList(
+                            sheveId: shelves[index]["id"],
+                            isExpanded: cardTriggeredList[index],
+                          ),
+                        ],
                       ),
-                      trailing: IconButton(
-                        icon: Icon(
-                          cardTriggeredList[index]
-                              ? Icons.keyboard_arrow_down
-                              : Icons.keyboard_arrow_right,
-                          color: Theme.of(context).primaryColor,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          updateListCardTriggered(index);
-                        },
-                      ),
-                    ),
-                    ProductsList(
-                      sheveId: shelves[index]["id"],
-                      isExpanded: cardTriggeredList[index],
-                    ),
-                  ],
-                ),
-              );
-            },
-            itemCount: shelves.length,
-          ): const Center(child: Text("Você ainda não listou os produtos para compra.")),
+                    );
+                  },
+                  itemCount: shelves.length,
+                )
+              : const Center(
+                  child:
+                      Text("Você ainda não listou os produtos para compra.")),
         ),
       ],
     );
