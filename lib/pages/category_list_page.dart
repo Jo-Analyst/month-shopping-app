@@ -80,6 +80,13 @@ class _CategoryListPageState extends State<CategoryListPage> {
                               motion: const StretchMotion(),
                               children: [
                                 SlidableAction(
+                                  onPressed: (_) => addNewCategory(),
+                                  backgroundColor: Colors.orange,
+                                  icon: Icons.edit,
+                                  label: "Editar",
+                                  foregroundColor: Colors.white,
+                                ),
+                                SlidableAction(
                                   onPressed: (_) {
                                     setState(() {
                                       categories.removeWhere(
