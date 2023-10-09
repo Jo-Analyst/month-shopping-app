@@ -6,20 +6,20 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> products = [
-      {"name": "Arroz", "id": 1, "shelve": "Alimentos"},
-      {"name": "Feijão", "id": 2, "shelve": "Alimentos"},
-      {"name": "Macarrão", "id": 3, "shelve": "Alimentos"},
-      {"name": "Óleo", "id": 4, "shelve": "Alimentos"},
-      {"name": "Sal", "id": 5, "shelve": "Alimentos"},
-      {"name": "Açucar", "id": 6, "shelve": "Alimentos"},
-      {"name": "Farinha de Mandioca", "id": 7, "shelve": "Alimentos"},
-      {"name": "Farinha de milho", "id": 8, "shelve": "Alimentos"},
-      {"name": "Colorau", "id": 9, "shelve": "Alimentos"},
-      {"name": "Biscoito", "id": 10, "shelve": "Guloseima"},
-      {"name": "Leite integral", "id": 11, "shelve": "laticionius"},
-      {"name": "Leite condensado", "id": 12, "shelve": "laticionius"},
-      {"name": "Leite em pó", "id": 13, "shelve": "laticionios"},
-      {"name": "Sabonete lafrore", "id": 14, "shelve": "higiene"},
+      {"name": "Arroz", "id": 1, "category": "Alimentos"},
+      {"name": "Feijão", "id": 2, "category": "Alimentos"},
+      {"name": "Macarrão", "id": 3, "category": "Alimentos"},
+      {"name": "Óleo", "id": 4, "category": "Alimentos"},
+      {"name": "Sal", "id": 5, "category": "Alimentos"},
+      {"name": "Açucar", "id": 6, "category": "Alimentos"},
+      {"name": "Farinha de Mandioca", "id": 7, "category": "Alimentos"},
+      {"name": "Farinha de milho", "id": 8, "category": "Alimentos"},
+      {"name": "Colorau", "id": 9, "category": "Alimentos"},
+      {"name": "Biscoito", "id": 10, "category": "Guloseima"},
+      {"name": "Leite integral", "id": 11, "category": "laticionius"},
+      {"name": "Leite condensado", "id": 12, "category": "laticionius"},
+      {"name": "Leite em pó", "id": 13, "category": "laticionios"},
+      {"name": "Sabonete lafrore", "id": 14, "category": "higiene"},
     ];
 
     return ListView(
@@ -68,7 +68,7 @@ class ProductPage extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                product["shelve"],
+                                product["category"],
                                 style: const TextStyle(
                                   fontSize: 18,
                                 ),

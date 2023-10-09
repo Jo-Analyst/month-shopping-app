@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shopping_list_app/components/dialog_product.dart';
+import 'package:shopping_list_app/pages/category_list_page.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -9,12 +12,9 @@ class ProductFormPage extends StatefulWidget {
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
-  List<Map<String, dynamic>> items = [
-    {"id": 1, "name": "Arroz"},
-    {"id": 2, "name": "Feijão"},
-    {"id": 3, "name": "Óleo"},
-    {"id": 4, "name": "Açucar"},
-  ];
+  List<Map<String, dynamic>> items = [];
+  final categoryController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +44,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Prateleira",
+                      "Categoria",
                       style: TextStyle(fontSize: 18),
                     ),
                     Divider(
@@ -55,18 +55,32 @@ class _ProductFormPageState extends State<ProductFormPage> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * .8 - 15,
                           child: TextFormField(
+                            controller: categoryController,
+                            readOnly: true,
                             textInputAction: TextInputAction.none,
-                            decoration:
-                                const InputDecoration(labelText: "Categoria"),
+                            decoration: const InputDecoration(
+                              labelText: "descrição",
+                            ),
                           ),
                         ),
                         IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.add_box_rounded,
-                              size: 50,
-                              color: Theme.of(context).primaryColor,
-                            ))
+                          onPressed: () async {
+                            final category = await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => const CategoryListPage(),
+                              ),
+                            );
+
+                            if (category != null) {
+                              categoryController.text = category["description"];
+                            }
+                          },
+                          icon: Icon(
+                            Icons.format_list_bulleted_add,
+                            size: 35,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -84,7 +98,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => print("oi"),
+                      onTap: () async {
+                        final name = await showDialogProductForm(context);
+
+                        if (name != null) {
+                          setState(() {
+                            items.add({
+                              "id": 0,
+                              "name": name,
+                            });
+                          });
+                        }
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -105,27 +130,31 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     ),
                     Column(
                       children: items
-                          .map((item) => Dismissible(
-                                key: Key(item["name"]),
-                                onDismissed: (direction) {
-                                  items.removeWhere(
-                                      (i) => i["id"] == item["id"]);
-                                },
-                                background: Container(
-                                  color: Colors.red,
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 20.0),
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
+                          .map(
+                            (item) => Slidable(
+                              endActionPane: ActionPane(
+                                motion: const StretchMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (_) {
+                                      setState(() {
+                                        items.removeWhere(
+                                          (i) => i["id"] == item["id"],
+                                        );
+                                      });
+                                    },
+                                    backgroundColor: Colors.red,
+                                    icon: Icons.delete,
+                                    label: "Excluir",
                                   ),
-                                ),
-                                direction: DismissDirection.endToStart,
-                                child: ListTile(
-                                  leading: const Icon(FontAwesomeIcons.box),
-                                  title: Text(item["name"]),
-                                ),
-                              ))
+                                ],
+                              ),
+                              child: ListTile(
+                                leading: const Icon(FontAwesomeIcons.box),
+                                title: Text(item["name"]),
+                              ),
+                            ),
+                          )
                           .toList(),
                     )
                   ],

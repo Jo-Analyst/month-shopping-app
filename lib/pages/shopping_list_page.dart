@@ -19,7 +19,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   void setListCardTriggered() {
-    for (int i = 0; i < shelves.length; i++) {
+    for (int i = 0; i < categories.length; i++) {
       setState(() {
         cardTriggeredList.add(false);
       });
@@ -33,7 +33,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   }
 
   // prateleiras
-  final List<Map<String, dynamic>> shelves = [
+  final List<Map<String, dynamic>> categories = [
     {"id": 1, "name": "Congelados"},
     {"id": 2, "name": "Alimentos"},
     {"id": 3, "name": "Guloseima"},
@@ -86,7 +86,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             vertical: 25,
           ),
           height: MediaQuery.of(context).size.height * 0.8,
-          child: shelves.isNotEmpty
+          child: categories.isNotEmpty
               ? ListView.builder(
                   itemBuilder: (context, index) {
                     return Card(
@@ -100,7 +100,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             },
                             contentPadding: const EdgeInsets.all(15),
                             title: Text(
-                              shelves[index]["name"],
+                              categories[index]["name"],
                               style: TextStyle(
                                 fontSize: Theme.of(context)
                                     .textTheme
@@ -122,14 +122,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             ),
                           ),
                           ProductsList(
-                            sheveId: shelves[index]["id"],
+                            sheveId: categories[index]["id"],
                             isExpanded: cardTriggeredList[index],
                           ),
                         ],
                       ),
                     );
                   },
-                  itemCount: shelves.length,
+                  itemCount: categories.length,
                 )
               : const Center(
                   child:
