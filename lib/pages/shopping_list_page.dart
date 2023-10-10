@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list_app/pages/list_purchases_page.dart';
 import 'package:shopping_list_app/templates/product_list.dart';
 
 class ShoppingListPage extends StatefulWidget {
@@ -12,10 +13,12 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   bool showInputSearch = false, isExpanded = false;
   List<bool> cardTriggeredList = [];
 
-  toggleShowInputSearch() {
-    setState(() {
-      showInputSearch = !showInputSearch;
-    });
+  openScreenListPurchases() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const LisPurchasesPage(),
+      ),
+    );
   }
 
   void setListCardTriggered() {
@@ -68,7 +71,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   size: 30,
                   color: Colors.white,
                 ),
-                onPressed: () => toggleShowInputSearch(),
+                onPressed: () => openScreenListPurchases(),
               ),
             ),
           ],

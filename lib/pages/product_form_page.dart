@@ -149,9 +149,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                   ),
                                 ],
                               ),
-                              child: ListTile(
-                                leading: const Icon(FontAwesomeIcons.box),
-                                title: Text(item["name"]),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(FontAwesomeIcons.box),
+                                    title: Text(item["name"]),
+                                  ),
+                                  Divider(
+                                    height: 2,
+                                    color: Theme.of(context).primaryColor,
+                                  )
+                                ],
                               ),
                             ),
                           )

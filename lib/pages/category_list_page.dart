@@ -100,19 +100,27 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                 ),
                               ],
                             ),
-                            child: InkWell(
-                              onTap: () => Navigator.of(context).pop(category),
-                              child: ListTile(
-                                title: Text(
-                                  category["description"],
-                                  style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .fontSize,
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () =>
+                                      Navigator.of(context).pop(category),
+                                  child: ListTile(
+                                    title: Text(
+                                      category["description"],
+                                      style: TextStyle(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .fontSize,
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Divider(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                              ],
                             ),
                           );
                         },
