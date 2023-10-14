@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list_app/pages/product_form_page.dart';
-import 'package:shopping_list_app/pages/product_page.dart';
+import 'package:shopping_list_app/pages/product_list_page.dart';
 import 'package:shopping_list_app/pages/shopping_list_page.dart';
 
 class ScreenAppPage extends StatefulWidget {
@@ -40,7 +40,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
         switchOutCurve: Curves.easeOut,
         child: screenShoppingListActived
             ? const ShoppingListPage()
-            : const ProductPage(),
+            : const ProductListPage(),
       ),
       extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

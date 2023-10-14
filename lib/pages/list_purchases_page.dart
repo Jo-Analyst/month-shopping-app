@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_list_app/components/dialog_unit.dart';
@@ -43,6 +42,13 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.of(context).pop(),
+          icon: const Icon(
+            Icons.keyboard_arrow_left,
+            size: 35,
+          ),
+        ),
         title: const Text("Listar compras"),
         actions: [
           IconButton(
@@ -177,18 +183,38 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                       ),
                                       Row(
                                         children: [
-                                          Text(shoppe["quantity"].toString()),
+                                          SizedBox(
+                                            width: 40,
+                                            child: FittedBox(
+                                              fit: BoxFit.scaleDown,
+                                              child: Text(
+                                                shoppe["quantity"].toString(),
+                                                style: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .displayLarge!
+                                                        .fontSize),
+                                                textAlign: TextAlign.right,
+                                              ),
+                                            ),
+                                          ),
                                           Column(
                                             children: [
                                               InkWell(
-                                                onTap: () {},
+                                                onTap: () => setState(() {
+                                                  shoppe["quantity"]++;
+                                                }),
                                                 child: const Icon(
                                                   Icons.keyboard_arrow_up,
                                                   size: 28,
                                                 ),
                                               ),
                                               InkWell(
-                                                onTap: () {},
+                                                onTap: () => setState(() {
+                                                  if (shoppe["quantity"] > 1) {
+                                                    shoppe["quantity"]--;
+                                                  }
+                                                }),
                                                 child: const Icon(
                                                   Icons.keyboard_arrow_down,
                                                   size: 28,
