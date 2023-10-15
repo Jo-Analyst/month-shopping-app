@@ -11,20 +11,20 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   final List<Map<String, dynamic>> products = [
-    {"name": "Arroz", "id": 1, "category": "Alimentos"},
-    {"name": "Feijão", "id": 2, "category": "Alimentos"},
-    {"name": "Macarrão", "id": 3, "category": "Alimentos"},
-    {"name": "Óleo", "id": 4, "category": "Alimentos"},
-    {"name": "Sal", "id": 5, "category": "Alimentos"},
-    {"name": "Açucar", "id": 6, "category": "Alimentos"},
-    {"name": "Farinha de Mandioca", "id": 7, "category": "Alimentos"},
-    {"name": "Farinha de milho", "id": 8, "category": "Alimentos"},
-    {"name": "Colorau", "id": 9, "category": "Alimentos"},
-    {"name": "Biscoito", "id": 10, "category": "Guloseima"},
-    {"name": "Leite integral", "id": 11, "category": "laticionius"},
-    {"name": "Leite condensado", "id": 12, "category": "laticionius"},
-    {"name": "Leite em pó", "id": 13, "category": "laticionios"},
-    {"name": "Sabonete lafrore", "id": 14, "category": "higiene"},
+    {"name": "Arroz", "id": 1, "type_category": "Alimentos"},
+    {"name": "Feijão", "id": 2, "type_category": "Alimentos"},
+    {"name": "Macarrão", "id": 3, "type_category": "Alimentos"},
+    {"name": "Óleo", "id": 4, "type_category": "Alimentos"},
+    {"name": "Sal", "id": 5, "type_category": "Alimentos"},
+    {"name": "Açucar", "id": 6, "type_category": "Alimentos"},
+    {"name": "Farinha de Mandioca", "id": 7, "type_category": "Alimentos"},
+    {"name": "Farinha de milho", "id": 8, "type_category": "Alimentos"},
+    {"name": "Colorau", "id": 9, "type_category": "Alimentos"},
+    {"name": "Biscoito", "id": 10, "type_category": "Guloseima"},
+    {"name": "Leite integral", "id": 11, "type_category": "laticionius"},
+    {"name": "Leite condensado", "id": 12, "type_category": "laticionius"},
+    {"name": "Leite em pó", "id": 13, "type_category": "laticionios"},
+    {"name": "Sabonete lafrore", "id": 14, "type_category": "higiene"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -99,7 +99,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                 fit: BoxFit.scaleDown,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  product["category"],
+                                  product["type_category"],
                                   style: const TextStyle(
                                     fontSize: 18,
                                   ),

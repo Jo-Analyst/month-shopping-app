@@ -19,7 +19,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         categories.add(
           {
             "id": 0,
-            "description": response,
+            "type_category": response,
           },
         );
       });
@@ -107,7 +107,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                       Navigator.of(context).pop(category),
                                   child: ListTile(
                                     title: Text(
-                                      category["description"],
+                                      category["type_category"],
                                       style: TextStyle(
                                         fontSize: Theme.of(context)
                                             .textTheme

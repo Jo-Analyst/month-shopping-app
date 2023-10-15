@@ -14,11 +14,22 @@ class ProductFormPage extends StatefulWidget {
 class _ProductFormPageState extends State<ProductFormPage> {
   List<Map<String, dynamic>> items = [];
   final categoryController = TextEditingController();
+  String category = "";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed:
+                  category.trim().isEmpty || items.isEmpty ? null : () {},
+              icon: const Icon(
+                Icons.check,
+                size: 35,
+              ),
+            ),
+          ],
           leading: IconButton(
             icon: const Icon(
               Icons.keyboard_arrow_left,
@@ -59,20 +70,22 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             readOnly: true,
                             textInputAction: TextInputAction.none,
                             decoration: const InputDecoration(
-                              labelText: "descrição",
+                              labelText: "Tipo",
                             ),
                           ),
                         ),
                         IconButton(
                           onPressed: () async {
-                            final category = await Navigator.of(context).push(
+                            final categorySelected =
+                                await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => const CategoryListPage(),
                               ),
                             );
 
-                            if (category != null) {
-                              categoryController.text = category["description"];
+                            if (categorySelected != null) {
+                              category = categorySelected["type_category"];
+                              categoryController.text = category;
                             }
                           },
                           icon: Icon(
@@ -152,7 +165,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    leading: const Icon(FontAwesomeIcons.box),
+                                    leading: const Icon(
+                                      FontAwesomeIcons.box,
+                                      size: 25,
+                                    ),
                                     title: Text(item["name"]),
                                   ),
                                   Divider(
