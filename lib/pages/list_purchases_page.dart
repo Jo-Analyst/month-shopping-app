@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shopping_list_app/components/dialog_unit.dart';
+import 'package:shopping_list_app/pages/product_list_shopping_page.dart';
 
 class LisPurchasesPage extends StatefulWidget {
   const LisPurchasesPage({super.key});
@@ -14,28 +15,28 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
   final quantityController = TextEditingController();
   final unitController = TextEditingController();
   List<Map<String, dynamic>> shopping = [
-    {"id": 1, "quantity": 1, "unit": "UND", "product_id": 1, "name": "Arroz"},
-    {"id": 2, "quantity": 1, "unit": "UND", "product_id": 2, "name": "Feijão"},
-    {
-      "id": 3,
-      "quantity": 1,
-      "unit": "UND",
-      "product_id": 3,
-      "name": "Macarrão"
-    },
-    {"id": 4, "quantity": 1, "unit": "UND", "product_id": 4, "name": "Óleo"},
-    {"id": 5, "quantity": 1, "unit": "UND", "product_id": 5, "name": "Sal"},
-    {"id": 6, "quantity": 1, "unit": "UND", "product_id": 6, "name": "Alho"},
-    {"id": 7, "quantity": 1, "unit": "UND", "product_id": 7, "name": "Açucar"},
-    {"id": 8, "quantity": 1, "unit": "UND", "product_id": 8, "name": "Farinha"},
-    {"id": 9, "quantity": 1, "unit": "UND", "product_id": 9, "name": "Fubá"},
-    {
-      "id": 10,
-      "quantity": 1,
-      "unit": "UND",
-      "product_id": 10,
-      "name": "Leite em pó"
-    },
+    // {"id": 1, "quantity": 1, "unit": "UND", "product_id": 1, "name": "Arroz"},
+    // {"id": 2, "quantity": 1, "unit": "UND", "product_id": 2, "name": "Feijão"},
+    // {
+    //   "id": 3,
+    //   "quantity": 1,
+    //   "unit": "UND",
+    //   "product_id": 3,
+    //   "name": "Macarrão"
+    // },
+    // {"id": 4, "quantity": 1, "unit": "UND", "product_id": 4, "name": "Óleo"},
+    // {"id": 5, "quantity": 1, "unit": "UND", "product_id": 5, "name": "Sal"},
+    // {"id": 6, "quantity": 1, "unit": "UND", "product_id": 6, "name": "Alho"},
+    // {"id": 7, "quantity": 1, "unit": "UND", "product_id": 7, "name": "Açucar"},
+    // {"id": 8, "quantity": 1, "unit": "UND", "product_id": 8, "name": "Farinha"},
+    // {"id": 9, "quantity": 1, "unit": "UND", "product_id": 9, "name": "Fubá"},
+    // {
+    //   "id": 10,
+    //   "quantity": 1,
+    //   "unit": "UND",
+    //   "product_id": 10,
+    //   "name": "Leite em pó"
+    // },
   ];
 
   @override
@@ -51,11 +52,14 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
         ),
         title: const Text("Listar compras"),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.check,
-              size: 35,
+          Visibility(
+            visible: shopping.isNotEmpty,
+            child: IconButton(
+              onPressed: () => Navigator.of(context).pop(shopping),
+              icon: const Icon(
+                Icons.check,
+                size: 35,
+              ),
             ),
           ),
         ],
@@ -65,7 +69,27 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
         child: ListView(
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                final products = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const ProductListShoppingPage(),
+                  ),
+                );
+
+                if (products != null) {
+                  setState(() {
+                    for (var product in products) {
+                      // Verifique se o produto não está na lista de compras
+                      bool productExistsInShopping = shopping.any((shoppe) =>
+                          shoppe["product_id"] == product["product_id"]);
+
+                      if (!productExistsInShopping) {
+                        shopping.add(product);
+                      }
+                    }
+                  });
+                }
+              },
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Row(
@@ -116,7 +140,8 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                       setState(() {
                                         shopping.removeWhere(
                                           (shopp) =>
-                                              shopp["id"] == shoppe["id"],
+                                              shopp["product_id"] ==
+                                              shoppe["product_id"],
                                         );
                                       });
                                     },

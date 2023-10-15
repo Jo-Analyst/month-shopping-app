@@ -12,13 +12,18 @@ class ShoppingListPage extends StatefulWidget {
 class _ShoppingListPageState extends State<ShoppingListPage> {
   bool showInputSearch = false, isExpanded = false;
   List<bool> cardTriggeredList = [];
+  List<Map<String, dynamic>> shoppingList = [];
 
-  openScreenListPurchases() {
-    Navigator.of(context).push(
+  openScreenListPurchases() async {
+    final response = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const LisPurchasesPage(),
       ),
     );
+
+    if (response != null) {
+      shoppingList = response;
+    }
   }
 
   void setListCardTriggered() {
@@ -67,7 +72,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
               ),
               child: IconButton(
                 icon: const Icon(
-                  Icons.shopping_cart_outlined,
+                  Icons.add_shopping_cart_outlined,
                   size: 30,
                   color: Colors.white,
                 ),
@@ -125,9 +130,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             ),
                           ),
                           ProductsList(
-                            sheveId: categories[index]["id"],
-                            isExpanded: cardTriggeredList[index],
-                          ),
+                              sheveId: categories[index]["id"],
+                              isExpanded: cardTriggeredList[index],
+                              shoppingList: shoppingList),
                         ],
                       ),
                     );

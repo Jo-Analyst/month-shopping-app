@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -76,6 +77,11 @@ class _ProductListPageState extends State<ProductListPage> {
                               ],
                             ),
                             child: ListTile(
+                              minLeadingWidth: 0,
+                              leading: const Icon(
+                                FontAwesomeIcons.box,
+                                size: 25,
+                              ),
                               title: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 alignment: Alignment.centerLeft,
