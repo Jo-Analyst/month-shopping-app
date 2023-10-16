@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/screen_app_page.dart';
 
@@ -7,22 +9,27 @@ class ShoppingListApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Shopping List',
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontSize: 23),
-          displayLarge: TextStyle(fontSize: 18),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Shopping List',
+        theme: ThemeData(
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(fontSize: 23),
+            displayLarge: TextStyle(fontSize: 18),
+          ),
+          primaryColor: const Color.fromARGB(255, 73, 133, 206),
+          appBarTheme: const AppBarTheme(
+            toolbarHeight: 80,
+            titleTextStyle: TextStyle(fontSize: 20),
+          ),
+          iconTheme: const IconThemeData(size: 35),
         ),
-        primaryColor: const Color.fromARGB(255, 73, 133, 206),
-        appBarTheme: const AppBarTheme(
-          toolbarHeight: 80,
-          titleTextStyle: TextStyle(fontSize: 20),
-        ),
-        iconTheme: const IconThemeData(size: 35),
+        home: const ScreenAppPage(),
       ),
-      home: const ScreenAppPage(),
     );
   }
 }

@@ -1,4 +1,4 @@
-# shopping_list_app
+# month_shopping_app
 
 A new Flutter project.
 

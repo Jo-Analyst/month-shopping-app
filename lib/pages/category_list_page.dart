@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:shopping_list_app/components/dialog_category.dart';
+import 'package:month_shopping_app/components/dialog_category.dart';
 
 class CategoryListPage extends StatefulWidget {
   const CategoryListPage({super.key});

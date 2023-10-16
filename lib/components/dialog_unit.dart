@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_app/utils/uppercase.dart';
+import 'package:month_shopping_app/utils/uppercase.dart';
 
 String description = "";
 final globalkey = GlobalKey<FormState>();

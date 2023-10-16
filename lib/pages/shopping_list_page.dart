@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_app/pages/list_purchases_page.dart';
-import 'package:shopping_list_app/templates/product_list.dart';
+import 'package:month_shopping_app/pages/list_purchases_page.dart';
+import 'package:month_shopping_app/templates/product_list.dart';
 
 class ShoppingListPage extends StatefulWidget {
   const ShoppingListPage({super.key});

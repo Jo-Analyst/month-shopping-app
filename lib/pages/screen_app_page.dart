@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list_app/pages/product_form_page.dart';
-import 'package:shopping_list_app/pages/product_list_page.dart';
-import 'package:shopping_list_app/pages/shopping_list_page.dart';
+import 'package:month_shopping_app/pages/product_form_page.dart';
+import 'package:month_shopping_app/pages/product_list_page.dart';
+import 'package:month_shopping_app/pages/shopping_list_page.dart';
 
 class ScreenAppPage extends StatefulWidget {
   const ScreenAppPage({super.key});

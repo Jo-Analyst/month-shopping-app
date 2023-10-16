@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shopping_list_app/components/dialog_product.dart';
-import 'package:shopping_list_app/pages/category_list_page.dart';
+import 'package:month_shopping_app/components/dialog_product.dart';
+import 'package:month_shopping_app/pages/category_list_page.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
