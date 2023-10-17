@@ -1,29 +1,39 @@
 import 'package:month_shopping_app/config/db.dart';
-import 'package:sqflite/sqflite.dart';
 
 class ProductModel {
-  final int? id;
-  final String name;
-  final int? categoryId;
-
-  ProductModel({
-    this.id,
-    required this.name,
-    this.categoryId,
-  });
-
   static Future<List<Map<String, dynamic>>> findAll() async {
     final db = await DB.openDatabase();
     return db.rawQuery(
-        "SELECT * FROM products AS p INNER JOIN categories AS c ON c.product_id = p.id");
+        "SELECT * FROM products AS p INNER JOIN categories AS c ON c.ID = p.category_id");
   }
 
-  Future<int> save(Transaction txn) async {
-    int lastId = await txn.insert("products", {
-      "name": name,
-      "category_id": categoryId,
+  static Future<int> save(Map<String, dynamic> products, int categoryId) async {
+    final db = await DB.openDatabase();
+    int lastId = 0;
+    await db.transaction((txn) async {
+      if (products["id"] > 0) {
+        await txn.update(
+            "products",
+            {
+              "name": products["name"],
+              "category_id": categoryId,
+            },
+            where: "id = ?",
+            whereArgs: [products["id"]]);
+        return;
+      }
+
+      lastId = await txn.insert("products", {
+        "name": products["name"],
+        "category_id": categoryId,
+      });
     });
 
     return lastId;
+  }
+
+  static Future<void> delete(int id) async {
+    final db = await DB.openDatabase();
+    await db.delete("products", where: "id = ?", whereArgs: [id]);
   }
 }

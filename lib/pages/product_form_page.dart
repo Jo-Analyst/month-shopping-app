@@ -14,13 +14,15 @@ class ProductFormPage extends StatefulWidget {
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
-  List<Map<String, dynamic>> items = [];
+  List<Map<String, dynamic>> products = [];
   final categoryController = TextEditingController();
-  String category = "";
+  int categoryId = 0;
+  String typeCategory = "";
 
   void saveProducts() async {
-    final productProvider = Provider.of<ProductProvider>(context, listen: false);
-    //  productProvider.save(category, productId, products)
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    await productProvider.save(products, categoryId, typeCategory);
   }
 
   @override
@@ -29,9 +31,12 @@ class _ProductFormPageState extends State<ProductFormPage> {
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed: category.trim().isEmpty || items.isEmpty
+              onPressed: typeCategory.trim().isEmpty || products.isEmpty
                   ? null
-                  : () => saveProducts,
+                  : () {
+                      saveProducts();
+                      Navigator.of(context).pop();
+                    },
               icon: const Icon(
                 Icons.check,
                 size: 35,
@@ -90,10 +95,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                 builder: (_) => const CategoryListPage(),
                               ),
                             );
-
                             if (categorySelected != null) {
-                              category = categorySelected["type_category"];
-                              categoryController.text = category;
+                              typeCategory = categorySelected["type_category"];
+                              categoryController.text = typeCategory;
+                              categoryId = categorySelected["id"];
                             }
                           },
                           icon: Icon(
@@ -124,7 +129,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
                         if (name != null) {
                           setState(() {
-                            items.add({
+                            products.add({
                               "id": 0,
                               "name": name,
                             });
@@ -149,44 +154,44 @@ class _ProductFormPageState extends State<ProductFormPage> {
                     Divider(
                       color: Theme.of(context).primaryColor,
                     ),
-                    Column(
-                      children: items
-                          .map(
-                            (item) => Slidable(
-                              endActionPane: ActionPane(
-                                motion: const StretchMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (_) {
-                                      setState(() {
-                                        items.removeWhere(
-                                          (i) => i["id"] == item["id"],
-                                        );
-                                      });
-                                    },
-                                    backgroundColor: Colors.red,
-                                    icon: Icons.delete,                                   
-                                  ),
-                                ],
+                    ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) => const Divider(),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        final product = products[index];
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: const StretchMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (_) {
+                                  setState(() {
+                                    products.removeAt(index);
+                                  });
+                                },
+                                backgroundColor: Colors.red,
+                                icon: Icons.delete,
                               ),
-                              child: Column(
-                                children: [
-                                  ListTile(
-                                    leading: const Icon(
-                                      FontAwesomeIcons.box,
-                                      size: 25,
-                                    ),
-                                    title: Text(item["name"]),
-                                  ),
-                                  Divider(
-                                    height: 2,
-                                    color: Theme.of(context).primaryColor,
-                                  )
-                                ],
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              ListTile(
+                                leading: const Icon(
+                                  FontAwesomeIcons.box,
+                                  size: 25,
+                                ),
+                                title: Text(product["name"]),
                               ),
-                            ),
-                          )
-                          .toList(),
+                              Divider(
+                                height: 2,
+                                color: Theme.of(context).primaryColor,
+                              )
+                            ],
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),

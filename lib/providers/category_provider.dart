@@ -35,7 +35,7 @@ class CategoryProvider extends ChangeNotifier {
 
   void delete(int id) async {
     await CategoryModel.delete(id);
-    _items.removeWhere((i) => i["id"] == id);
+    deleteItem(id);
     notifyListeners();
   }
 

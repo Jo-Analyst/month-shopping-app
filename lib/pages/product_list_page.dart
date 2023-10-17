@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -35,10 +36,10 @@ class _ProductListPageState extends State<ProductListPage> {
     loadProducts();
   }
 
-  void loadProducts() {
+  void loadProducts() async {
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
-    productProvider.load();
+    await productProvider.load();
     setState(() {
       products = productProvider.items;
     });
@@ -65,6 +66,7 @@ class _ProductListPageState extends State<ProductListPage> {
           child: Consumer<ProductProvider>(
             builder: (_, productProvider, __) {
               products = productProvider.items;
+
               return products.isEmpty
                   ? const Center(
                       child: Text(
@@ -88,13 +90,17 @@ class _ProductListPageState extends State<ProductListPage> {
                                       foregroundColor: Colors.white,
                                     ),
                                     SlidableAction(
-                                      onPressed: (_) => setState(
-                                        () {
-                                          products.removeWhere(
-                                            (pd) => pd["id"] == product["id"],
-                                          );
-                                        },
-                                      ),
+                                      onPressed: (_) async {
+                                        final confirmAction =
+                                            await showDialogDelete(context,
+                                                    "Deseja mesmo excluir o produto?") ??
+                                                false;
+
+                                        if (confirmAction) {
+                                          await productProvider
+                                              .delete(product["id"]);
+                                        }
+                                      },
                                       backgroundColor: Colors.red,
                                       icon: Icons.delete,
                                     ),

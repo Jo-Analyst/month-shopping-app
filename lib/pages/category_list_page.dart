@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:month_shopping_app/components/dialog_category.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
+import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
 class CategoryListPage extends StatefulWidget {
@@ -31,6 +32,11 @@ class _CategoryListPageState extends State<CategoryListPage> {
   void deleteCategory(int id) async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
+    bool confirmAction = await showDialogDelete(
+            context, "Deseja mesmo excluir esta categoria?") ??
+        false;
+
+    if (!confirmAction) return;
 
     setState(() {
       categoryProvider.delete(id);
@@ -116,7 +122,8 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                       foregroundColor: Colors.white,
                                     ),
                                     SlidableAction(
-                                      onPressed: (_) => deleteCategory(category["id"]),
+                                      onPressed: (_) =>
+                                          deleteCategory(category["id"]),
                                       backgroundColor: Colors.red,
                                       icon: Icons.delete,
                                     ),

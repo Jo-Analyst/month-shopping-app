@@ -15,6 +15,7 @@ Future<String?> showDialogProductForm(BuildContext context) async {
             key: globalkey,
             child: TextFormField(
               autofocus: true,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: "Produto",
               ),

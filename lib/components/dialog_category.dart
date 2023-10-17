@@ -19,6 +19,7 @@ Future<String?> showDialogCategory(
             key: globalkey,
             child: TextFormField(
               controller: typeCategoryController,
+              textCapitalization: TextCapitalization.sentences,
               autofocus: true,
               decoration: const InputDecoration(
                 labelText: "Categoria",
@@ -37,7 +38,7 @@ Future<String?> showDialogCategory(
             width: double.infinity,
             child: ElevatedButton(
               child: const Text(
-                "Adicionar",
+                "Salvar",
               ),
               onPressed: () {
                 if (globalkey.currentState!.validate()) {
