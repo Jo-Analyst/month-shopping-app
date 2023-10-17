@@ -14,16 +14,27 @@ class CategoryListPage extends StatefulWidget {
 class _CategoryListPageState extends State<CategoryListPage> {
   List<Map<String, dynamic>> categories = [];
 
-  void addNewCategory() async {
+  void saveNewCategory(Map<String, dynamic> category) async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
 
-    final response = await showDialogCategory(context);
+    final response = await showDialogCategory(
+        context, category.isEmpty ? null : category["type_category"]);
     if (response != null) {
       await categoryProvider.save({
+        "id": category.isEmpty ? 0 : category["id"],
         "type_category": response,
       });
     }
+  }
+
+  void deleteCategory(int id) async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
+    setState(() {
+      categoryProvider.delete(id);
+    });
   }
 
   @override
@@ -48,7 +59,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         title: const Text("Categoria"),
         actions: [
           IconButton(
-            onPressed: () => addNewCategory(),
+            onPressed: () => saveNewCategory({}),
             icon: const Icon(
               Icons.add,
               size: 35,
@@ -64,7 +75,6 @@ class _CategoryListPageState extends State<CategoryListPage> {
         child: Consumer<CategoryProvider>(
           builder: (context, categoryProvider, _) {
             categories = categoryProvider.items;
-            print(categories);
             return ListView(
               children: [
                 TextFormField(
@@ -99,19 +109,14 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                   motion: const StretchMotion(),
                                   children: [
                                     SlidableAction(
-                                      onPressed: (_) => addNewCategory(),
+                                      onPressed: (_) =>
+                                          saveNewCategory(category),
                                       backgroundColor: Colors.orange,
                                       icon: Icons.edit,
                                       foregroundColor: Colors.white,
                                     ),
                                     SlidableAction(
-                                      onPressed: (_) {
-                                        setState(() {
-                                          categories.removeWhere(
-                                            (ct) => ct["id"] == category["id"],
-                                          );
-                                        });
-                                      },
+                                      onPressed: (_) => deleteCategory(category["id"]),
                                       backgroundColor: Colors.red,
                                       icon: Icons.delete,
                                     ),

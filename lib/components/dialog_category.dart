@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 String description = "";
 final globalkey = GlobalKey<FormState>();
+final typeCategoryController = TextEditingController();
 
-Future<String?> showDialogCategory(BuildContext context) async {
+Future<String?> showDialogCategory(
+    BuildContext context, String? typeCategory) async {
+  description = typeCategory ?? "";
+  typeCategoryController.text = description;
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -14,6 +18,7 @@ Future<String?> showDialogCategory(BuildContext context) async {
         content: Form(
             key: globalkey,
             child: TextFormField(
+              controller: typeCategoryController,
               autofocus: true,
               decoration: const InputDecoration(
                 labelText: "Categoria",

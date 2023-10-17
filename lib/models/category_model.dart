@@ -22,6 +22,11 @@ class CategoryModel {
     return lastId;
   }
 
+  static Future<void> delete(int id) async {
+    final db = await DB.openDatabase();
+    await db.delete("categories", where: "id = ?", whereArgs: [id]);
+  }
+
   static Future<List<Map<String, dynamic>>> findAll() async {
     final db = await DB.openDatabase();
     return db.query("categories");
