@@ -14,13 +14,16 @@ class CategoryProvider extends ChangeNotifier {
 
   Future<void> save(Map<String, dynamic> data) async {
     final categoryId =
-        await CategoryModel(id: data["id"], type: data["type"]).save();
+        await CategoryModel(id: data["id"] ?? 0, type: data["type_category"])
+            .save();
 
+    data["id"] = categoryId;
     _items.add(data);
     notifyListeners();
   }
 
-  void loadCategories() async {
+  Future<void> loadCategories() async {
+    _items.clear();
     final categories = await CategoryModel.findAll();
     for (var category in categories) {
       _items.add(category);

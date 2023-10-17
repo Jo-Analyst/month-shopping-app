@@ -15,19 +15,30 @@ class _CategoryListPageState extends State<CategoryListPage> {
   List<Map<String, dynamic>> categories = [];
 
   void addNewCategory() async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+
     final response = await showDialogCategory(context);
     if (response != null) {
-      final categoryId = await CategoryProvider.save();
-
-      setState(() {
-        categories.add(
-          {
-            "id": categoryId,
-            "type_category": response,
-          },
-        );
+      await categoryProvider.save({
+        "type_category": response,
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadCategories();
+  }
+
+  void loadCategories() async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    await categoryProvider.loadCategories();
+    setState(() {
+      categories = categoryProvider.items;
+    });
   }
 
   @override
@@ -53,6 +64,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
         child: Consumer<CategoryProvider>(
           builder: (context, categoryProvider, _) {
             categories = categoryProvider.items;
+            print(categories);
             return ListView(
               children: [
                 TextFormField(
