@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/models/product_model.dart';
 
 class ProductProvider extends ChangeNotifier {
-  List<Map<String, dynamic>> _items = [];
+  final List<Map<String, dynamic>> _items = [];
   List<Map<String, dynamic>> get items {
     return [
       ..._items
@@ -17,5 +18,20 @@ class ProductProvider extends ChangeNotifier {
     for (var product in products) {
       _items.add(product);
     }
+  }
+
+  void save(
+      String type, int productId, List<Map<String, dynamic>> products) async {
+    // final productIds = await CategoryModel(type: type).save(products);
+
+    // for (int i = 0; i < products.length; i++) {
+    //   _items.add({
+    //     "id": productIds[i],
+    //     "name": products[i]["name"],
+    //     "type_category": type,
+    //   });
+    // }
+
+    notifyListeners();
   }
 }

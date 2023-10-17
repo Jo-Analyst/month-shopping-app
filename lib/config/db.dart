@@ -8,11 +8,11 @@ class DB {
       path.join(dbPath, "appShoppingList.db"),
       onCreate: (db, version) {
         db.execute(
-          "CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL)",
+          "CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, category_id INTEGER, FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE)",
         );
 
         db.execute(
-          "CREATE TABLE categories (id INTEGER PRIMARY KEY, type_category TEXT NOT NULL, product_id INTEGER, FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE)",
+          "CREATE TABLE categories (id INTEGER PRIMARY KEY, type_category TEXT NOT NULL)",
         );
 
         db.execute(

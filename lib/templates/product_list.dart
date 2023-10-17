@@ -14,7 +14,6 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> products = shoppingList;
-    print(products);
     // List<Map<String, dynamic>> products = [
     // {
     //   "name": "Arroz",

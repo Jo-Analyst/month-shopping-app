@@ -28,6 +28,22 @@ class _ProductListPageState extends State<ProductListPage> {
     // {"name": "Leite em pó", "id": 13, "type_category": "laticionios"},
     // {"name": "Sabonete lafrore", "id": 14, "type_category": "higiene"},
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    loadProducts();
+  }
+
+  void loadProducts() {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    productProvider.load();
+    setState(() {
+      products = productProvider.items;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -3,6 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/dialog_product.dart';
 import 'package:month_shopping_app/pages/category_list_page.dart';
+import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -16,14 +18,20 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final categoryController = TextEditingController();
   String category = "";
 
+  void saveProducts() async {
+    final productProvider = Provider.of<ProductProvider>(context, listen: false);
+    //  productProvider.save(category, productId, products)
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           actions: [
             IconButton(
-              onPressed:
-                  category.trim().isEmpty || items.isEmpty ? null : () {},
+              onPressed: category.trim().isEmpty || items.isEmpty
+                  ? null
+                  : () => saveProducts,
               icon: const Icon(
                 Icons.check,
                 size: 35,
@@ -157,8 +165,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                       });
                                     },
                                     backgroundColor: Colors.red,
-                                    icon: Icons.delete,
-                                    label: "Excluir",
+                                    icon: Icons.delete,                                   
                                   ),
                                 ],
                               ),
