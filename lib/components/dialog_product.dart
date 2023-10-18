@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 String name = "";
 final globalkey = GlobalKey<FormState>();
+final nameController = TextEditingController();
 
 void addProduct(BuildContext context) {
   if (globalkey.currentState!.validate()) {
@@ -9,7 +10,9 @@ void addProduct(BuildContext context) {
   }
 }
 
-Future<String?> showDialogProductForm(BuildContext context) async {
+Future<String?> showDialogProductForm(
+    BuildContext context, String? name) async {
+  nameController.text = name ?? "";
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -20,6 +23,7 @@ Future<String?> showDialogProductForm(BuildContext context) async {
         content: Form(
             key: globalkey,
             child: TextFormField(
+              controller: nameController,
               autofocus: true,
               textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(

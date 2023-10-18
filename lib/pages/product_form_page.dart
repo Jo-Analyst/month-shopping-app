@@ -57,6 +57,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
     });
   }
 
+  void receiveNameProduct() async {
+    final name = await showDialogProductForm(context, null);
+
+    if (name != null) {
+      setState(() {
+        products.add({
+          "id": widget.item.isEmpty ? 0 : widget.item["id"],
+          "name": name,
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,18 +150,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () async {
-                        final name = await showDialogProductForm(context);
-
-                        if (name != null) {
-                          setState(() {
-                            products.add({
-                              "id": 0,
-                              "name": name,
-                            });
-                          });
-                        }
-                      },
+                      onTap: () => receiveNameProduct(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
