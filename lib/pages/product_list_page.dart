@@ -42,6 +42,7 @@ class _ProductListPageState extends State<ProductListPage> {
     await productProvider.load();
     setState(() {
       products = productProvider.items;
+      print(products);
     });
   }
 
@@ -66,6 +67,7 @@ class _ProductListPageState extends State<ProductListPage> {
           child: Consumer<ProductProvider>(
             builder: (_, productProvider, __) {
               products = productProvider.items;
+              print(products);
 
               return products.isEmpty
                   ? const Center(

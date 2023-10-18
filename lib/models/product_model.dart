@@ -4,7 +4,7 @@ class ProductModel {
   static Future<List<Map<String, dynamic>>> findAll() async {
     final db = await DB.openDatabase();
     return db.rawQuery(
-        "SELECT * FROM products AS p INNER JOIN categories AS c ON c.ID = p.category_id");
+        "SELECT p.id, p.name, c.type_category FROM products AS p INNER JOIN categories AS c ON c.id = p.category_id");
   }
 
   static Future<int> save(Map<String, dynamic> products, int categoryId) async {
