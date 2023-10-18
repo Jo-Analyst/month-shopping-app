@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/dialog_unit.dart';
+import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 import 'package:month_shopping_app/pages/product_list_shopping_page.dart';
 
 class LisPurchasesPage extends StatefulWidget {
@@ -43,13 +44,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.keyboard_arrow_left,
-            size: 35,
-          ),
-        ),
+        leading: const IconButtonLeadingAppBar(),
         title: const Text("Listar compras"),
         actions: [
           Visibility(

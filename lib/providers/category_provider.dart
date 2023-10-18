@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/models/category_model.dart';
+import 'package:month_shopping_app/utils/search_list.dart';
 
 class CategoryProvider extends ChangeNotifier {
-  final List<Map<String, dynamic>> _items = [];
+  List<Map<String, dynamic>> _items = [];
+  List<Map<String, dynamic>> itemsFiltered = [];
   List<Map<String, dynamic>> get items {
     return [
       ..._items
@@ -22,15 +24,22 @@ class CategoryProvider extends ChangeNotifier {
     data["id"] = data["id"] == 0 ? categoryId : data["id"];
 
     _items.add(data);
+    itemsFiltered.add(data);
     notifyListeners();
   }
 
   Future<void> loadCategories() async {
-    _items.clear();
+    clear();
     final categories = await CategoryModel.findAll();
     for (var category in categories) {
       _items.add(category);
     }
+    itemsFiltered.addAll(categories);
+  }
+
+  void clear() {
+    _items.clear();
+    itemsFiltered.clear();
   }
 
   void delete(int id) async {
@@ -41,5 +50,12 @@ class CategoryProvider extends ChangeNotifier {
 
   void deleteItem(int id) {
     _items.removeWhere((i) => i["id"] == id);
+    itemsFiltered.removeWhere((i) => i["id"] == id);
+  }
+
+  Future<void> searchCategory(String type) async {
+    _items.clear();
+    _items = searchItems(type, itemsFiltered, "type_category");
+    notifyListeners();
   }
 }

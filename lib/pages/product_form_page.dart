@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/dialog_product.dart';
-import 'package:month_shopping_app/pages/category_list_page.dart';
+import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
+import 'package:month_shopping_app/pages/categories_list_page.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
     await productProvider.save(products, categoryId, typeCategory);
   }
 
+  void openScreenCategories() async {
+    final categorySelected = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const CategoriesListPage(),
+      ),
+    );
+    if (categorySelected != null) {
+      typeCategory = categorySelected["type_category"];
+      categoryController.text = typeCategory;
+      categoryId = categorySelected["id"];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,15 +57,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
               ),
             ),
           ],
-          leading: IconButton(
-            icon: const Icon(
-              Icons.keyboard_arrow_left,
-              size: 35,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          leading: const IconButtonLeadingAppBar(),
           title: const Text("Produto"),
           backgroundColor: Theme.of(context).primaryColor,
           toolbarHeight: 80,
@@ -85,22 +91,11 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             decoration: const InputDecoration(
                               labelText: "Tipo",
                             ),
+                            onTap: () => openScreenCategories(),
                           ),
                         ),
                         IconButton(
-                          onPressed: () async {
-                            final categorySelected =
-                                await Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => const CategoryListPage(),
-                              ),
-                            );
-                            if (categorySelected != null) {
-                              typeCategory = categorySelected["type_category"];
-                              categoryController.text = typeCategory;
-                              categoryId = categorySelected["id"];
-                            }
-                          },
+                          onPressed: () => openScreenCategories(),
                           icon: Icon(
                             Icons.format_list_bulleted_add,
                             size: 35,

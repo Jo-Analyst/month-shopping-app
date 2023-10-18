@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:month_shopping_app/components/dialog_category.dart';
+import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
-class CategoryListPage extends StatefulWidget {
-  const CategoryListPage({super.key});
+class CategoriesListPage extends StatefulWidget {
+  const CategoriesListPage({super.key});
 
   @override
-  State<CategoryListPage> createState() => _CategoryListPageState();
+  State<CategoriesListPage> createState() => _CategoriesListPageState();
 }
 
-class _CategoryListPageState extends State<CategoryListPage> {
+class _CategoriesListPageState extends State<CategoriesListPage> {
   List<Map<String, dynamic>> categories = [];
+  bool isValueInSearch = false;
+  String search = "";
+  final searchController = TextEditingController();
 
   void saveNewCategory(Map<String, dynamic> category) async {
     final categoryProvider =
@@ -63,6 +67,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Categoria"),
+        leading: const IconButtonLeadingAppBar(),
         actions: [
           IconButton(
             onPressed: () => saveNewCategory({}),
@@ -83,10 +88,42 @@ class _CategoryListPageState extends State<CategoryListPage> {
             categories = categoryProvider.items;
             return ListView(
               children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: "Busque a categoria aqui",
-                    border: OutlineInputBorder(),
+                Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: TextFormField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      labelText: "Busque a categoria aqui",
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: !isValueInSearch
+                            ? null
+                            : () {
+                                if (isValueInSearch) {
+                                  searchController.text = "";
+                                  isValueInSearch = false;
+                                  loadCategories();
+                                }
+                              },
+                        icon: Icon(
+                          isValueInSearch ? Icons.close : Icons.search,
+                        ),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        final categoryProvider = Provider.of<CategoryProvider>(
+                          context,
+                          listen: false,
+                        );
+                        categoryProvider.searchCategory(value);
+                        isValueInSearch = value.isNotEmpty;
+                      });
+                    },
+                    style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.displayLarge!.fontSize,
+                    ),
                   ),
                 ),
                 categories.isEmpty
@@ -135,6 +172,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                       onTap: () =>
                                           Navigator.of(context).pop(category),
                                       child: ListTile(
+                                        minLeadingWidth: 0,
+                                        leading:
+                                            const Icon(Icons.category_outlined),
                                         title: Text(
                                           category["type_category"],
                                           style: TextStyle(

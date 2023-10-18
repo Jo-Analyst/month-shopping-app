@@ -4,6 +4,12 @@ String description = "";
 final globalkey = GlobalKey<FormState>();
 final typeCategoryController = TextEditingController();
 
+void addCategory(BuildContext context) {
+  if (globalkey.currentState!.validate()) {
+    Navigator.of(context).pop(description.trim());
+  }
+}
+
 Future<String?> showDialogCategory(
     BuildContext context, String? typeCategory) async {
   description = typeCategory ?? "";
@@ -16,23 +22,25 @@ Future<String?> showDialogCategory(
           "Novo",
         ),
         content: Form(
-            key: globalkey,
-            child: TextFormField(
-              controller: typeCategoryController,
-              textCapitalization: TextCapitalization.sentences,
-              autofocus: true,
-              decoration: const InputDecoration(
-                labelText: "Categoria",
-              ),
-              onChanged: (value) => description = value,
-              validator: (value) {
-                if (value.toString().trim().isEmpty) {
-                  return "Informe a categoria";
-                }
+          key: globalkey,
+          child: TextFormField(
+            controller: typeCategoryController,
+            textCapitalization: TextCapitalization.sentences,
+            autofocus: true,
+            decoration: const InputDecoration(
+              labelText: "Categoria",
+            ),
+            onChanged: (value) => description = value,
+            onFieldSubmitted: (value) => addCategory(context),
+            validator: (value) {
+              if (value.toString().trim().isEmpty) {
+                return "Informe a categoria";
+              }
 
-                return null;
-              },
-            )),
+              return null;
+            },
+          ),
+        ),
         actions: [
           SizedBox(
             width: double.infinity,
@@ -40,11 +48,7 @@ Future<String?> showDialogCategory(
               child: const Text(
                 "Salvar",
               ),
-              onPressed: () {
-                if (globalkey.currentState!.validate()) {
-                  Navigator.of(context).pop(description);
-                }
-              },
+              onPressed: () => addCategory(context),
             ),
           ),
         ],

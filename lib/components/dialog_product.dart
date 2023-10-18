@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 String name = "";
 final globalkey = GlobalKey<FormState>();
 
+void addProduct(BuildContext context) {
+  if (globalkey.currentState!.validate()) {
+    Navigator.of(context).pop(name.trim());
+  }
+}
+
 Future<String?> showDialogProductForm(BuildContext context) async {
   return showDialog<String>(
     context: context,
@@ -20,6 +26,7 @@ Future<String?> showDialogProductForm(BuildContext context) async {
                 labelText: "Produto",
               ),
               onChanged: (value) => name = value,
+              onFieldSubmitted: (_) => addProduct(context),
               validator: (value) {
                 if (value.toString().trim().isEmpty) {
                   return "Informe o produto";
@@ -35,11 +42,7 @@ Future<String?> showDialogProductForm(BuildContext context) async {
               child: const Text(
                 "Adicionar",
               ),
-              onPressed: () {
-                if (globalkey.currentState!.validate()) {
-                  Navigator.of(context).pop(name);
-                }
-              },
+              onPressed: () => addProduct(context),
             ),
           ),
         ],

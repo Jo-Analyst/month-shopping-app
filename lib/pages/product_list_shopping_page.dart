@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 
 class ProductListShoppingPage extends StatefulWidget {
   const ProductListShoppingPage({super.key});
@@ -149,6 +150,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: const IconButtonLeadingAppBar(),
         actions: [
           Visibility(
             visible: productsSelected.isNotEmpty,
