@@ -1,4 +1,5 @@
 import 'package:month_shopping_app/config/db.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ProductModel {
   static Future<List<Map<String, dynamic>>> findAll() async {
@@ -35,5 +36,11 @@ class ProductModel {
   static Future<void> delete(int id) async {
     final db = await DB.openDatabase();
     await db.delete("products", where: "id = ?", whereArgs: [id]);
+  }
+
+  static Future<void> deleteByCategoryId(
+      Transaction txn, int categoryId) async {
+    await txn
+        .delete("products", where: "category_id = ?", whereArgs: [categoryId]);
   }
 }

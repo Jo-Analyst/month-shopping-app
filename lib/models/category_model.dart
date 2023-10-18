@@ -1,4 +1,5 @@
 import 'package:month_shopping_app/config/db.dart';
+import 'package:month_shopping_app/models/product_model.dart';
 
 class CategoryModel {
   final int id;
@@ -24,7 +25,10 @@ class CategoryModel {
 
   static Future<void> delete(int id) async {
     final db = await DB.openDatabase();
-    await db.delete("categories", where: "id = ?", whereArgs: [id]);
+    await db.transaction((txn) async {
+      await txn.delete("categories", where: "id = ?", whereArgs: [id]);
+      await ProductModel.deleteByCategoryId(txn, id);
+    });
   }
 
   static Future<List<Map<String, dynamic>>> findAll() async {
