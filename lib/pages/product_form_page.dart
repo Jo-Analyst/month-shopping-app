@@ -8,7 +8,11 @@ import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductFormPage extends StatefulWidget {
-  const ProductFormPage({super.key});
+  final Map<String, dynamic> item;
+  const ProductFormPage({
+    required this.item,
+    super.key,
+  });
 
   @override
   State<ProductFormPage> createState() => _ProductFormPageState();
@@ -37,6 +41,20 @@ class _ProductFormPageState extends State<ProductFormPage> {
       categoryController.text = typeCategory;
       categoryId = categorySelected["id"];
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.item.isEmpty) return;
+
+    categoryId = widget.item["id"];
+    typeCategory = widget.item["type_category"];
+    categoryController.text = typeCategory;
+    products.add({
+      "id": widget.item["id"],
+      "name": widget.item["name"],
+    });
   }
 
   @override
@@ -134,14 +152,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Produtos",
-                            style: TextStyle(fontSize: 18),
+                          Text(
+                            widget.item.isEmpty ? "Produtos" : "Produto",
+                            style: const TextStyle(fontSize: 18),
                           ),
-                          Icon(
-                            Icons.add,
-                            size: 35,
-                            color: Theme.of(context).primaryColor,
+                          Visibility(
+                            visible: widget.item.isEmpty,
+                            child: Icon(
+                              Icons.add,
+                              size: 35,
+                              color: Theme.of(context).primaryColor,
+                            ),
                           )
                         ],
                       ),
@@ -162,11 +183,18 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               SlidableAction(
                                 onPressed: (_) {
                                   setState(() {
-                                    products.removeAt(index);
+                                    if (widget.item.isEmpty) {
+                                      products.removeAt(index);
+                                    } else {}
                                   });
                                 },
-                                backgroundColor: Colors.red,
-                                icon: Icons.delete,
+                                backgroundColor: widget.item.isEmpty
+                                    ? Colors.red
+                                    : Colors.orange,
+                                foregroundColor: Colors.white,
+                                icon: widget.item.isEmpty
+                                    ? Icons.delete
+                                    : Icons.edit,
                               ),
                             ],
                           ),

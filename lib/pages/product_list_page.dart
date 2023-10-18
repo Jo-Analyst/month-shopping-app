@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,15 @@ class _ProductListPageState extends State<ProductListPage> {
                                   motion: const StretchMotion(),
                                   children: [
                                     SlidableAction(
-                                      onPressed: (_) {},
+                                      onPressed: (_) {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => ProductFormPage(
+                                              item: product,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       backgroundColor: Colors.orange,
                                       icon: Icons.edit,
                                       foregroundColor: Colors.white,

@@ -52,7 +52,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
           } else {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const ProductFormPage(),
+                builder: (_) => const ProductFormPage(item: {},),
               ),
             );
           }
