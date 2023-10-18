@@ -57,8 +57,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
     });
   }
 
-  void receiveNameProduct() async {
-    final name = await showDialogProductForm(context, null);
+  void receiveNameProduct(String? nameProduct) async {
+    final name = await showDialogProductForm(context, nameProduct);
 
     if (name != null) {
       setState(() {
@@ -150,7 +150,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => receiveNameProduct(),
+                      onTap: () => receiveNameProduct(null),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -187,7 +187,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                   setState(() {
                                     if (widget.item.isEmpty) {
                                       products.removeAt(index);
-                                    } else {}
+                                    } else {
+                                      receiveNameProduct(product["name"]);
+                                    }
                                   });
                                 },
                                 backgroundColor: widget.item.isEmpty
