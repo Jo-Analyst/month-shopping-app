@@ -28,6 +28,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
               "product_id": dataProduct["id"],
               "name": dataProduct["name"],
               "category_id": dataProduct["category_id"],
+              "type_category": dataProduct["type_category"],
               "quantity": 1,
               "unit": "UND",
             })
@@ -50,6 +51,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
           "product_id": product["id"],
           "name": product["name"],
           "category_id": product["category_id"],
+          "type_category": product["type_category"],
           "quantity": 1,
           "unit": "UND",
         });
@@ -138,6 +140,8 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                                   {
                                     "product_id": product["id"],
                                     "name": product["name"],
+                                    "category_id": product["category_id"],
+                                    "type_category": product["type_category"],
                                     "quantity": 1,
                                     "unit": "UND",
                                   }

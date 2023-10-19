@@ -42,6 +42,13 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
     // },
   ];
 
+  void addListShopping() async {
+    final shoppingListProvider =
+        Provider.of<ShoppingListProvider>(context, listen: false);
+
+    await shoppingListProvider.save(shopping);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,11 +59,9 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
           Visibility(
             visible: shopping.isNotEmpty,
             child: IconButton(
-              onPressed: () async {
-                final shoppingListProvider =
-                    Provider.of<ShoppingListProvider>(context, listen: false);
-                await shoppingListProvider.save(shopping);
-               
+              onPressed: () {
+                addListShopping();
+
                 Navigator.of(context).pop(shopping);
               },
               icon: const Icon(

@@ -13,13 +13,13 @@ class ShoppingListProvider extends ChangeNotifier {
   }
 
   Future<void> save(List<Map<String, dynamic>> itemsShoppe) async {
-    
     for (var item in itemsShoppe) {
       await ShoppingListModel(
         productId: item["product_id"],
         quantity: item["quantity"],
         unit: item["unit"],
       ).save();
+
       _items.add({
         "id": item["product_id"],
         "name": item["name"],
@@ -27,6 +27,16 @@ class ShoppingListProvider extends ChangeNotifier {
         "quantity": item["quantity"],
         "unit": item["unit"]
       });
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> loadShopping() async {
+    _items.clear();
+    final shopping = await ShoppingListModel.findAll();
+    for (var shoppe in shopping) {
+      _items.add(shoppe);
     }
   }
 }

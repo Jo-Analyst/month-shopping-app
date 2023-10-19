@@ -28,6 +28,6 @@ class ShoppingListModel {
   static Future<List<Map<String, dynamic>>> findAll() async {
     final db = await DB.openDatabase();
     return db.rawQuery(
-        "SELECT c.type_category, s.unit, s.quantity,  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id");
+        "SELECT c.type_category, s.unit, s.quantity, p.id AS product_id, p.name, p.category_id  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id");
   }
 }
