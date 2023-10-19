@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/dialog_unit.dart';
 import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 import 'package:month_shopping_app/pages/product_list_shopping_page.dart';
+import 'package:month_shopping_app/providers/shopping_list_provider.dart';
+import 'package:provider/provider.dart';
 
 class LisPurchasesPage extends StatefulWidget {
   const LisPurchasesPage({super.key});
@@ -50,7 +52,13 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
           Visibility(
             visible: shopping.isNotEmpty,
             child: IconButton(
-              onPressed: () => Navigator.of(context).pop(shopping),
+              onPressed: () async {
+                final shoppingListProvider =
+                    Provider.of<ShoppingListProvider>(context, listen: false);
+                await shoppingListProvider.save(shopping);
+               
+                Navigator.of(context).pop(shopping);
+              },
               icon: const Icon(
                 Icons.check,
                 size: 35,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:month_shopping_app/models/shopping_list_model.dart';
 
 class ShoppingListProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> _items = [];
@@ -9,5 +10,23 @@ class ShoppingListProvider extends ChangeNotifier {
               b["name"].toString().toLowerCase(),
             )))
     ];
+  }
+
+  Future<void> save(List<Map<String, dynamic>> itemsShoppe) async {
+    
+    for (var item in itemsShoppe) {
+      await ShoppingListModel(
+        productId: item["product_id"],
+        quantity: item["quantity"],
+        unit: item["unit"],
+      ).save();
+      _items.add({
+        "id": item["product_id"],
+        "name": item["name"],
+        "type_category": item["type_category"],
+        "quantity": item["quantity"],
+        "unit": item["unit"]
+      });
+    }
   }
 }

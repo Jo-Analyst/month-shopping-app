@@ -11,7 +11,7 @@ class ShoppingListModel {
     required this.unit,
   });
 
-  void save() async {
+  Future<void> save() async {
     final db = await DB.openDatabase();
     await db.insert("shopping_list", {
       "unit": unit,
