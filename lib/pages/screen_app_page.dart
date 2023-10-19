@@ -101,14 +101,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
                       color: changeColor(menuActived[1]["isActive"]),
                     ),
                   ),
-                  // Text(
-                  //   "Produtos",
-                  //   style: TextStyle(
-                  //     color: changeColor(menuActived[1]["isActive"]),
-                  //     fontSize: 18,
-                  //     fontWeight: FontWeight.bold,
-                  //   ),
-                  // )
+                 
                 ],
               ),
             ],

@@ -8,7 +8,11 @@ import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesListPage extends StatefulWidget {
-  const CategoriesListPage({super.key});
+  final bool isScreenProducts;
+  const CategoriesListPage({
+    required this.isScreenProducts,
+    super.key,
+  });
 
   @override
   State<CategoriesListPage> createState() => _CategoriesListPageState();
@@ -162,19 +166,24 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                       icon: Icons.edit,
                                       foregroundColor: Colors.white,
                                     ),
-                                    SlidableAction(
-                                      onPressed: (_) =>
-                                          deleteCategory(category["id"]),
-                                      backgroundColor: Colors.red,
-                                      icon: Icons.delete,
+                                    Visibility(
+                                      visible: widget.isScreenProducts,
+                                      child: SlidableAction(
+                                        onPressed: (_) =>
+                                            deleteCategory(category["id"]),
+                                        backgroundColor: Colors.red,
+                                        icon: Icons.delete,
+                                      ),
                                     ),
                                   ],
                                 ),
                                 child: Column(
                                   children: [
                                     InkWell(
-                                      onTap: () =>
-                                          Navigator.of(context).pop(category),
+                                      onTap: widget.isScreenProducts
+                                          ? null
+                                          : () => Navigator.of(context)
+                                              .pop(category),
                                       child: ListTile(
                                         minLeadingWidth: 0,
                                         leading:
