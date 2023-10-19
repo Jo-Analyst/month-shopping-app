@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
+import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductListShoppingPage extends StatefulWidget {
   const ProductListShoppingPage({super.key});
@@ -11,98 +13,7 @@ class ProductListShoppingPage extends StatefulWidget {
 }
 
 class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
-  final List<Map<String, dynamic>> products = [
-    {
-      "id": 1,
-      "name": "Arroz",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 2,
-      "name": "Feijão",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 3,
-      "name": "Macarrão",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 4,
-      "name": "Óleo",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 5,
-      "name": "Sal",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 6,
-      "name": "Alho",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 7,
-      "name": "Açucar",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 8,
-      "name": "Farinha",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 9,
-      "name": "Fubá",
-      "category_id": 2,
-      "category": "Alimentos",
-    },
-    {
-      "id": 10,
-      "name": "Leite em pó",
-      "category_id": 9,
-      "category": "Laticinios",
-    },
-    {
-      "id": 11,
-      "name": "Uva",
-      "category_id": 8,
-      "category": "Frutas",
-    },
-    {
-      "id": 12,
-      "name": "Yorgute",
-      "category_id": 9,
-      "category": "laticionios",
-    },
-    {
-      "id": 13,
-      "name": "Leite condesado",
-      "category_id": 9,
-      "category": "laticionios",
-    },
-    {
-      "id": 14,
-      "name": "Queijo",
-      "category_id": 9,
-      "category": "laticionios",
-    },
-    {
-      "id": 15,
-      "name": "Papel Higiênico",
-      "category_id": 10,
-      "category": "higiene",
-    },
-  ];
+  List<Map<String, dynamic>> products = [];
 
   List<Map<String, dynamic>> productsSelected = [];
 
@@ -143,6 +54,21 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
           "unit": "UND",
         });
       }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadProduct();
+  }
+
+  void loadProduct() async {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    await productProvider.load();
+    setState(() {
+      products = productProvider.items;
     });
   }
 
@@ -243,7 +169,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                                 fit: BoxFit.scaleDown,
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  product["category"],
+                                  product["type_category"],
                                   style: const TextStyle(
                                     fontSize: 18,
                                   ),

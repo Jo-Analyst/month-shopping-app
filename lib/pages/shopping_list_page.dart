@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/pages/list_purchases_page.dart';
+import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/templates/product_list.dart';
+import 'package:provider/provider.dart';
 
 class ShoppingListPage extends StatefulWidget {
   const ShoppingListPage({super.key});
@@ -40,24 +42,33 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     });
   }
 
-  // prateleiras
-  final List<Map<String, dynamic>> categories = [
-    {"id": 1, "name": "Congelados"},
-    {"id": 2, "name": "Alimentos"},
-    {"id": 3, "name": "Guloseima"},
-    {"id": 4, "name": "Limpeza"},
-    {"id": 5, "name": "Utensilios"},
-    {"id": 6, "name": "Padaria"},
-    {"id": 7, "name": "Beleza"},
-    {"id": 8, "name": "Feira"},
-    {"id": 9, "name": "Laticínios"},
-    {"id": 10, "name": "Higiene"},
+  List<Map<String, dynamic>> categories = [
+    // {"id": 1, "type_category": "Congelados"},
+    // {"id": 2, "type_category": "Alimentos"},
+    // {"id": 3, "type_category": "Guloseima"},
+    // {"id": 4, "type_category": "Limpeza"},
+    // {"id": 5, "type_category": "Utensilios"},
+    // {"id": 6, "type_category": "Padaria"},
+    // {"id": 7, "type_category": "Beleza"},
+    // {"id": 8, "type_category": "Feira"},
+    // {"id": 9, "type_category": "Laticínios"},
+    // {"id": 10, "type_category": "Higiene"},
   ];
 
   @override
   void initState() {
     super.initState();
     setListCardTriggered();
+    // loadCategory();
+  }
+
+  void loadCategory() async {
+    final categoryProvider =
+        Provider.of<CategoryProvider>(context, listen: false);
+    await categoryProvider.loadCategories();
+    setState(() {
+      categories = categoryProvider.items;
+    });
   }
 
   @override
@@ -108,7 +119,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                             },
                             contentPadding: const EdgeInsets.all(15),
                             title: Text(
-                              categories[index]["name"],
+                              categories[index]["type_category"],
                               style: TextStyle(
                                 fontSize: Theme.of(context)
                                     .textTheme
@@ -140,8 +151,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   itemCount: categories.length,
                 )
               : const Center(
-                  child:
-                      Text("Você ainda não listou os produtos para compra.")),
+                  child: Text("Você ainda não listou os produtos para compra."),
+                ),
         ),
       ],
     );

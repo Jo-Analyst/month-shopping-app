@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:month_shopping_app/providers/shopping_list_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/screen_app_page.dart';
@@ -14,6 +15,7 @@ class ShoppingListApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => ShoppingListProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
