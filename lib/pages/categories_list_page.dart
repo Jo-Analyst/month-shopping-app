@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:month_shopping_app/components/dialog_category.dart';
 import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
+import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,8 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
   void deleteCategory(int id) async {
     final categoryProvider =
         Provider.of<CategoryProvider>(context, listen: false);
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     bool confirmAction = await showDialogDelete(
             context, "Deseja mesmo excluir esta categoria?") ??
         false;
@@ -44,6 +47,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
 
     setState(() {
       categoryProvider.delete(id);
+      productProvider.deleteItemByCategoryId(id);
     });
   }
 

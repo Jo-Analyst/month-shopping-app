@@ -11,8 +11,8 @@ void addProduct(BuildContext context) {
 }
 
 Future<String?> showDialogProductForm(
-    BuildContext context, String? name) async {
-  nameController.text = name ?? "";
+    BuildContext context, String? nameEditing) async {
+  nameController.text = nameEditing ?? "";
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -43,8 +43,8 @@ Future<String?> showDialogProductForm(
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              child: const Text(
-                "Adicionar",
+              child:  Text(
+               nameEditing == null ? "Adicionar" : "Alterar",
               ),
               onPressed: () => addProduct(context),
             ),

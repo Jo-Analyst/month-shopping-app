@@ -18,7 +18,7 @@ class CategoryProvider extends ChangeNotifier {
     final categoryId =
         await CategoryModel(id: data["id"], type: data["type_category"]).save();
     if (data["id"] != 0) {
-      deleteItem(data["id"]);
+      _deleteItemById(data["id"]);
     }
 
     data["id"] = data["id"] == 0 ? categoryId : data["id"];
@@ -44,11 +44,11 @@ class CategoryProvider extends ChangeNotifier {
 
   void delete(int id) async {
     await CategoryModel.delete(id);
-    deleteItem(id);
+    _deleteItemById(id);
     notifyListeners();
   }
 
-  void deleteItem(int id) {
+  void _deleteItemById(int id) {
     _items.removeWhere((i) => i["id"] == id);
     itemsFiltered.removeWhere((i) => i["id"] == id);
   }

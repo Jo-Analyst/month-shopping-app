@@ -48,13 +48,15 @@ class _ProductFormPageState extends State<ProductFormPage> {
     super.initState();
     if (widget.item.isEmpty) return;
 
-    categoryId = widget.item["id"];
+    categoryId = widget.item["category_id"];
     typeCategory = widget.item["type_category"];
     categoryController.text = typeCategory;
     products.add({
       "id": widget.item["id"],
       "name": widget.item["name"],
+      "category_id": categoryId
     });
+
   }
 
   void receiveNameProduct(String? nameProduct) async {
@@ -62,10 +64,17 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
     if (name != null) {
       setState(() {
-        products.add({
-          "id": widget.item.isEmpty ? 0 : widget.item["id"],
-          "name": name,
-        });
+        if (widget.item.isEmpty) {
+          products.add({
+            "id": widget.item.isEmpty ? 0 : widget.item["id"],
+            "name": name,
+            "category_id": categoryId
+          });
+          return;
+        }
+
+        products[0]["name"] = name;
+        products[0]["category_id"] = categoryId;
       });
     }
   }

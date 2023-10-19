@@ -22,12 +22,17 @@ class ProductProvider extends ChangeNotifier {
 
   Future<void> delete(int id) async {
     await ProductModel.delete(id);
-    deleteItem(id);
+    _deleteItemById(id);
     notifyListeners();
   }
 
-  void deleteItem(int id) {
+  void _deleteItemById(int id) {
     _items.removeWhere((items) => items["id"] == id);
+  }
+
+  void deleteItemByCategoryId(int categoryId) {
+    _items.removeWhere((item) => item["category_id"] == categoryId);
+    notifyListeners();
   }
 
   Future<void> save(
@@ -35,12 +40,13 @@ class ProductProvider extends ChangeNotifier {
     for (var product in products) {
       int productId = await ProductModel.save(product, categoryId);
       if (product["id"] > 0) {
-        deleteItem(product["id"]);
+        _deleteItemById(product["id"]);
       }
       _items.add({
         "id": product["id"] > 0 ? product["id"] : productId,
         "name": product["name"],
         "type_category": type,
+        "category_id": categoryId
       });
     }
     notifyListeners();
