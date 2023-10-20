@@ -6,9 +6,11 @@ class ShoppingListProvider extends ChangeNotifier {
   List<Map<String, dynamic>> get items {
     return [
       ..._items
-        ..sort(((a, b) => a["name"].toString().toLowerCase().compareTo(
-              b["name"].toString().toLowerCase(),
-            )),)
+        ..sort(
+          ((a, b) => a["name"].toString().toLowerCase().compareTo(
+                b["name"].toString().toLowerCase(),
+              )),
+        )
     ];
   }
 

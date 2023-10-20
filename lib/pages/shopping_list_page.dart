@@ -25,6 +25,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
     if (response != null) {
       shoppingList = response;
+      shopping = getUniqueCategories(shoppingList);
+      setListCardTriggered();
     }
   }
 

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/utils/uppercase.dart';
 
-String description = "";
+String unit = "";
 final globalkey = GlobalKey<FormState>();
-final unitController = TextEditingController();
 
-Future<String?> showDialogUnit(BuildContext context, String unit) async {
-  unitController.text = unit.toUpperCase();
+Future<String?> showDialogUnit(BuildContext context) async {
   return showDialog<String>(
     context: context,
     builder: (BuildContext context) {
@@ -15,14 +13,13 @@ Future<String?> showDialogUnit(BuildContext context, String unit) async {
           key: globalkey,
           child: TextFormField(
             inputFormatters: [UpperCaseTextFormatter()],
-            controller: unitController,
             textCapitalization: TextCapitalization.characters,
             autofocus: true,
             maxLength: 5,
             decoration: const InputDecoration(
               labelText: "Unidade",
             ),
-            onChanged: (value) => description = value.toUpperCase().trim(),
+            onChanged: (value) => unit = value.toUpperCase().trim(),
             validator: (value) {
               if (value.toString().trim().isEmpty) {
                 return "Informe a unidade";
@@ -41,7 +38,7 @@ Future<String?> showDialogUnit(BuildContext context, String unit) async {
               ),
               onPressed: () {
                 if (globalkey.currentState!.validate()) {
-                  Navigator.of(context).pop(description);
+                  Navigator.of(context).pop(unit);
                 }
               },
             ),

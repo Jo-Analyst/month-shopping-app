@@ -17,30 +17,7 @@ class LisPurchasesPage extends StatefulWidget {
 class _LisPurchasesPageState extends State<LisPurchasesPage> {
   final quantityController = TextEditingController();
   final unitController = TextEditingController();
-  List<Map<String, dynamic>> shopping = [
-    // {"id": 1, "quantity": 1, "unit": "UND", "product_id": 1, "name": "Arroz"},
-    // {"id": 2, "quantity": 1, "unit": "UND", "product_id": 2, "name": "Feijão"},
-    // {
-    //   "id": 3,
-    //   "quantity": 1,
-    //   "unit": "UND",
-    //   "product_id": 3,
-    //   "name": "Macarrão"
-    // },
-    // {"id": 4, "quantity": 1, "unit": "UND", "product_id": 4, "name": "Óleo"},
-    // {"id": 5, "quantity": 1, "unit": "UND", "product_id": 5, "name": "Sal"},
-    // {"id": 6, "quantity": 1, "unit": "UND", "product_id": 6, "name": "Alho"},
-    // {"id": 7, "quantity": 1, "unit": "UND", "product_id": 7, "name": "Açucar"},
-    // {"id": 8, "quantity": 1, "unit": "UND", "product_id": 8, "name": "Farinha"},
-    // {"id": 9, "quantity": 1, "unit": "UND", "product_id": 9, "name": "Fubá"},
-    // {
-    //   "id": 10,
-    //   "quantity": 1,
-    //   "unit": "UND",
-    //   "product_id": 10,
-    //   "name": "Leite em pó"
-    // },
-  ];
+  List<Map<String, dynamic>> shopping = [];
 
   void addListShopping() async {
     final shoppingListProvider =
@@ -73,7 +50,10 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 15,
+        ),
         child: ListView(
           children: [
             InkWell(
@@ -93,6 +73,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
 
                       if (!productExistsInShopping) {
                         shopping.add(product);
+                       
                       }
                     }
                   });
@@ -187,7 +168,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                       InkWell(
                                         onTap: () async {
                                           final unit = await showDialogUnit(
-                                              context, shoppe["unit"]);
+                                              context);
                                           if (unit != null) {
                                             setState(() {
                                               shoppe["unit"] = unit;
