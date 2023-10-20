@@ -8,7 +8,7 @@ class ShoppingListProvider extends ChangeNotifier {
       ..._items
         ..sort(((a, b) => a["name"].toString().toLowerCase().compareTo(
               b["name"].toString().toLowerCase(),
-            )))
+            )),)
     ];
   }
 
@@ -21,14 +21,14 @@ class ShoppingListProvider extends ChangeNotifier {
       ).save();
 
       _items.add({
-        "id": item["product_id"],
+        "product_id": item["product_id"],
         "name": item["name"],
         "type_category": item["type_category"],
+        "category_id": item["category_id"],
         "quantity": item["quantity"],
         "unit": item["unit"]
       });
     }
-
     notifyListeners();
   }
 

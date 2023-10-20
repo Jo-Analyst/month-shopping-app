@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/pages/list_purchases_page.dart';
-import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
 import 'package:month_shopping_app/templates/product_list.dart';
 import 'package:provider/provider.dart';
@@ -116,54 +115,59 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ),
           height: MediaQuery.of(context).size.height * 0.8,
           child: shopping.isNotEmpty
-              ? ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 8,
-                      color: Colors.white,
-                      child: Column(children: [
-                        ListTile(
-                          onTap: () {
-                            updateListCardTriggered(index);
-                          },
-                          contentPadding: const EdgeInsets.all(15),
-                          title: Text(
-                            shopping[index]["type_category"],
-                            style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .fontSize,
-                            ),
-                          ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              cardTriggeredList[index]
-                                  ? Icons.keyboard_arrow_down
-                                  : Icons.keyboard_arrow_right,
-                              color: Theme.of(context).primaryColor,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              updateListCardTriggered(index);
-                            },
-                          ),
-                        ),
-                        Consumer<ShoppingListProvider>(
-                          builder: (context, shoppingProvider, __) {
-                            shoppingList = shoppingProvider.items;
-                            shopping = getUniqueCategories(shoppingList);
-                            cardTriggeredList.add(false);
-                            return ProductsList(
+              ? Consumer<ShoppingListProvider>(
+                  builder: (context, shoppingProvider, __) {
+                    shoppingList = shoppingProvider.items;
+
+                    shopping = getUniqueCategories(shoppingList);
+                    cardTriggeredList.add(false);
+
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 8,
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                onTap: () {
+                                  updateListCardTriggered(index);
+                                },
+                                contentPadding: const EdgeInsets.all(15),
+                                title: Text(
+                                  shopping[index]["type_category"],
+                                  style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .fontSize,
+                                  ),
+                                ),
+                                trailing: IconButton(
+                                  icon: Icon(
+                                    cardTriggeredList[index]
+                                        ? Icons.keyboard_arrow_down
+                                        : Icons.keyboard_arrow_right,
+                                    color: Theme.of(context).primaryColor,
+                                    size: 30,
+                                  ),
+                                  onPressed: () {
+                                    updateListCardTriggered(index);
+                                  },
+                                ),
+                              ),
+                              ProductsList(
                                 categoryId: shopping[index]["category_id"],
                                 isExpanded: cardTriggeredList[index],
-                                shoppingList: shoppingList);
-                          },
-                        ),
-                      ]),
+                                shoppingList: shoppingList,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      itemCount: shopping.length,
                     );
                   },
-                  itemCount: shopping.length,
                 )
               : const Center(
                   child: Text("Você ainda não listou os produtos para compra."),

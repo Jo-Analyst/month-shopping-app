@@ -133,16 +133,6 @@ class ProductsList extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  // leading: CircleAvatar(
-                  //   backgroundColor: Colors.black54,
-                  //   maxRadius: 20,
-                  //   child: Icon(
-                  //     product["isChecked"]
-                  //         ? Icons.check
-                  //         : Icons.shopping_bag_outlined,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
                   title: Text(
                       "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
                 ),
