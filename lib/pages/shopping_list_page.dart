@@ -19,7 +19,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   openScreenListPurchases() async {
     final response = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const LisPurchasesPage(),
+        builder: (_) => LisPurchasesPage(shopping: shoppingList),
       ),
     );
 

@@ -3,6 +3,11 @@ import 'package:month_shopping_app/utils/uppercase.dart';
 
 String unit = "";
 final globalkey = GlobalKey<FormState>();
+void updateUnit(BuildContext context) {
+  if (globalkey.currentState!.validate()) {
+    Navigator.of(context).pop(unit);
+  }
+}
 
 Future<String?> showDialogUnit(BuildContext context) async {
   return showDialog<String>(
@@ -20,6 +25,7 @@ Future<String?> showDialogUnit(BuildContext context) async {
               labelText: "Unidade",
             ),
             onChanged: (value) => unit = value.toUpperCase().trim(),
+            onFieldSubmitted: (_) => updateUnit(context),
             validator: (value) {
               if (value.toString().trim().isEmpty) {
                 return "Informe a unidade";
@@ -36,11 +42,7 @@ Future<String?> showDialogUnit(BuildContext context) async {
               child: const Text(
                 "Alterar",
               ),
-              onPressed: () {
-                if (globalkey.currentState!.validate()) {
-                  Navigator.of(context).pop(unit);
-                }
-              },
+              onPressed: () => updateUnit(context),
             ),
           ),
         ],

@@ -8,7 +8,11 @@ import 'package:month_shopping_app/providers/shopping_list_provider.dart';
 import 'package:provider/provider.dart';
 
 class LisPurchasesPage extends StatefulWidget {
-  const LisPurchasesPage({super.key});
+  final List<Map<String, dynamic>> shopping;
+  const LisPurchasesPage({
+    required this.shopping,
+    super.key,
+  });
 
   @override
   State<LisPurchasesPage> createState() => _LisPurchasesPageState();
@@ -23,7 +27,35 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
     final shoppingListProvider =
         Provider.of<ShoppingListProvider>(context, listen: false);
 
-    await shoppingListProvider.save(shopping);
+    for (var shoppe in shopping) {
+      shoppe["shoppe_list_id"] = await shoppingListProvider.save(shoppe);
+    }
+  }
+
+  void loadShopping() async {
+    final shoppingProvider =
+        Provider.of<ShoppingListProvider>(context, listen: false);
+    await shoppingProvider.loadShopping();
+    setState(() {
+      final shoppingList = shoppingProvider.items;
+      for (var shoppe in shoppingList) {
+        shopping.add({
+          "shoppe_list_id": shoppe["shoppe_list_id"],
+          "type_category": shoppe["type_category"],
+          'unit': shoppe["unit"],
+          'quantity': shoppe["quantity"],
+          'product_id': shoppe["product_id"],
+          'name': shoppe["name"],
+          'category_id': shoppe["category_id"]
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadShopping();
   }
 
   @override
@@ -73,7 +105,6 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
 
                       if (!productExistsInShopping) {
                         shopping.add(product);
-                       
                       }
                     }
                   });
@@ -167,8 +198,8 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                     children: [
                                       InkWell(
                                         onTap: () async {
-                                          final unit = await showDialogUnit(
-                                              context);
+                                          final unit =
+                                              await showDialogUnit(context);
                                           if (unit != null) {
                                             setState(() {
                                               shoppe["unit"] = unit;
