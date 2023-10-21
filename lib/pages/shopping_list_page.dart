@@ -25,10 +25,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     );
 
     if (response != null) {
-      shopping = response;
-      categories = getUniqueCategories(shopping);
+      setListShoppingAndCategories(response);
       setListCardTriggered();
     }
+  }
+
+  void setListShoppingAndCategories(dynamic items) {
+    shopping = items;
+    categories = getUniqueCategories(shopping);
   }
 
   void setListCardTriggered() {
@@ -56,8 +60,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         Provider.of<ShoppingListProvider>(context, listen: false);
     await shoppingProvider.loadShopping();
     setState(() {
-      shopping = shoppingProvider.items;
-      categories = getUniqueCategories(shopping);
+      setListShoppingAndCategories(shoppingProvider.items);
       setListCardTriggered();
     });
   }
@@ -111,9 +114,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         ),
         Consumer<ShoppingListProvider>(
           builder: (context, shoppingProvider, __) {
-            shopping = shoppingProvider.items;
-
-            categories = getUniqueCategories(shopping);
+            setListShoppingAndCategories(shoppingProvider.items);
             cardTriggeredList.add(false);
 
             return Container(
