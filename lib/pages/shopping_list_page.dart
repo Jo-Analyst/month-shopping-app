@@ -14,24 +14,25 @@ class ShoppingListPage extends StatefulWidget {
 class _ShoppingListPageState extends State<ShoppingListPage> {
   bool showInputSearch = false, isExpanded = false;
   List<bool> cardTriggeredList = [];
-  List<Map<String, dynamic>> shoppingList = [];
+  List<Map<String, dynamic>> shopping = [];
+  List<Map<String, dynamic>> categories = [];
 
   openScreenListPurchases() async {
     final response = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => LisPurchasesPage(shopping: shoppingList),
+        builder: (_) => LisPurchasesPage(shopping: shopping),
       ),
     );
 
     if (response != null) {
-      shoppingList = response;
-      shopping = getUniqueCategories(shoppingList);
+      shopping = response;
+      categories = getUniqueCategories(shopping);
       setListCardTriggered();
     }
   }
 
   void setListCardTriggered() {
-    for (int i = 0; i < shopping.length; i++) {
+    for (int i = 0; i < categories.length; i++) {
       setState(() {
         cardTriggeredList.add(false);
       });
@@ -44,8 +45,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     });
   }
 
-  List<Map<String, dynamic>> shopping = [];
-
   @override
   void initState() {
     super.initState();
@@ -57,8 +56,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         Provider.of<ShoppingListProvider>(context, listen: false);
     await shoppingProvider.loadShopping();
     setState(() {
-      shoppingList = shoppingProvider.items;
-      shopping = getUniqueCategories(shoppingList);
+      shopping = shoppingProvider.items;
+      categories = getUniqueCategories(shopping);
       setListCardTriggered();
     });
   }
@@ -110,21 +109,21 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             ),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 25,
-          ),
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: shopping.isNotEmpty
-              ? Consumer<ShoppingListProvider>(
-                  builder: (context, shoppingProvider, __) {
-                    shoppingList = shoppingProvider.items;
+        Consumer<ShoppingListProvider>(
+          builder: (context, shoppingProvider, __) {
+            shopping = shoppingProvider.items;
 
-                    shopping = getUniqueCategories(shoppingList);
-                    cardTriggeredList.add(false);
+            categories = getUniqueCategories(shopping);
+            cardTriggeredList.add(false);
 
-                    return ListView.builder(
+            return Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 25,
+              ),
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: shopping.isNotEmpty
+                  ? ListView.builder(
                       itemBuilder: (context, index) {
                         return Card(
                           elevation: 8,
@@ -137,7 +136,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                 },
                                 contentPadding: const EdgeInsets.all(15),
                                 title: Text(
-                                  shopping[index]["type_category"],
+                                  categories[index]["type_category"],
                                   style: TextStyle(
                                     fontSize: Theme.of(context)
                                         .textTheme
@@ -148,8 +147,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                 trailing: IconButton(
                                   icon: Icon(
                                     cardTriggeredList[index]
-                                        ? Icons.keyboard_arrow_down
-                                        : Icons.keyboard_arrow_right,
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down,
                                     color: Theme.of(context).primaryColor,
                                     size: 30,
                                   ),
@@ -159,21 +158,47 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                 ),
                               ),
                               ProductsList(
-                                categoryId: shopping[index]["category_id"],
+                                categoryId: categories[index]["category_id"],
                                 isExpanded: cardTriggeredList[index],
-                                shoppingList: shoppingList,
+                                shopping: shopping,
                               ),
                             ],
                           ),
                         );
                       },
-                      itemCount: shopping.length,
-                    );
-                  },
-                )
-              : const Center(
-                  child: Text("Você ainda não listou os produtos para compra."),
-                ),
+                      itemCount: categories.length,
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/ic_launcher.png",
+                          width: 100,
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Olá, seja bem vindo.",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Text(
+                          "Faça a sua lista de compras de um jeito fácil e rápido.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .fontSize,
+                          ),
+                        ),
+                      ],
+                    ),
+            );
+          },
         ),
       ],
     );

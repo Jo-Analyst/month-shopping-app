@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:month_shopping_app/models/product_model.dart';
 import 'package:month_shopping_app/models/shopping_list_model.dart';
 
 class ShoppingListProvider extends ChangeNotifier {
@@ -41,8 +40,8 @@ class ShoppingListProvider extends ChangeNotifier {
     return shoppeListId;
   }
 
-  void delete(int id) async {
-    await ProductModel.delete(id);
+  Future<void> delete(int id) async {
+    await ShoppingListModel.delete(id);
     _deleteItem(id);
     notifyListeners();
   }

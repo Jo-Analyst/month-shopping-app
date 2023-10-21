@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class ProductsList extends StatelessWidget {
   final int? categoryId;
   final bool isExpanded;
-  final List<Map<String, dynamic>> shoppingList;
+  final List<Map<String, dynamic>> shopping;
   const ProductsList({
-    required this.shoppingList,
+    required this.shopping,
     this.categoryId,
     required this.isExpanded,
     super.key,
@@ -13,7 +13,7 @@ class ProductsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> products = shoppingList;
+    List<Map<String, dynamic>> products = shopping;
     
     return Container(
       color: const Color.fromARGB(25, 73, 133, 206),

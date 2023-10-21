@@ -163,7 +163,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => receiveProduct(null, null),
+                      onTap: widget.item.isNotEmpty ? null : () => receiveProduct(null, null),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

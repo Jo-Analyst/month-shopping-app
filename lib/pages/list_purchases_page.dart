@@ -22,6 +22,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
   final quantityController = TextEditingController();
   final unitController = TextEditingController();
   List<Map<String, dynamic>> shopping = [];
+  List<Map<String, dynamic>> deletedItems = [];
 
   void addListShopping() async {
     final shoppingListProvider =
@@ -30,14 +31,17 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
     for (var shoppe in shopping) {
       shoppe["shoppe_list_id"] = await shoppingListProvider.save(shoppe);
     }
+    // print(shopping.isNotEmpty);
+    if (widget.shopping.isNotEmpty) {
+      for (var deletedItem in deletedItems) {
+        await shoppingListProvider.delete(deletedItem["shoppe_list_id"]);
+      }
+    }
   }
 
   void loadShopping() async {
-    final shoppingProvider =
-        Provider.of<ShoppingListProvider>(context, listen: false);
-    await shoppingProvider.loadShopping();
     setState(() {
-      final shoppingList = shoppingProvider.items;
+      final shoppingList = widget.shopping;
       for (var shoppe in shoppingList) {
         shopping.add({
           "shoppe_list_id": shoppe["shoppe_list_id"],
@@ -66,7 +70,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
         title: const Text("Listar compras"),
         actions: [
           Visibility(
-            visible: shopping.isNotEmpty,
+            visible: shopping.isNotEmpty || deletedItems.isNotEmpty,
             child: IconButton(
               onPressed: () {
                 addListShopping();
@@ -122,7 +126,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                             Theme.of(context).textTheme.displayLarge!.fontSize,
                       ),
                     ),
-                    const Icon(Icons.list),
+                    const Icon(Icons.format_list_bulleted_add),
                   ],
                 ),
               ),
@@ -163,6 +167,9 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                               shopp["product_id"] ==
                                               shoppe["product_id"],
                                         );
+                                        if (widget.shopping.isNotEmpty) {
+                                          deletedItems.add(shoppe);
+                                        }
                                       });
                                     },
                                     backgroundColor: Colors.red,

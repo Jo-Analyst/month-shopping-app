@@ -31,9 +31,9 @@ class ShoppingListModel {
     return lastId;
   }
 
-  static void delete(int id) async {
+  static Future<void> delete(int id) async {
     final db = await DB.openDatabase();
-    await db.delete("shopping_list", where: "id = ?", whereArgs: ["id"]);
+    await db.delete("shopping_list", where: "id = ?", whereArgs: [id]);
   }
 
   static Future<List<Map<String, dynamic>>> findAll() async {
