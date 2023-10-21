@@ -30,7 +30,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
               "category_id": dataProduct["category_id"],
               "type_category": dataProduct["type_category"],
               "quantity": 1,
-              "unit": "UND",
+              "unit": dataProduct["unit"],
             })
           : productsSelected.removeWhere(
               (product) => product["name"] == dataProduct["name"],
@@ -53,7 +53,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
           "category_id": product["category_id"],
           "type_category": product["type_category"],
           "quantity": 1,
-          "unit": "UND",
+          "unit": product["unit"],
         });
       }
     });
@@ -143,7 +143,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                                     "category_id": product["category_id"],
                                     "type_category": product["type_category"],
                                     "quantity": 1,
-                                    "unit": "UND",
+                                    "unit": product["unit"],
                                   }
                                 ]);
                               },
@@ -174,6 +174,16 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(
                                   product["type_category"],
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
+                              ),
+                              trailing: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  product["unit"],
                                   style: const TextStyle(
                                     fontSize: 18,
                                   ),

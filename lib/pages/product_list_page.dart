@@ -142,6 +142,16 @@ class _ProductListPageState extends State<ProductListPage> {
                                       ),
                                     ),
                                   ),
+                                  trailing: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      product["unit"],
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),

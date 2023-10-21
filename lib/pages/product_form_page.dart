@@ -54,26 +54,30 @@ class _ProductFormPageState extends State<ProductFormPage> {
     products.add({
       "id": widget.item["id"],
       "name": widget.item["name"],
+      "unit": widget.item["unit"],
       "category_id": categoryId
     });
-
   }
 
-  void receiveNameProduct(String? nameProduct) async {
-    final name = await showDialogProductForm(context, nameProduct);
+  void receiveProduct(String? nameProduct, String? unitProduct) async {
+    final product =
+        await showDialogProductForm(context, nameProduct, unitProduct);
 
-    if (name != null) {
+    if (product != null) {
       setState(() {
         if (widget.item.isEmpty) {
           products.add({
             "id": widget.item.isEmpty ? 0 : widget.item["id"],
-            "name": name,
+            "name": product["name"],
+            "unit": product["unit"],
             "category_id": categoryId
           });
           return;
         }
 
-        products[0]["name"] = name;
+        // Ao atualizar  executa a linha abaixo
+        products[0]["name"] = product["name"];
+        products[0]["unit"] = product["unit"];
         products[0]["category_id"] = categoryId;
       });
     }
@@ -159,7 +163,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () => receiveNameProduct(null),
+                      onTap: () => receiveProduct(null, null),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -197,7 +201,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                     if (widget.item.isEmpty) {
                                       products.removeAt(index);
                                     } else {
-                                      receiveNameProduct(product["name"]);
+                                      receiveProduct(
+                                          product["name"], product["unit"]);
                                     }
                                   });
                                 },
@@ -219,6 +224,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                                   size: 25,
                                 ),
                                 title: Text(product["name"]),
+                                subtitle: Text(product["unit"]),
                               ),
                               Divider(
                                 height: 2,

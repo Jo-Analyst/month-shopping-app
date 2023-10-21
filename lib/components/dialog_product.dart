@@ -1,50 +1,82 @@
 import 'package:flutter/material.dart';
+import 'package:month_shopping_app/utils/uppercase.dart';
 
-String name = "";
+String name = "", unit = "";
 final globalkey = GlobalKey<FormState>();
 final nameController = TextEditingController();
+final unitController = TextEditingController();
 
 void addProduct(BuildContext context) {
   if (globalkey.currentState!.validate()) {
-    Navigator.of(context).pop(name.trim());
+    Map<String, dynamic> data = {"name": name.trim(), "unit": unit.trim()};
+    Navigator.of(context).pop(data);
   }
 }
 
-Future<String?> showDialogProductForm(
-    BuildContext context, String? nameEditing) async {
-  nameController.text = nameEditing ?? "";
-  return showDialog<String>(
+Future<Map<String, dynamic>?> showDialogProductForm(
+    BuildContext context, String? nameEditing, String? unitEditing) async {
+  name = nameEditing ?? "";
+  unit = unitEditing ?? "";
+  nameController.text = name;
+  unitController.text = unit;
+
+  return showDialog<Map<String, dynamic>>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text(
-          "Novo",
+        title: Text(
+          nameEditing == null ? "Novo" : "Alteração",
         ),
         content: Form(
             key: globalkey,
-            child: TextFormField(
-              controller: nameController,
-              autofocus: true,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(
-                labelText: "Produto",
-              ),
-              onChanged: (value) => name = value,
-              onFieldSubmitted: (_) => addProduct(context),
-              validator: (value) {
-                if (value.toString().trim().isEmpty) {
-                  return "Informe o produto";
-                }
+            child: SizedBox(
+              height: 170,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: nameController,
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: const InputDecoration(
+                      labelText: "Produto",
+                    ),
+                    onChanged: (value) => name = value,
+                    onFieldSubmitted: (_) => addProduct(context),
+                    validator: (value) {
+                      if (value.toString().trim().isEmpty || value == null) {
+                        return "Informe o produto";
+                      }
 
-                return null;
-              },
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: unitController,
+                    inputFormatters: [UpperCaseTextFormatter()],
+                    maxLength: 5,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: const InputDecoration(
+                      labelText: "Unidade de medida",
+                    ),
+                    onChanged: (value) => unit = value,
+                    onFieldSubmitted: (_) => addProduct(context),
+                    validator: (value) {
+                      if (value.toString().trim().isEmpty || value == null) {
+                        return "Informe a unidade de medida";
+                      }
+
+                      return null;
+                    },
+                  ),
+                ],
+              ),
             )),
         actions: [
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              child:  Text(
-               nameEditing == null ? "Adicionar" : "Alterar",
+              child: Text(
+                nameEditing == null ? "Adicionar" : "Alterar",
               ),
               onPressed: () => addProduct(context),
             ),

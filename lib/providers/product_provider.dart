@@ -45,6 +45,7 @@ class ProductProvider extends ChangeNotifier {
       _items.add({
         "id": product["id"] > 0 ? product["id"] : productId,
         "name": product["name"],
+        "unit": product["unit"],
         "type_category": type,
         "category_id": categoryId
       });
