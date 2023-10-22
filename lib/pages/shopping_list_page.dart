@@ -90,25 +90,75 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       children: [
         AppBar(
           actions: [
-            Container(
-              margin: const EdgeInsets.only(
-                right: 10,
+            PopupMenuButton(
+              color: const Color.fromARGB(236, 73, 133, 206),
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.white,
               ),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.add_shopping_cart_outlined,
-                  size: 30,
-                  color: Colors.white,
+              iconSize: 30,
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem(
+                  padding: EdgeInsets.zero,
+                  value: "shopping_list",
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      "Listar Compras",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
                 ),
-                onPressed: () => openScreenListPurchases(),
-              ),
+                const PopupMenuItem(
+                  value: "shopping_checked",
+                  padding: EdgeInsets.zero,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      "Compras checados",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+              onSelected: (option) async {
+                if (option == "shopping_list") {
+                  openScreenListPurchases();
+                } else {
+                  setState(() {});
+                }
+              },
             ),
           ],
+          // actions: [
+          //   Container(
+          //     margin: const EdgeInsets.only(
+          //       right: 10,
+          //     ),
+          //     child: IconButton(
+          //       icon: const Icon(
+          //         Icons.add_shopping_cart_outlined,
+          //         size: 30,
+          //         color: Colors.white,
+          //       ),
+          //       onPressed: () => openScreenListPurchases(),
+          //     ),
+          //   ),
+          // ],
           backgroundColor: Theme.of(context).primaryColor,
-          title: Text(
-            "Minha lista de compras",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              "Minha lista de compras",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+              ),
             ),
           ),
         ),

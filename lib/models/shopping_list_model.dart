@@ -36,9 +36,9 @@ class ShoppingListModel {
     await db.delete("shopping_list", where: "id = ?", whereArgs: [id]);
   }
 
-  static Future<List<Map<String, dynamic>>> findAll() async {
+  static Future<List<Map<String, dynamic>>> findAllIsChecked() async {
     final db = await DB.openDatabase();
     return db.rawQuery(
-        "SELECT s.id AS shoppe_list_id, c.type_category, s.unit, s.quantity, p.id AS product_id, p.name, p.category_id  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id");
+        "SELECT s.id AS shoppe_list_id, c.type_category, s.unit, s.quantity, p.id AS product_id, p.name, p.category_id  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id WHERE list_is_ckecked = 0");
   }
 }

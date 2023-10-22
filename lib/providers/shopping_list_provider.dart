@@ -52,9 +52,11 @@ class ShoppingListProvider extends ChangeNotifier {
 
   Future<void> loadShopping() async {
     _items.clear();
-    final shopping = await ShoppingListModel.findAll();
+    final shopping = await ShoppingListModel.findAllIsChecked();
     for (var shoppe in shopping) {
       _items.add(shoppe);
     }
+
+    print(_items);
   }
 }
