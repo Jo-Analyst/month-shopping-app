@@ -40,6 +40,12 @@ class ShoppingListProvider extends ChangeNotifier {
     return shoppeListId;
   }
 
+  Future<void> checkList(int shoppingListId) async {
+    await ShoppingListModel.checkList(shoppingListId);
+    _deleteItem(shoppingListId);
+    notifyListeners();
+  }
+
   Future<void> delete(int id) async {
     await ShoppingListModel.delete(id);
     _deleteItem(id);
@@ -50,13 +56,19 @@ class ShoppingListProvider extends ChangeNotifier {
     _items.removeWhere((i) => i["shoppe_list_id"] == id);
   }
 
-  Future<void> loadShopping() async {
+  Future<void> loadShoppingIsNotChecked() async {
+    _items.clear();
+    final shopping = await ShoppingListModel.findAllIsNotChecked();
+    for (var shoppe in shopping) {
+      _items.add(shoppe);
+    }
+  }
+
+  Future<void> loadShoppingIsChecked() async {
     _items.clear();
     final shopping = await ShoppingListModel.findAllIsChecked();
     for (var shoppe in shopping) {
       _items.add(shoppe);
     }
-
-    print(_items);
   }
 }

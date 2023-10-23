@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/pages/list_purchases_page.dart';
+import 'package:month_shopping_app/pages/shopping_list_checked.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
 import 'package:month_shopping_app/templates/product_list.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     }
   }
 
+  openScreenShoppingListChecked() async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const ShoppingListChecked(),
+      ),
+    );
+  }
+
   void setListShoppingAndCategories(dynamic items) {
     shopping = items;
     categories = getUniqueCategories(shopping);
@@ -58,7 +67,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   void loadShopping() async {
     final shoppingProvider =
         Provider.of<ShoppingListProvider>(context, listen: false);
-    await shoppingProvider.loadShopping();
+    await shoppingProvider.loadShoppingIsNotChecked();
     setState(() {
       setListShoppingAndCategories(shoppingProvider.items);
       setListCardTriggered();
@@ -118,7 +127,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
-                      "Compras checados",
+                      "Compras checadas",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
@@ -131,7 +140,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                 if (option == "shopping_list") {
                   openScreenListPurchases();
                 } else {
-                  setState(() {});
+                  openScreenShoppingListChecked();
                 }
               },
             ),
