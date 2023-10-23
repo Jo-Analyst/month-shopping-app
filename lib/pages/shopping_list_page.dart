@@ -178,7 +178,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             title: FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
-                "Minha compras",
+                "Minhas compras",
                 style: TextStyle(
                   fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                 ),

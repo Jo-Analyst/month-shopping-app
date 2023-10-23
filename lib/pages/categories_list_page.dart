@@ -23,6 +23,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
   bool isValueInSearch = false;
   String search = "";
   final searchController = TextEditingController();
+  int index = 0;
 
   void saveNewCategory(Map<String, dynamic> category) async {
     final categoryProvider =
@@ -152,61 +153,73 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                     : Container(
                         height: MediaQuery.of(context).size.height - 192,
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: ListView(
-                          children: categories.map(
-                            (category) {
-                              return Slidable(
-                                endActionPane: ActionPane(
-                                  motion: const StretchMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (_) =>
-                                          saveNewCategory(category),
-                                      backgroundColor: Colors.orange,
-                                      icon: Icons.edit,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                    Visibility(
-                                      visible: widget.isScreenProducts,
-                                      child: SlidableAction(
-                                        onPressed: (_) =>
-                                            deleteCategory(category["id"]),
-                                        backgroundColor: Colors.red,
-                                        icon: Icons.delete,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                      onTap: widget.isScreenProducts
-                                          ? null
-                                          : () => Navigator.of(context)
-                                              .pop(category),
-                                      child: ListTile(
-                                        minLeadingWidth: 0,
-                                        leading:
-                                            const Icon(Icons.category_outlined),
-                                        title: Text(
-                                          category["type_category"],
-                                          style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .displayLarge!
-                                                .fontSize,
+                        child: Card(
+                          child: ListView(
+                            children: categories.map(
+                              (category) {
+                                index++;
+                                return Container(
+                                  color: (index % 2 > 0)
+                                      ? const Color.fromARGB(25, 73, 133, 206)
+                                      : Colors.white,
+                                  child: Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: const StretchMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: (_) =>
+                                              saveNewCategory(category),
+                                          backgroundColor: Colors.orange,
+                                          icon: Icons.edit,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        Visibility(
+                                          visible: widget.isScreenProducts,
+                                          child: SlidableAction(
+                                            onPressed: (_) =>
+                                                deleteCategory(category["id"]),
+                                            backgroundColor: Colors.red,
+                                            icon: Icons.delete,
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    Divider(
-                                      color: Theme.of(context).primaryColor,
+                                    child: Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: widget.isScreenProducts
+                                              ? null
+                                              : () => Navigator.of(context)
+                                                  .pop(category),
+                                          child: Container(
+                                            color: (index % 2 == 0)
+                                                ? const Color.fromARGB(
+                                                    25, 73, 133, 206)
+                                                : Colors.white,
+                                            child: ListTile(
+                                              minLeadingWidth: 0,
+                                              leading: const Icon(
+                                                  Icons.category_outlined),
+                                              title: Text(
+                                                category["type_category"],
+                                                style: TextStyle(
+                                                  fontSize: Theme.of(context)
+                                                      .textTheme
+                                                      .displayLarge!
+                                                      .fontSize,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ).toList(),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
                         ),
                       )
               ],

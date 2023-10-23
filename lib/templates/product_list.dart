@@ -16,54 +16,53 @@ class ProductsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> products = shopping;
-
-    return Container(
-      color: const Color.fromARGB(25, 73, 133, 206),
-      child: Column(
-        children: products
-            .where((e) => e["category_id"] == categoryId)
-            .map((product) {
-          return Visibility(
-            visible: isExpanded,
-            child: Column(
-              children: [
-                Dismissible(
-                  key: Key(product["shoppe_list_id"].toString()),
-                  background: Container(
-                    color: Theme.of(context).primaryColor,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: 10),
-                    child: const Icon(
-                      Icons.check,
-                      color: Colors.white,
-                    ),
+    int index = 0;
+    return Column(
+      children:
+          products.where((e) => e["category_id"] == categoryId).map((product) {
+        index++;
+        return Visibility(
+          visible: isExpanded,
+          child: Column(
+            children: [
+              Dismissible(
+                key: Key(product["shoppe_list_id"].toString()),
+                background: Container(
+                  color: Theme.of(context).primaryColor,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.only(right: 10),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
                   ),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) async {
-                    final shoppingListProvider =
-                        Provider.of<ShoppingListProvider>(context,
-                            listen: false);
-                    await shoppingListProvider
-                        .checkList(product);
-                  
-                  },
-                  // endActionPane: ActionPane(
-                  //   motion: const ScrollMotion(),
-                  //   children: [
-                  //     SlidableAction(
-                  //       onPressed: (context) async {
-                  //         final shoppingListProvider =
-                  //             Provider.of<ShoppingListProvider>(context,
-                  //                 listen: false);
-                  //         await shoppingListProvider
-                  //             .checkList(product["shoppe_list_id"]);
-                  //       },
-                  //       backgroundColor: Theme.of(context).primaryColor,
-                  //       icon: Icons.check,
-                  //       foregroundColor: Colors.white,
-                  //     )
-                  //   ],
-                  // ),
+                ),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) async {
+                  final shoppingListProvider =
+                      Provider.of<ShoppingListProvider>(context, listen: false);
+                  await shoppingListProvider.checkList(product);
+                },
+                // endActionPane: ActionPane(
+                //   motion: const ScrollMotion(),
+                //   children: [
+                //     SlidableAction(
+                //       onPressed: (context) async {
+                //         final shoppingListProvider =
+                //             Provider.of<ShoppingListProvider>(context,
+                //                 listen: false);
+                //         await shoppingListProvider
+                //             .checkList(product["shoppe_list_id"]);
+                //       },
+                //       backgroundColor: Theme.of(context).primaryColor,
+                //       icon: Icons.check,
+                //       foregroundColor: Colors.white,
+                //     )
+                //   ],
+                // ),
+                child: Container(
+                  color: (index % 2 > 0)
+                      ? const Color.fromARGB(25, 73, 133, 206)
+                      : Colors.white,
                   child: ListTile(
                     leading: const CircleAvatar(
                       backgroundColor: Colors.black54,
@@ -77,14 +76,14 @@ class ProductsList extends StatelessWidget {
                         "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
                   ),
                 ),
-                Divider(
-                  color: Theme.of(context).primaryColor,
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
+              ),
+              // Divider(
+              //   color: Theme.of(context).primaryColor,
+              // ),
+            ],
+          ),
+        );
+      }).toList(),
     );
   }
 }

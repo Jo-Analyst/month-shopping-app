@@ -25,10 +25,6 @@ class ShoppingListProvider extends ChangeNotifier {
     ];
   }
 
-  int _countItemChecked = 0;
-  int get countItemChecked {
-    return _countItemChecked;
-  }
 
   final List<Map<String, dynamic>> _itemsChecked = [];
   List<Map<String, dynamic>> get itemsChecked {

@@ -57,7 +57,7 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
             size: 35,
           ),
         ),
-        title: const Text("Minha compras"),
+        title: const Text("Minhas compras"),
         actions: [
           IconButton(
             onPressed: () async {
@@ -94,10 +94,9 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
               builder: (context, shoppingListProvider, _) {
                 shoppingListChecked = shoppingListProvider.itemsChecked;
 
-                return ListView.separated(
+                return ListView.builder(
                   shrinkWrap: true,
                   itemCount: shoppingListChecked.length,
-                  separatorBuilder: (context, index) => const Divider(),
                   itemBuilder: (_, index) {
                     final shoppe = shoppingListChecked[index];
                     return Dismissible(
@@ -118,25 +117,31 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
                           closeScreen();
                         }
                       },
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.shopping_bag_outlined,
-                          size: 30,
-                          color: Colors.black,
-                        ),
-                        title: Text(
-                          "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
-                          style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .fontSize,
+                      child: Container(
+                        color: (index % 2 == 0)
+                            ? const Color.fromARGB(25, 73, 133, 206)
+                            : Colors.white,
+                        padding: const EdgeInsets.all(12),
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.shopping_bag_outlined,
+                            size: 30,
+                            color: Colors.black,
                           ),
-                        ),
-                        trailing: const Icon(
-                          Icons.check,
-                          size: 30,
-                          color: Colors.green,
+                          title: Text(
+                            "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
+                            style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .fontSize,
+                            ),
+                          ),
+                          trailing: const Icon(
+                            Icons.check,
+                            size: 30,
+                            color: Colors.green,
+                          ),
                         ),
                       ),
                     );
