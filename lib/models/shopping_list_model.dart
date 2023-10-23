@@ -53,5 +53,11 @@ class ShoppingListModel {
     await db.update("shopping_list", {"list_is_ckecked": true},
         where: "id = ?", whereArgs: [shoppingListId]);
   }
+  
+  static Future<void> unverifyList(int shoppingListId) async {
+    final db = await DB.openDatabase();
+    await db.update("shopping_list", {"list_is_ckecked": false},
+        where: "id = ?", whereArgs: [shoppingListId]);
+  }
 
 }

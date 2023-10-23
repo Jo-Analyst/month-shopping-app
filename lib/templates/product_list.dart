@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -28,24 +27,43 @@ class ProductsList extends StatelessWidget {
             visible: isExpanded,
             child: Column(
               children: [
-                Slidable(
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    children: [
-                      SlidableAction(
-                        onPressed: (context) async {
-                          final shoppingListProvider =
-                              Provider.of<ShoppingListProvider>(context,
-                                  listen: false);
-                          await shoppingListProvider
-                              .checkList(product["shoppe_list_id"]);
-                        },
-                        backgroundColor: Theme.of(context).primaryColor,
-                        icon: Icons.check,
-                        foregroundColor: Colors.white,
-                      )
-                    ],
+                Dismissible(
+                  key: Key(product["shoppe_list_id"].toString()),
+                  background: Container(
+                    color: Theme.of(context).primaryColor,
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 10),
+                    child: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
                   ),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) async {
+                    final shoppingListProvider =
+                        Provider.of<ShoppingListProvider>(context,
+                            listen: false);
+                    await shoppingListProvider
+                        .checkList(product);
+                  
+                  },
+                  // endActionPane: ActionPane(
+                  //   motion: const ScrollMotion(),
+                  //   children: [
+                  //     SlidableAction(
+                  //       onPressed: (context) async {
+                  //         final shoppingListProvider =
+                  //             Provider.of<ShoppingListProvider>(context,
+                  //                 listen: false);
+                  //         await shoppingListProvider
+                  //             .checkList(product["shoppe_list_id"]);
+                  //       },
+                  //       backgroundColor: Theme.of(context).primaryColor,
+                  //       icon: Icons.check,
+                  //       foregroundColor: Colors.white,
+                  //     )
+                  //   ],
+                  // ),
                   child: ListTile(
                     leading: const CircleAvatar(
                       backgroundColor: Colors.black54,

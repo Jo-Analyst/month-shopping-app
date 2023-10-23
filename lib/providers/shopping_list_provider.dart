@@ -7,6 +7,34 @@ class ShoppingListProvider extends ChangeNotifier {
     return [
       ..._items
         ..sort(
+          ((a, b) {
+            final dateComparison = a["type_category"]
+                .toString()
+                .toLowerCase()
+                .compareTo(b["type_category"].toString().toLowerCase());
+
+            if (dateComparison != 0) {
+              return dateComparison; // Compara as datas primeiro
+            } else {
+              return a["name"].toString().toLowerCase().compareTo(b["name"]
+                  .toString()
+                  .toLowerCase()); // Compara os nomes em caso de empate nas datas
+            }
+          }),
+        )
+    ];
+  }
+
+  int _countItemChecked = 0;
+  int get countItemChecked {
+    return _countItemChecked;
+  }
+
+  final List<Map<String, dynamic>> _itemsChecked = [];
+  List<Map<String, dynamic>> get itemsChecked {
+    return [
+      ..._itemsChecked
+        ..sort(
           ((a, b) => a["name"].toString().toLowerCase().compareTo(
                 b["name"].toString().toLowerCase(),
               )),
@@ -27,8 +55,16 @@ class ShoppingListProvider extends ChangeNotifier {
       _deleteItem(shoppingListId);
     }
 
+    itemShoppe["shoppe_list_id"] = shoppeListId;
+    add(itemShoppe);
+
+    notifyListeners();
+    return shoppeListId;
+  }
+
+  void add(Map<String, dynamic> itemShoppe) {
     _items.add({
-      "shoppe_list_id": shoppeListId,
+      "shoppe_list_id": itemShoppe["shoppe_list_id"],
       "product_id": itemShoppe["product_id"],
       "name": itemShoppe["name"],
       "type_category": itemShoppe["type_category"],
@@ -36,24 +72,35 @@ class ShoppingListProvider extends ChangeNotifier {
       "quantity": itemShoppe["quantity"],
       "unit": itemShoppe["unit"]
     });
-    notifyListeners();
-    return shoppeListId;
   }
 
-  Future<void> checkList(int shoppingListId) async {
-    await ShoppingListModel.checkList(shoppingListId);
-    _deleteItem(shoppingListId);
+  Future<void> checkList(Map<String, dynamic> itemShoppe) async {
+    await ShoppingListModel.checkList(itemShoppe["shoppe_list_id"]);
+    _deleteItem(itemShoppe["shoppe_list_id"]);
+    _itemsChecked.add(itemShoppe);
+    notifyListeners();
+  }
+
+  Future<void> unverifyList(Map<String, dynamic> itemShoppe) async {
+    await ShoppingListModel.unverifyList(itemShoppe["shoppe_list_id"]);
+    _deleteItemChecked(itemShoppe["shoppe_list_id"]);
+    add(itemShoppe);
     notifyListeners();
   }
 
   Future<void> delete(int id) async {
     await ShoppingListModel.delete(id);
     _deleteItem(id);
+    _deleteItemChecked(id);
     notifyListeners();
   }
 
   void _deleteItem(int id) {
     _items.removeWhere((i) => i["shoppe_list_id"] == id);
+  }
+
+  void _deleteItemChecked(int id) {
+    _itemsChecked.removeWhere((i) => i["shoppe_list_id"] == id);
   }
 
   Future<void> loadShoppingIsNotChecked() async {
@@ -65,10 +112,10 @@ class ShoppingListProvider extends ChangeNotifier {
   }
 
   Future<void> loadShoppingIsChecked() async {
-    _items.clear();
+    _itemsChecked.clear();
     final shopping = await ShoppingListModel.findAllIsChecked();
     for (var shoppe in shopping) {
-      _items.add(shoppe);
+      _itemsChecked.add(shoppe);
     }
   }
 }

@@ -14,6 +14,7 @@ class ShoppingListPage extends StatefulWidget {
 
 class _ShoppingListPageState extends State<ShoppingListPage> {
   bool showInputSearch = false, isExpanded = false;
+  int quantityItemsChecked = 0;
   List<bool> cardTriggeredList = [];
   List<Map<String, dynamic>> shopping = [];
   List<Map<String, dynamic>> categories = [];
@@ -68,7 +69,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     final shoppingProvider =
         Provider.of<ShoppingListProvider>(context, listen: false);
     await shoppingProvider.loadShoppingIsNotChecked();
+    await shoppingProvider.loadShoppingIsChecked();
     setState(() {
+      quantityItemsChecked = shoppingProvider.itemsChecked.length;
       setListShoppingAndCategories(shoppingProvider.items);
       setListCardTriggered();
     });
@@ -95,172 +98,177 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        AppBar(
-          actions: [
-            PopupMenuButton(
-              color: const Color.fromARGB(236, 73, 133, 206),
-              icon: const Icon(
-                Icons.more_vert,
-                color: Colors.white,
+    return Consumer<ShoppingListProvider>(
+        builder: (context, shoppingProvider, __) {
+      setListShoppingAndCategories(shoppingProvider.items);
+      cardTriggeredList.add(false);
+      quantityItemsChecked = shoppingProvider.itemsChecked.length;
+      return ListView(
+        children: [
+          AppBar(
+            // actions: [
+            //   PopupMenuButton(
+            //     color: const Color.fromARGB(236, 73, 133, 206),
+            //     icon: const Icon(
+            //       Icons.more_vert,
+            //       color: Colors.white,
+            //     ),
+            //     iconSize: 30,
+            //     itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+            //       const PopupMenuItem(
+            //         padding: EdgeInsets.zero,
+            //         value: "shopping_list",
+            //         child: Padding(
+            //           padding: EdgeInsets.symmetric(horizontal: 10),
+            //           child: Text(
+            //             "Listar Compras",
+            //             style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 20,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //       const PopupMenuItem(
+            //         value: "shopping_checked",
+            //         padding: EdgeInsets.zero,
+            //         child: Padding(
+            //           padding: EdgeInsets.symmetric(horizontal: 10),
+            //           child: Text(
+            //             "Compras checadas",
+            //             style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 20,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //     onSelected: (option) async {
+            //       if (option == "shopping_list") {
+            //         openScreenListPurchases();
+            //       } else {
+            //         openScreenShoppingListChecked();
+            //       }
+            //     },
+            //   ),
+            // ],
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.add_shopping_cart_outlined,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                onPressed: () => openScreenListPurchases(),
               ),
-              iconSize: 30,
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem(
-                  padding: EdgeInsets.zero,
-                  value: "shopping_list",
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      "Listar Compras",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
+              Visibility(
+                visible: quantityItemsChecked > 0,
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.checklist_rounded,
+                    size: 30,
+                    color: Colors.white,
                   ),
+                  onPressed: () => openScreenShoppingListChecked(),
                 ),
-                const PopupMenuItem(
-                  value: "shopping_checked",
-                  padding: EdgeInsets.zero,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      "Compras checadas",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+              ),
+            ],
+            backgroundColor: Theme.of(context).primaryColor,
+            title: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                "Minha compras",
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
                 ),
-              ],
-              onSelected: (option) async {
-                if (option == "shopping_list") {
-                  openScreenListPurchases();
-                } else {
-                  openScreenShoppingListChecked();
-                }
-              },
-            ),
-          ],
-          // actions: [
-          //   Container(
-          //     margin: const EdgeInsets.only(
-          //       right: 10,
-          //     ),
-          //     child: IconButton(
-          //       icon: const Icon(
-          //         Icons.add_shopping_cart_outlined,
-          //         size: 30,
-          //         color: Colors.white,
-          //       ),
-          //       onPressed: () => openScreenListPurchases(),
-          //     ),
-          //   ),
-          // ],
-          backgroundColor: Theme.of(context).primaryColor,
-          title: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              "Minha lista de compras",
-              style: TextStyle(
-                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
               ),
             ),
           ),
-        ),
-        Consumer<ShoppingListProvider>(
-          builder: (context, shoppingProvider, __) {
-            setListShoppingAndCategories(shoppingProvider.items);
-            cardTriggeredList.add(false);
-
-            return Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 25,
-              ),
-              height: MediaQuery.of(context).size.height * 0.8,
-              child: shopping.isNotEmpty
-                  ? ListView.builder(
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 8,
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                onTap: () {
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 25,
+            ),
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: shopping.isNotEmpty
+                ? ListView.builder(
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 8,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              onTap: () {
+                                updateListCardTriggered(index);
+                              },
+                              contentPadding: const EdgeInsets.all(15),
+                              title: Text(
+                                categories[index]["type_category"],
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .fontSize,
+                                ),
+                              ),
+                              trailing: IconButton(
+                                icon: Icon(
+                                  cardTriggeredList[index]
+                                      ? Icons.keyboard_arrow_up
+                                      : Icons.keyboard_arrow_down,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
                                   updateListCardTriggered(index);
                                 },
-                                contentPadding: const EdgeInsets.all(15),
-                                title: Text(
-                                  categories[index]["type_category"],
-                                  style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontSize,
-                                  ),
-                                ),
-                                trailing: IconButton(
-                                  icon: Icon(
-                                    cardTriggeredList[index]
-                                        ? Icons.keyboard_arrow_up
-                                        : Icons.keyboard_arrow_down,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    updateListCardTriggered(index);
-                                  },
-                                ),
                               ),
-                              ProductsList(
-                                categoryId: categories[index]["category_id"],
-                                isExpanded: cardTriggeredList[index],
-                                shopping: shopping,
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: categories.length,
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/ic_launcher.png",
-                          width: 100,
+                            ),
+                            ProductsList(
+                              categoryId: categories[index]["category_id"],
+                              isExpanded: cardTriggeredList[index],
+                              shopping: shopping,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "Olá, seja bem vindo.",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).primaryColor,
-                          ),
+                      );
+                    },
+                    itemCount: categories.length,
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/ic_launcher.png",
+                        width: 100,
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Olá, seja bem vindo.",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor,
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          "Faça a sua lista de compras de um jeito fácil e rápido.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .fontSize,
-                          ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        "Faça a sua lista de compras de um jeito fácil e rápido.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .fontSize,
                         ),
-                      ],
-                    ),
-            );
-          },
-        ),
-      ],
-    );
+                      ),
+                    ],
+                  ),
+          ),
+        ],
+      );
+    });
   }
 }

@@ -11,14 +11,14 @@ class ShoppingListChecked extends StatefulWidget {
 }
 
 class _ShoppingListCheckedState extends State<ShoppingListChecked> {
-  List<Map<String, dynamic>> productsChecked = [];
+  List<Map<String, dynamic>> shoppingListChecked = [];
 
   void loadingShoppingChecked() async {
     final shoppingProvider =
         Provider.of<ShoppingListProvider>(context, listen: false);
     await shoppingProvider.loadShoppingIsChecked();
     setState(() {
-      productsChecked = shoppingProvider.items;
+      shoppingListChecked = shoppingProvider.itemsChecked;
     });
   }
 
@@ -28,21 +28,22 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
     loadingShoppingChecked();
   }
 
-  Future<bool> deleteShoppingChecked() async {
-    bool isDeleted = false;
+  Future<void> deleteShoppingChecked() async {
     final shoppingListProvider =
         Provider.of<ShoppingListProvider>(context, listen: false);
     final confirmAction = await showDialogDelete(context,
         "Ao confirmar você excluirá todos os itens. Deseja mesmo excluir?");
 
     if (confirmAction == true) {
-      for (var product in productsChecked) {
-        await shoppingListProvider.delete(product["shoppe_list_id"]);
+      for (var shoppe in shoppingListChecked) {
+        await shoppingListProvider.delete(shoppe["shoppe_list_id"]);
       }
-      isDeleted = true;
+      closeScreen();
     }
+  }
 
-    return isDeleted;
+  void closeScreen() {
+    Navigator.of(context).pop();
   }
 
   @override
@@ -56,15 +57,11 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
             size: 35,
           ),
         ),
-        title: const Text("Compras checadas"),
+        title: const Text("Minha compras"),
         actions: [
           IconButton(
             onPressed: () async {
-              bool isDeleted = await deleteShoppingChecked();
-              if (isDeleted) {
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
-              }
+              await deleteShoppingChecked();
             },
             icon: const Icon(
               Icons.delete_rounded,
@@ -78,30 +75,76 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
           vertical: 10,
           horizontal: 15,
         ),
-        child: ListView.separated(
-          itemCount: productsChecked.length,
-          separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (_, index) {
-            final product = productsChecked[index];
-            return ListTile(
-              leading: const Icon(
-                Icons.shopping_bag_outlined,
-                size: 30,
-                color: Colors.black,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Compras checadas",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.displayLarge!.fontSize,
+                fontWeight: FontWeight.w600,
               ),
-              title: Text(
-                "${product["quantity"]} ${product["unit"]} de ${product["name"]}",
-                style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.displayLarge!.fontSize,
-                ),
-              ),
-              trailing: const Icon(
-                Icons.check,
-                size: 30,
-                color: Colors.green,
-              ),
-            );
-          },
+            ),
+            const Divider(
+              height: 10,
+              // thickness: 2,
+              color: Colors.black,
+            ),
+            Consumer<ShoppingListProvider>(
+              builder: (context, shoppingListProvider, _) {
+                shoppingListChecked = shoppingListProvider.itemsChecked;
+
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: shoppingListChecked.length,
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemBuilder: (_, index) {
+                    final shoppe = shoppingListChecked[index];
+                    return Dismissible(
+                      key: Key(shoppe["shoppe_list_id"].toString()),
+                      background: Container(
+                        color: Colors.orange,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 10),
+                        child: const Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                      direction: DismissDirection.endToStart,
+                      onDismissed: (direction) async {
+                        await shoppingListProvider.unverifyList(shoppe);
+                        if (shoppingListProvider.itemsChecked.isEmpty) {
+                          closeScreen();
+                        }
+                      },
+                      child: ListTile(
+                        leading: const Icon(
+                          Icons.shopping_bag_outlined,
+                          size: 30,
+                          color: Colors.black,
+                        ),
+                        title: Text(
+                          "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
+                          style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .fontSize,
+                          ),
+                        ),
+                        trailing: const Icon(
+                          Icons.check,
+                          size: 30,
+                          color: Colors.green,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

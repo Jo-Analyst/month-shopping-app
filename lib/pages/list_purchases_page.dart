@@ -31,7 +31,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
     for (var shoppe in shopping) {
       shoppe["shoppe_list_id"] = await shoppingListProvider.save(shoppe);
     }
-    // print(shopping.isNotEmpty);
+    
     if (widget.shopping.isNotEmpty) {
       for (var deletedItem in deletedItems) {
         await shoppingListProvider.delete(deletedItem["shoppe_list_id"]);
