@@ -154,14 +154,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
             //   ),
             // ],
             actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.add_shopping_cart_outlined,
-                  size: 30,
-                  color: Colors.white,
-                ),
-                onPressed: () => openScreenListPurchases(),
-              ),
               Visibility(
                 visible: quantityItemsChecked > 0,
                 child: IconButton(
@@ -172,6 +164,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                   ),
                   onPressed: () => openScreenShoppingListChecked(),
                 ),
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.add_shopping_cart_outlined,
+                  size: 30,
+                  color: Colors.white,
+                ),
+                onPressed: () => openScreenListPurchases(),
               ),
             ],
             backgroundColor: Theme.of(context).primaryColor,

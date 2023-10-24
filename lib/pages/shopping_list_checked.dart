@@ -121,7 +121,6 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
                         color: (index % 2 == 0)
                             ? const Color.fromARGB(25, 73, 133, 206)
                             : Colors.white,
-                        padding: const EdgeInsets.all(12),
                         child: ListTile(
                           leading: const Icon(
                             Icons.shopping_bag_outlined,

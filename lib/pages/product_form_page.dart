@@ -106,140 +106,144 @@ class _ProductFormPageState extends State<ProductFormPage> {
           backgroundColor: Theme.of(context).primaryColor,
           toolbarHeight: 80,
         ),
-        body: ListView(
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 15,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Categoria",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Divider(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * .8 - 15,
-                          child: TextFormField(
-                            controller: categoryController,
-                            readOnly: true,
-                            textInputAction: TextInputAction.none,
-                            decoration: const InputDecoration(
-                              labelText: "Tipo",
-                            ),
-                            onTap: () => openScreenCategories(),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => openScreenCategories(),
-                          icon: Icon(
-                            Icons.format_list_bulleted_add,
-                            size: 35,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 15,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: widget.item.isNotEmpty ? null : () => receiveProduct(null, null),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Categoria",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      Divider(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Row(
                         children: [
-                          Text(
-                            widget.item.isEmpty ? "Produtos" : "Produto",
-                            style: const TextStyle(fontSize: 18),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * .8 - 15,
+                            child: TextFormField(
+                              controller: categoryController,
+                              readOnly: true,
+                              textInputAction: TextInputAction.none,
+                              decoration: const InputDecoration(
+                                labelText: "Tipo",
+                              ),
+                              onTap: () => openScreenCategories(),
+                            ),
                           ),
-                          Visibility(
-                            visible: widget.item.isEmpty,
-                            child: Icon(
-                              Icons.add,
+                          IconButton(
+                            onPressed: () => openScreenCategories(),
+                            icon: Icon(
+                              Icons.format_list_bulleted_add,
                               size: 35,
                               color: Theme.of(context).primaryColor,
                             ),
-                          )
+                          ),
                         ],
                       ),
-                    ),
-                    Divider(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemCount: products.length,
-                      itemBuilder: (context, index) {
-                        final product = products[index];
-                        return Slidable(
-                          endActionPane: ActionPane(
-                            motion: const StretchMotion(),
-                            children: [
-                              SlidableAction(
-                                onPressed: (_) {
-                                  setState(() {
-                                    if (widget.item.isEmpty) {
-                                      products.removeAt(index);
-                                    } else {
-                                      receiveProduct(
-                                          product["name"], product["unit"]);
-                                    }
-                                  });
-                                },
-                                backgroundColor: widget.item.isEmpty
-                                    ? Colors.red
-                                    : Colors.orange,
-                                foregroundColor: Colors.white,
-                                icon: widget.item.isEmpty
-                                    ? Icons.delete
-                                    : Icons.edit,
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              ListTile(
-                                leading: const Icon(
-                                  FontAwesomeIcons.box,
-                                  size: 25,
-                                ),
-                                title: Text(product["name"]),
-                                subtitle: Text(product["unit"]),
-                              ),
-                              Divider(
-                                height: 2,
-                                color: Theme.of(context).primaryColor,
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 10),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 15,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: widget.item.isNotEmpty
+                            ? null
+                            : () => receiveProduct(null, null),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.item.isEmpty ? "Produtos" : "Produto",
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                            Visibility(
+                              visible: widget.item.isEmpty,
+                              child: Icon(
+                                Icons.add,
+                                size: 35,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 2 + 76,
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => const Divider(),
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final product = products[index];
+                            return Slidable(
+                              endActionPane: ActionPane(
+                                motion: const StretchMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (_) {
+                                      setState(() {
+                                        if (widget.item.isEmpty) {
+                                          products.removeAt(index);
+                                        } else {
+                                          receiveProduct(
+                                              product["name"], product["unit"]);
+                                        }
+                                      });
+                                    },
+                                    backgroundColor: widget.item.isEmpty
+                                        ? Colors.red
+                                        : Colors.orange,
+                                    foregroundColor: Colors.white,
+                                    icon: widget.item.isEmpty
+                                        ? Icons.delete
+                                        : Icons.edit,
+                                  ),
+                                ],
+                              ),
+                              child: Container(
+                                color: (index % 2 == 0)
+                                    ? const Color.fromARGB(25, 73, 133, 206)
+                                    : Colors.white,
+                                child: ListTile(
+                                  leading: const Icon(
+                                    FontAwesomeIcons.box,
+                                    size: 25,
+                                  ),
+                                  title: Text(product["name"]),
+                                  subtitle: Text(product["unit"]),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ));
   }
 }
