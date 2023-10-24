@@ -1,6 +1,4 @@
-
 import 'package:month_shopping_app/config/db.dart';
-import 'package:month_shopping_app/utils/convert_values.dart';
 
 class ShoppingListModel {
   final int id;

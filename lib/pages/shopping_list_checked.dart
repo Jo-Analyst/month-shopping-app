@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
+import 'package:month_shopping_app/utils/convert_values.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -99,64 +100,73 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
               builder: (context, shoppingListProvider, _) {
                 shoppingListChecked = shoppingListProvider.itemsChecked;
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: shoppingListChecked.length,
-                  itemBuilder: (_, index) {
-                    final shoppe = shoppingListChecked[index];
-                    return Dismissible(
-                      key: Key(shoppe["shoppe_list_id"].toString()),
-                      background: Container(
-                        color: Colors.orange,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 10),
-                        child: const Icon(
-                          Icons.edit,
-                          color: Colors.white,
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height - 162,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: shoppingListChecked.length,
+                    itemBuilder: (_, index) {
+                      final shoppe = shoppingListChecked[index];
+                      return Dismissible(
+                        key: Key(shoppe["shoppe_list_id"].toString()),
+                        background: Container(
+                          color: Colors.orange,
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(right: 10),
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      direction: DismissDirection.endToStart,
-                      onDismissed: (direction) async {
-                        await shoppingListProvider.unverifyList(shoppe);
-                        if (shoppingListProvider.itemsChecked.isEmpty) {
-                          closeScreen();
-                        }
-                      },
-                      child: Container(
-                        color: (index % 2 == 0)
-                            ? const Color.fromARGB(25, 73, 133, 206)
-                            : Colors.white,
-                        child: ListTile(
-                          leading: const Icon(
-                            Icons.shopping_bag_outlined,
-                            size: 30,
-                            color: Colors.black,
-                          ),
-                          title: Text(
-                            "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
-                            style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .fontSize,
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) async {
+                          await shoppingListProvider.unverifyList(shoppe);
+                          if (shoppingListProvider.itemsChecked.isEmpty) {
+                            closeScreen();
+                          }
+                        },
+                        child: Container(
+                          color: (index % 2 == 0)
+                              ? const Color.fromARGB(25, 73, 133, 206)
+                              : Colors.white,
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.shopping_bag_outlined,
+                              size: 30,
+                              color: Colors.black,
                             ),
-                          ),
-                          subtitle: Text(shoppe["date_shoppe"],
+                            title: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .fontSize,
+                                ),
+                              ),
+                            ),
+                            subtitle: Text(
+                              changeTheDateWriting(shoppe["date_shoppe"]),
                               style: TextStyle(
                                 fontSize: Theme.of(context)
                                     .textTheme
                                     .displayLarge!
                                     .fontSize,
-                              )),
-                          trailing: const Icon(
-                            Icons.check,
-                            size: 30,
-                            color: Colors.green,
+                              ),
+                            ),
+                            trailing: const Icon(
+                              Icons.check,
+                              size: 30,
+                              color: Colors.green,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 );
               },
             ),

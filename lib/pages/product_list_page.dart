@@ -5,6 +5,7 @@ import 'package:month_shopping_app/pages/categories_list_page.dart';
 import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
+import 'package:month_shopping_app/utils/loading.dart';
 import 'package:provider/provider.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   List<Map<String, dynamic>> products = [];
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _ProductListPageState extends State<ProductListPage> {
     await productProvider.load();
     setState(() {
       products = productProvider.items;
+      isLoading = false;
     });
   }
 
@@ -66,98 +69,102 @@ class _ProductListPageState extends State<ProductListPage> {
             builder: (_, productProvider, __) {
               products = productProvider.items;
 
-              return products.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "Não há produtos cadastrado.",
-                        style: TextStyle(fontSize: 18),
-                      ),
+              return isLoading
+                  ? Center(
+                      child: loadingThreeRotatingDots(context, 50),
                     )
-                  : ListView(
-                      children: products
-                          .map(
-                            (product) => Card(
-                              elevation: 8,
-                              child: Slidable(
-                                endActionPane: ActionPane(
-                                  motion: const StretchMotion(),
-                                  children: [
-                                    SlidableAction(
-                                      onPressed: (_) {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => ProductFormPage(
-                                              item: product,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      backgroundColor: Colors.orange,
-                                      icon: Icons.edit,
-                                      foregroundColor: Colors.white,
-                                    ),
-                                    SlidableAction(
-                                      onPressed: (_) async {
-                                        final confirmAction =
-                                            await showDialogDelete(context,
-                                                    "Deseja mesmo excluir o produto?") ??
-                                                false;
+                  : products.isEmpty
+                      ? const Center(
+                          child: Text(
+                            "Não há produtos cadastrado.",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        )
+                      : ListView(
+                          children: products
+                              .map(
+                                (product) => Card(
+                                  elevation: 8,
+                                  child: Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: const StretchMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          onPressed: (_) {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (_) => ProductFormPage(
+                                                  item: product,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          backgroundColor: Colors.orange,
+                                          icon: Icons.edit,
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        SlidableAction(
+                                          onPressed: (_) async {
+                                            final confirmAction =
+                                                await showDialogDelete(context,
+                                                        "Deseja mesmo excluir o produto?") ??
+                                                    false;
 
-                                        if (confirmAction) {
-                                          await productProvider
-                                              .delete(product["id"]);
-                                        }
-                                      },
-                                      backgroundColor: Colors.red,
-                                      icon: Icons.delete,
+                                            if (confirmAction) {
+                                              await productProvider
+                                                  .delete(product["id"]);
+                                            }
+                                          },
+                                          backgroundColor: Colors.red,
+                                          icon: Icons.delete,
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                    child: ListTile(
+                                      minLeadingWidth: 0,
+                                      leading: const Icon(
+                                        FontAwesomeIcons.box,
+                                        size: 25,
+                                      ),
+                                      title: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          product["name"],
+                                          style: TextStyle(
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge!
+                                                .fontSize,
+                                          ),
+                                        ),
+                                      ),
+                                      subtitle: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          product["type_category"],
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                      trailing: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          product["unit"],
+                                          style: const TextStyle(
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                child: ListTile(
-                                  minLeadingWidth: 0,
-                                  leading: const Icon(
-                                    FontAwesomeIcons.box,
-                                    size: 25,
-                                  ),
-                                  title: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      product["name"],
-                                      style: TextStyle(
-                                        fontSize: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .fontSize,
-                                      ),
-                                    ),
-                                  ),
-                                  subtitle: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      product["type_category"],
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                  trailing: FittedBox(
-                                    fit: BoxFit.scaleDown,
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      product["unit"],
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    );
+                              )
+                              .toList(),
+                        );
             },
           ),
         ),

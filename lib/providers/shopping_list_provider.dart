@@ -15,11 +15,12 @@ class ShoppingListProvider extends ChangeNotifier {
                 .compareTo(b["type_category"].toString().toLowerCase());
 
             if (dateComparison != 0) {
-              return dateComparison; // Compara as datas primeiro
+              return dateComparison;
             } else {
-              return a["name"].toString().toLowerCase().compareTo(b["name"]
+              return a["name"]
                   .toString()
-                  .toLowerCase()); // Compara os nomes em caso de empate nas datas
+                  .toLowerCase()
+                  .compareTo(b["name"].toString().toLowerCase());
             }
           }),
         )
@@ -31,9 +32,20 @@ class ShoppingListProvider extends ChangeNotifier {
     return [
       ..._itemsChecked
         ..sort(
-          ((a, b) => a["name"].toString().toLowerCase().compareTo(
-                b["name"].toString().toLowerCase(),
-              )),
+          ((a, b) {
+            final dateComparison = b["date_shoppe"]
+                .toString()
+                .toLowerCase()
+                .compareTo(a["date_shoppe"].toString().toLowerCase());
+
+            if (dateComparison != 0) {
+              return dateComparison; // Compara as datas primeiro
+            } else {
+              return a["name"].toString().toLowerCase().compareTo(b["name"]
+                  .toString()
+                  .toLowerCase()); // Compara os nomes em caso de empate nas datas
+            }
+          }),
         )
     ];
   }
@@ -81,7 +93,9 @@ class ShoppingListProvider extends ChangeNotifier {
 
   Future<void> unverifyList(Map<String, dynamic> itemShoppe) async {
     await ShoppingListModel.unverifyList(itemShoppe["shoppe_list_id"]);
-    _deleteItemChecked(itemShoppe["shoppe_list_id"],);
+    _deleteItemChecked(
+      itemShoppe["shoppe_list_id"],
+    );
     add(itemShoppe, false);
     notifyListeners();
   }

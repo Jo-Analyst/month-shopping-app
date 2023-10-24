@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
+import 'package:month_shopping_app/utils/loading.dart';
 import 'package:provider/provider.dart';
 
 class ProductListShoppingPage extends StatefulWidget {
@@ -13,9 +14,8 @@ class ProductListShoppingPage extends StatefulWidget {
 }
 
 class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
-  List<Map<String, dynamic>> products = [];
-
-  List<Map<String, dynamic>> productsSelected = [];
+  List<Map<String, dynamic>> products = [], productsSelected = [];
+  bool isLoading = true;
 
   void selectProducts(Map<String, dynamic> dataProduct) {
     final result = productsSelected.any(
@@ -71,6 +71,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
     await productProvider.load();
     setState(() {
       products = productProvider.items;
+      isLoading = false;
     });
   }
 
@@ -108,94 +109,102 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
           ),
         ),
       ),
-      body: ListView(
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 25,
-            ),
-            height: MediaQuery.of(context).size.height * 0.89,
-            child: products.isEmpty
-                ? const Center(
-                    child: Text(
-                      "Não há produtos cadastrado.",
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  )
-                : ListView(
-                    children: products
-                        .map(
-                          (product) => Card(
-                            elevation: 8,
-                            child: ListTile(
-                              onLongPress: () => selectProducts(product),
-                              onTap: () {
-                                if (productsSelected.isNotEmpty) {
-                                  selectProducts(product);
-                                  return;
-                                }
-
-                                Navigator.of(context).pop([
-                                  {
-                                    "product_id": product["id"],
-                                    "name": product["name"],
-                                    "category_id": product["category_id"],
-                                    "type_category": product["type_category"],
-                                    "quantity": 1,
-                                    "unit": product["unit"],
-                                  }
-                                ]);
-                              },
-                              selected: productsSelected.any((productSelect) =>
-                                  productSelect["product_id"] == product["id"]),
-                              selectedTileColor: Theme.of(context).primaryColor,
-                              selectedColor: Colors.white,
-                              minLeadingWidth: 0,
-                              leading: const Icon(
-                                FontAwesomeIcons.box,
-                                size: 25,
-                              ),
-                              title: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  product["name"],
-                                  style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .fontSize,
-                                  ),
-                                ),
-                              ),
-                              subtitle: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  product["type_category"],
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              trailing: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  product["unit"],
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
+      body: isLoading
+          ? Center(
+              child: loadingThreeRotatingDots(context, 50),
+            )
+          : ListView(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 25,
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.89,
+                  child: products.isEmpty
+                      ? const Center(
+                          child: Text(
+                            "Não há produtos cadastrado.",
+                            style: TextStyle(fontSize: 18),
                           ),
                         )
-                        .toList()),
-          ),
-        ],
-      ),
+                      : ListView(
+                          children: products
+                              .map(
+                                (product) => Card(
+                                  elevation: 8,
+                                  child: ListTile(
+                                    onLongPress: () => selectProducts(product),
+                                    onTap: () {
+                                      if (productsSelected.isNotEmpty) {
+                                        selectProducts(product);
+                                        return;
+                                      }
+
+                                      Navigator.of(context).pop([
+                                        {
+                                          "product_id": product["id"],
+                                          "name": product["name"],
+                                          "category_id": product["category_id"],
+                                          "type_category":
+                                              product["type_category"],
+                                          "quantity": 1,
+                                          "unit": product["unit"],
+                                        }
+                                      ]);
+                                    },
+                                    selected: productsSelected.any(
+                                        (productSelect) =>
+                                            productSelect["product_id"] ==
+                                            product["id"]),
+                                    selectedTileColor:
+                                        Theme.of(context).primaryColor,
+                                    selectedColor: Colors.white,
+                                    minLeadingWidth: 0,
+                                    leading: const Icon(
+                                      FontAwesomeIcons.box,
+                                      size: 25,
+                                    ),
+                                    title: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        product["name"],
+                                        style: TextStyle(
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .fontSize,
+                                        ),
+                                      ),
+                                    ),
+                                    subtitle: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        product["type_category"],
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                    trailing: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        product["unit"],
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList()),
+                ),
+              ],
+            ),
     );
   }
 }
