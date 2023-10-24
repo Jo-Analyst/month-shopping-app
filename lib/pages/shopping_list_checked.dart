@@ -4,7 +4,11 @@ import 'package:month_shopping_app/utils/dialog.dart';
 import 'package:provider/provider.dart';
 
 class ShoppingListChecked extends StatefulWidget {
-  const ShoppingListChecked({super.key});
+  final List<Map<String, dynamic>> shoppingListChecked;
+  const ShoppingListChecked({
+    required this.shoppingListChecked,
+    super.key,
+  });
 
   @override
   State<ShoppingListChecked> createState() => _ShoppingListCheckedState();
@@ -13,19 +17,20 @@ class ShoppingListChecked extends StatefulWidget {
 class _ShoppingListCheckedState extends State<ShoppingListChecked> {
   List<Map<String, dynamic>> shoppingListChecked = [];
 
-  void loadingShoppingChecked() async {
-    final shoppingProvider =
-        Provider.of<ShoppingListProvider>(context, listen: false);
-    await shoppingProvider.loadShoppingIsChecked();
-    setState(() {
-      shoppingListChecked = shoppingProvider.itemsChecked;
-    });
-  }
+  // void loadingShoppingChecked() async {
+  //   final shoppingProvider =
+  //       Provider.of<ShoppingListProvider>(context, listen: false);
+  //   await shoppingProvider.loadShoppingIsChecked();
+  //   setState(() {
+  //     shoppingListChecked = shoppingProvider.itemsChecked;
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    loadingShoppingChecked();
+    // loadingShoppingChecked();
+    shoppingListChecked = widget.shoppingListChecked;
   }
 
   Future<void> deleteShoppingChecked() async {
@@ -136,6 +141,13 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
                                   .fontSize,
                             ),
                           ),
+                          subtitle: Text(shoppe["date_shoppe"],
+                              style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .fontSize,
+                              )),
                           trailing: const Icon(
                             Icons.check,
                             size: 30,

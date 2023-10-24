@@ -16,7 +16,7 @@ class DB {
         );
 
         db.execute(
-            "CREATE TABLE shopping_list (id INTEGER PRIMARY KEY, quantity INTEGER, unit TEXT, list_is_ckecked BLOB DEFAULT 0, product_id INTEGER NOT NULL, FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE)");
+            "CREATE TABLE shopping_list (id INTEGER PRIMARY KEY, quantity INTEGER, unit TEXT, list_is_ckecked BLOB DEFAULT 0, date_shoppe TEXT, product_id INTEGER NOT NULL, FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE)");
       },
       version: 1,
     );

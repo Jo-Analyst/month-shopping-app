@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/models/shopping_list_model.dart';
+import 'package:month_shopping_app/utils/convert_values.dart';
 
 class ShoppingListProvider extends ChangeNotifier {
   final List<Map<String, dynamic>> _items = [];
@@ -24,7 +25,6 @@ class ShoppingListProvider extends ChangeNotifier {
         )
     ];
   }
-
 
   final List<Map<String, dynamic>> _itemsChecked = [];
   List<Map<String, dynamic>> get itemsChecked {
@@ -52,13 +52,13 @@ class ShoppingListProvider extends ChangeNotifier {
     }
 
     itemShoppe["shoppe_list_id"] = shoppeListId;
-    add(itemShoppe);
+    add(itemShoppe, false);
 
     notifyListeners();
     return shoppeListId;
   }
 
-  void add(Map<String, dynamic> itemShoppe) {
+  void add(Map<String, dynamic> itemShoppe, bool isCheckedList) {
     _items.add({
       "shoppe_list_id": itemShoppe["shoppe_list_id"],
       "product_id": itemShoppe["product_id"],
@@ -66,12 +66,14 @@ class ShoppingListProvider extends ChangeNotifier {
       "type_category": itemShoppe["type_category"],
       "category_id": itemShoppe["category_id"],
       "quantity": itemShoppe["quantity"],
+      "date_shoppe": isCheckedList ? dateFormat.format(DateTime.now()) : null,
       "unit": itemShoppe["unit"]
     });
   }
 
   Future<void> checkList(Map<String, dynamic> itemShoppe) async {
-    await ShoppingListModel.checkList(itemShoppe["shoppe_list_id"]);
+    await ShoppingListModel.checkList(
+        itemShoppe["shoppe_list_id"], dateFormat.format(DateTime.now()));
     _deleteItem(itemShoppe["shoppe_list_id"]);
     _itemsChecked.add(itemShoppe);
     notifyListeners();
@@ -79,8 +81,8 @@ class ShoppingListProvider extends ChangeNotifier {
 
   Future<void> unverifyList(Map<String, dynamic> itemShoppe) async {
     await ShoppingListModel.unverifyList(itemShoppe["shoppe_list_id"]);
-    _deleteItemChecked(itemShoppe["shoppe_list_id"]);
-    add(itemShoppe);
+    _deleteItemChecked(itemShoppe["shoppe_list_id"],);
+    add(itemShoppe, false);
     notifyListeners();
   }
 

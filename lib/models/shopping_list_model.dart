@@ -1,4 +1,6 @@
+
 import 'package:month_shopping_app/config/db.dart';
+import 'package:month_shopping_app/utils/convert_values.dart';
 
 class ShoppingListModel {
   final int id;
@@ -45,19 +47,25 @@ class ShoppingListModel {
   static Future<List<Map<String, dynamic>>> findAllIsChecked() async {
     final db = await DB.openDatabase();
     return db.rawQuery(
-        "SELECT s.id AS shoppe_list_id, c.type_category, s.unit, s.quantity, p.id AS product_id, p.name, p.category_id  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id WHERE list_is_ckecked = 1");
+        "SELECT s.id AS shoppe_list_id, c.type_category, s.unit, s.quantity, s.date_shoppe, p.id AS product_id, p.name, p.category_id  FROM  shopping_list AS s INNER JOIN products AS p  ON p.id = s.product_id INNER JOIN categories AS c ON c.id = P.category_id WHERE list_is_ckecked = 1");
   }
 
-  static Future<void> checkList(int shoppingListId) async {
+  static Future<void> checkList(int shoppingListId, String dateShoppe) async {
     final db = await DB.openDatabase();
-    await db.update("shopping_list", {"list_is_ckecked": true},
-        where: "id = ?", whereArgs: [shoppingListId]);
+    await db.update(
+        "shopping_list",
+        {
+          "list_is_ckecked": true,
+          "date_shoppe": dateShoppe,
+        },
+        where: "id = ?",
+        whereArgs: [shoppingListId]);
   }
-  
+
   static Future<void> unverifyList(int shoppingListId) async {
     final db = await DB.openDatabase();
-    await db.update("shopping_list", {"list_is_ckecked": false},
+    await db.update(
+        "shopping_list", {"list_is_ckecked": false, "date_shoppe": null},
         where: "id = ?", whereArgs: [shoppingListId]);
   }
-
 }

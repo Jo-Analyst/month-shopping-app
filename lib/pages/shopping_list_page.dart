@@ -18,6 +18,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   List<bool> cardTriggeredList = [];
   List<Map<String, dynamic>> shopping = [];
   List<Map<String, dynamic>> categories = [];
+  List<Map<String, dynamic>> shoppingListChecked = [];
 
   openScreenListPurchases() async {
     final response = await Navigator.of(context).push(
@@ -35,7 +36,8 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   openScreenShoppingListChecked() async {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const ShoppingListChecked(),
+        builder: (_) =>
+            ShoppingListChecked(shoppingListChecked: shoppingListChecked),
       ),
     );
   }
@@ -72,6 +74,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
     await shoppingProvider.loadShoppingIsChecked();
     setState(() {
       quantityItemsChecked = shoppingProvider.itemsChecked.length;
+      shoppingListChecked = shoppingProvider.itemsChecked;
       setListShoppingAndCategories(shoppingProvider.items);
       setListCardTriggered();
     });
@@ -103,6 +106,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       setListShoppingAndCategories(shoppingProvider.items);
       cardTriggeredList.add(false);
       quantityItemsChecked = shoppingProvider.itemsChecked.length;
+      shoppingListChecked = shoppingProvider.itemsChecked;
       return ListView(
         children: [
           AppBar(
