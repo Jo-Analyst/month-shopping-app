@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
+import 'package:month_shopping_app/utils/convert_values.dart';
 import 'package:provider/provider.dart';
 
 class ProductsList extends StatelessWidget {
@@ -40,7 +41,17 @@ class ProductsList extends StatelessWidget {
                 onDismissed: (direction) async {
                   final shoppingListProvider =
                       Provider.of<ShoppingListProvider>(context, listen: false);
-                  await shoppingListProvider.checkList(product);
+
+                  await shoppingListProvider.checkList({
+                    "shoppe_list_id": product["shoppe_list_id"],
+                    "type_category": product["type_category"],
+                    "unit": product["unit"],
+                    "quantity": product["quantity"],
+                    "product_id": product["product_id"],
+                    "name": product["name"],
+                    "category_id": product["category_id"],
+                    "date_shoppe": dateFormat.format(DateTime.now()),
+                  });
                 },
                 // endActionPane: ActionPane(
                 //   motion: const ScrollMotion(),

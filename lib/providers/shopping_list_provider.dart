@@ -73,7 +73,7 @@ class ShoppingListProvider extends ChangeNotifier {
 
   Future<void> checkList(Map<String, dynamic> itemShoppe) async {
     await ShoppingListModel.checkList(
-        itemShoppe["shoppe_list_id"], dateFormat.format(DateTime.now()));
+        itemShoppe["shoppe_list_id"], itemShoppe["date_shoppe"]);
     _deleteItem(itemShoppe["shoppe_list_id"]);
     _itemsChecked.add(itemShoppe);
     notifyListeners();

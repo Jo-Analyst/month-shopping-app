@@ -107,6 +107,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       cardTriggeredList.add(false);
       quantityItemsChecked = shoppingProvider.itemsChecked.length;
       shoppingListChecked = shoppingProvider.itemsChecked;
+      print(shoppingListChecked);
       return ListView(
         children: [
           AppBar(
