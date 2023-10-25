@@ -5,7 +5,7 @@ class DB {
   static Future<sql.Database> openDatabase() async {
     final dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(
-      path.join(dbPath, "appShoppingList.db"),
+      path.join(dbPath, "month_shopping_app.db"),
       onCreate: (db, version) {
         db.execute(
           "CREATE TABLE products (id INTEGER PRIMARY KEY, name TEXT NOT NULL, unit TEXT NOT NULL, category_id INTEGER, FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE)",

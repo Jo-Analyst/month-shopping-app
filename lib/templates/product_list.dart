@@ -53,23 +53,6 @@ class ProductsList extends StatelessWidget {
                     "date_shoppe": dateFormat.format(DateTime.now()),
                   });
                 },
-                // endActionPane: ActionPane(
-                //   motion: const ScrollMotion(),
-                //   children: [
-                //     SlidableAction(
-                //       onPressed: (context) async {
-                //         final shoppingListProvider =
-                //             Provider.of<ShoppingListProvider>(context,
-                //                 listen: false);
-                //         await shoppingListProvider
-                //             .checkList(product["shoppe_list_id"]);
-                //       },
-                //       backgroundColor: Theme.of(context).primaryColor,
-                //       icon: Icons.check,
-                //       foregroundColor: Colors.white,
-                //     )
-                //   ],
-                // ),
                 child: Container(
                   color: (index % 2 > 0)
                       ? const Color.fromARGB(25, 73, 133, 206)

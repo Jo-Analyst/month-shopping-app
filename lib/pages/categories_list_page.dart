@@ -147,16 +147,25 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                       categories.isEmpty
                           ? SizedBox(
                               height: MediaQuery.of(context).size.height - 192,
-                              child: Center(
-                                child: Text(
-                                  "Adicione uma ou mais categorias",
-                                  style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .fontSize,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.category,
+                                    size: 80,
+                                    color: Colors.black87,
                                   ),
-                                ),
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "Adicione uma ou mais categorias",
+                                    style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .fontSize,
+                                    ),
+                                  ),
+                                ],
                               ),
                             )
                           : Container(

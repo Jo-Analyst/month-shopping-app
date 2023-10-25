@@ -74,11 +74,24 @@ class _ProductListPageState extends State<ProductListPage> {
                       child: loadingThreeRotatingDots(context, 50),
                     )
                   : products.isEmpty
-                      ? const Center(
-                          child: Text(
-                            "Não há produtos cadastrado.",
-                            style: TextStyle(fontSize: 18),
-                          ),
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.box,
+                              size: 80,
+                              color: Colors.black87,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Adicione um ou mais produtos.",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .fontSize),
+                            ),
+                          ],
                         )
                       : ListView(
                           children: products
