@@ -31,7 +31,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
     for (var shoppe in shopping) {
       shoppe["shoppe_list_id"] = await shoppingListProvider.save(shoppe);
     }
-    
+
     if (widget.shopping.isNotEmpty) {
       for (var deletedItem in deletedItems) {
         await shoppingListProvider.delete(deletedItem["shoppe_list_id"]);
@@ -124,9 +124,13 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                       style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.displayLarge!.fontSize,
+                        color: Theme.of(context).textTheme.displayLarge!.color,
                       ),
                     ),
-                    const Icon(Icons.format_list_bulleted_add),
+                    Icon(
+                      Icons.format_list_bulleted_add,
+                      color: Theme.of(context).textTheme.titleMedium!.color,
+                    ),
                   ],
                 ),
               ),
@@ -143,10 +147,13 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                         "Não há produtos listados para a compra",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .fontSize),
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .fontSize,
+                          color:
+                              Theme.of(context).textTheme.displayLarge!.color,
+                        ),
                       ),
                     ),
                   )
@@ -194,7 +201,16 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                         child: Text(
                                           shoppe["name"],
                                           textAlign: TextAlign.left,
-                                          style: const TextStyle(fontSize: 18),
+                                          style: TextStyle(
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .displayLarge!
+                                                .fontSize,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .displayLarge!
+                                                .color,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -226,6 +242,16 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                             fit: BoxFit.scaleDown,
                                             child: Text(
                                               shoppe["unit"].toString(),
+                                              style: TextStyle(
+                                                fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .displayLarge!
+                                                    .fontSize,
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .displayLarge!
+                                                    .color,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -242,10 +268,15 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                               child: Text(
                                                 shoppe["quantity"].toString(),
                                                 style: TextStyle(
-                                                    fontSize: Theme.of(context)
-                                                        .textTheme
-                                                        .displayLarge!
-                                                        .fontSize),
+                                                  fontSize: Theme.of(context)
+                                                      .textTheme
+                                                      .displayLarge!
+                                                      .fontSize,
+                                                  color: Theme.of(context)
+                                                      .textTheme
+                                                      .displayLarge!
+                                                      .color,
+                                                ),
                                                 textAlign: TextAlign.right,
                                               ),
                                             ),

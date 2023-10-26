@@ -116,9 +116,13 @@ class _ProductFormPageState extends State<ProductFormPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "Categoria",
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18,
+                          color:
+                              Theme.of(context).textTheme.displayLarge!.color,
+                        ),
                       ),
                       Divider(
                         color: Theme.of(context).primaryColor,
@@ -132,8 +136,19 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               readOnly: true,
                               textInputAction: TextInputAction.none,
                               decoration: const InputDecoration(
-                                  labelText: "Tipo",
-                                  enabledBorder: OutlineInputBorder()),
+                                labelText: "Tipo",
+                                enabledBorder: UnderlineInputBorder(),
+                              ),
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .color,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .fontSize,
+                              ),
                               onTap: () => openScreenCategories(),
                             ),
                           ),
@@ -142,7 +157,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
                             icon: Icon(
                               Icons.format_list_bulleted_add,
                               size: 35,
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .color,
                             ),
                           ),
                         ],
@@ -170,14 +188,23 @@ class _ProductFormPageState extends State<ProductFormPage> {
                           children: [
                             Text(
                               widget.item.isEmpty ? "Produtos" : "Produto",
-                              style: const TextStyle(fontSize: 18),
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .color,
+                              ),
                             ),
                             Visibility(
                               visible: widget.item.isEmpty,
                               child: Icon(
                                 Icons.add,
                                 size: 35,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .color,
                               ),
                             )
                           ],
@@ -188,48 +215,61 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 2 + 76,
-                        child: ListView.separated(
+                        child: ListView.builder(
                           shrinkWrap: true,
-                          separatorBuilder: (context, index) => const Divider(),
                           itemCount: products.length,
                           itemBuilder: (context, index) {
                             final product = products[index];
-                            return Slidable(
-                              endActionPane: ActionPane(
-                                motion: const StretchMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (_) {
-                                      setState(() {
-                                        if (widget.item.isEmpty) {
-                                          products.removeAt(index);
-                                        } else {
-                                          receiveProduct(
-                                              product["name"], product["unit"]);
-                                        }
-                                      });
-                                    },
-                                    backgroundColor: widget.item.isEmpty
-                                        ? Colors.red
-                                        : Colors.orange,
-                                    foregroundColor: Colors.white,
-                                    icon: widget.item.isEmpty
-                                        ? Icons.delete
-                                        : Icons.edit,
-                                  ),
-                                ],
-                              ),
-                              child: Container(
-                                color: (index % 2 == 0)
-                                    ? const Color.fromARGB(25, 73, 133, 206)
-                                    : Colors.white,
+                            return Container(
+                              color: (index % 2 == 0)
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .color
+                                  : Theme.of(context)
+                                      .textTheme
+                                      .titleLarge!
+                                      .color,
+                              child: Slidable(
+                                endActionPane: ActionPane(
+                                  motion: const StretchMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      onPressed: (_) {
+                                        setState(() {
+                                          if (widget.item.isEmpty) {
+                                            products.removeAt(index);
+                                          } else {
+                                            receiveProduct(product["name"],
+                                                product["unit"]);
+                                          }
+                                        });
+                                      },
+                                      backgroundColor: widget.item.isEmpty
+                                          ? Colors.red
+                                          : Colors.orange,
+                                      foregroundColor: Colors.white,
+                                      icon: widget.item.isEmpty
+                                          ? Icons.delete
+                                          : Icons.edit,
+                                    ),
+                                  ],
+                                ),
                                 child: ListTile(
                                   leading: const Icon(
                                     FontAwesomeIcons.box,
                                     size: 25,
                                   ),
                                   title: Text(product["name"]),
-                                  subtitle: Text(product["unit"]),
+                                  trailing: Text(
+                                    product["unit"],
+                                    style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .fontSize,
+                                    ),
+                                  ),
                                 ),
                               ),
                             );

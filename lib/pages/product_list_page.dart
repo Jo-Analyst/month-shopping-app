@@ -160,19 +160,14 @@ class _ProductListPageState extends State<ProductListPage> {
                                       subtitle: FittedBox(
                                         fit: BoxFit.scaleDown,
                                         alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          product["type_category"],
-                                          style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .displayLarge!
-                                                .fontSize,
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .color,
-                                          ),
-                                        ),
+                                        child: Text(product["type_category"],
+                                            style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .displayLarge!
+                                                  .fontSize,
+                                              color: Colors.grey,
+                                            )),
                                       ),
                                       trailing: FittedBox(
                                         fit: BoxFit.scaleDown,

@@ -23,6 +23,10 @@ Future<String?> showDialogUnit(BuildContext context) async {
             maxLength: 5,
             decoration: const InputDecoration(
               labelText: "Unidade",
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
+              floatingLabelStyle: TextStyle(color: Colors.black),
             ),
             onChanged: (value) => unit = value.toUpperCase().trim(),
             onFieldSubmitted: (_) => updateUnit(context),
@@ -39,6 +43,9 @@ Future<String?> showDialogUnit(BuildContext context) async {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
               child: const Text(
                 "Alterar",
               ),

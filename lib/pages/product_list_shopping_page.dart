@@ -183,9 +183,12 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         product["type_category"],
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                        ),
+                                        style: TextStyle(
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .displayLarge!
+                                                .fontSize,
+                                            color: Colors.grey),
                                       ),
                                     ),
                                     trailing: FittedBox(

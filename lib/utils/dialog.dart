@@ -7,10 +7,21 @@ Future<bool?> showDialogDelete(BuildContext context, String content) async {
       return AlertDialog(
         title: const Text(
           "Excluir",
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
-        content: Text(content),
+        content: Text(
+          content,
+          style: const TextStyle(
+            color: Colors.black,
+          ),
+        ),
         actions: [
           TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
             child: const Text(
               'Cancelar',
             ),
@@ -19,6 +30,9 @@ Future<bool?> showDialogDelete(BuildContext context, String content) async {
             },
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
             child: const Text(
               "Excluir",
             ),

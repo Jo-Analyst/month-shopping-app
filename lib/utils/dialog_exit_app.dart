@@ -7,10 +7,21 @@ Future<String?> showDialogApp(BuildContext context, String content) async {
       return AlertDialog(
         title: const Text(
           "Sair",
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
-        content: Text(content),
+        content: Text(
+          content,
+          style: const TextStyle(
+            color: Colors.black,
+          ),
+        ),
         actions: [
           TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
             child: const Text(
               'Cancelar',
             ),
@@ -19,6 +30,9 @@ Future<String?> showDialogApp(BuildContext context, String content) async {
             },
           ),
           TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
             child: const Text(
               'Não',
             ),
@@ -27,6 +41,9 @@ Future<String?> showDialogApp(BuildContext context, String content) async {
             },
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+            ),
             child: const Text(
               "Sim",
             ),

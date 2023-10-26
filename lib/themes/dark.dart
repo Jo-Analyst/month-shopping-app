@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(
-      fontSize: 23,
-      color: Colors.black,
-    ),
+    bodyLarge: TextStyle(fontSize: 23, color: Colors.black),
     displayLarge: TextStyle(fontSize: 18, color: Colors.white),
     displaySmall: TextStyle(color: Color.fromARGB(194, 13, 23, 37)),
-    titleLarge: TextStyle(color: Colors.grey),
+    titleLarge: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
+    titleMedium: TextStyle(color: Colors.white),
   ),
   primaryColor: const Color.fromARGB(113, 141, 137, 137),
   appBarTheme: const AppBarTheme(
@@ -18,7 +16,7 @@ final darkTheme = ThemeData(
   ),
   iconTheme: const IconThemeData(
     size: 35,
-    color: Color.fromARGB(255, 73, 133, 206),
+    color: Colors.white,
   ),
   scaffoldBackgroundColor: Colors.black87,
   cardTheme: const CardTheme(

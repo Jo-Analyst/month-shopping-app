@@ -35,6 +35,7 @@ Future<String?> showDialogCategory(
               labelText: "Categoria",
               floatingLabelStyle: TextStyle(color: Colors.black),
             ),
+            style: const TextStyle(color: Colors.black),
             onChanged: (value) => description = value,
             onFieldSubmitted: (value) => addCategory(context),
             validator: (value) {

@@ -26,6 +26,7 @@ Future<Map<String, dynamic>?> showDialogProductForm(
       return AlertDialog(
         title: Text(
           nameEditing == null ? "Novo" : "Alteração",
+          style: const TextStyle(color: Colors.black),
         ),
         content: Form(
             key: globalkey,
@@ -48,6 +49,7 @@ Future<Map<String, dynamic>?> showDialogProductForm(
                       ),
                       floatingLabelStyle: TextStyle(color: Colors.black),
                     ),
+                    style: const TextStyle(color: Colors.black),
                     onChanged: (value) => name = value,
                     onFieldSubmitted: (_) => addProduct(context),
                     validator: (value) {
@@ -77,6 +79,7 @@ Future<Map<String, dynamic>?> showDialogProductForm(
                       ),
                       floatingLabelStyle: TextStyle(color: Colors.black),
                     ),
+                    style: const TextStyle(color: Colors.black),
                     onChanged: (value) => unit = value,
                     onFieldSubmitted: (_) => addProduct(context),
                     validator: (value) {
@@ -93,7 +96,8 @@ Future<Map<String, dynamic>?> showDialogProductForm(
         actions: [
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton( style: ElevatedButton.styleFrom(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
               ),
               child: Text(
