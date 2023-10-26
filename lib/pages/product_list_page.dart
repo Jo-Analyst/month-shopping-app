@@ -86,10 +86,11 @@ class _ProductListPageState extends State<ProductListPage> {
                             Text(
                               "Adicione um ou mais produtos.",
                               style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .fontSize),
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .fontSize,
+                              ),
                             ),
                           ],
                         )
@@ -157,8 +158,15 @@ class _ProductListPageState extends State<ProductListPage> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           product["type_category"],
-                                          style: const TextStyle(
-                                            fontSize: 18,
+                                          style: TextStyle(
+                                            fontSize: Theme.of(context)
+                                                .textTheme
+                                                .displayLarge!
+                                                .fontSize,
+                                            color: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .color,
                                           ),
                                         ),
                                       ),

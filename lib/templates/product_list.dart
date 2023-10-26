@@ -56,7 +56,7 @@ class ProductsList extends StatelessWidget {
                 child: Container(
                   color: (index % 2 > 0)
                       ? const Color.fromARGB(25, 73, 133, 206)
-                      : Colors.white,
+                      : Colors.grey,
                   child: ListTile(
                     leading: const CircleAvatar(
                       backgroundColor: Colors.black54,
@@ -67,7 +67,12 @@ class ProductsList extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                        "${product["quantity"]} ${product["unit"]} de ${product["name"]}"),
+                      "${product["quantity"]} ${product["unit"]} de ${product["name"]}",
+                      style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.displayLarge!.fontSize,
+                      ),
+                    ),
                   ),
                 ),
               ),

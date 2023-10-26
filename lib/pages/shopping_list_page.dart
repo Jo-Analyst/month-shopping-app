@@ -161,7 +161,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                           itemBuilder: (context, index) {
                             return Card(
                               elevation: 8,
-                              color: Colors.white,
                               child: Column(
                                 children: [
                                   ListTile(
@@ -183,8 +182,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                         cardTriggeredList[index]
                                             ? Icons.keyboard_arrow_up
                                             : Icons.keyboard_arrow_down,
-                                        color: Theme.of(context).primaryColor,
-                                        size: 30,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .color,
                                       ),
                                       onPressed: () {
                                         updateListCardTriggered(index);
@@ -216,7 +217,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                               style: TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w700,
-                                color: Theme.of(context).primaryColor,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .color,
                               ),
                             ),
                             const SizedBox(height: 20),
@@ -228,6 +232,10 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                                     .textTheme
                                     .displayLarge!
                                     .fontSize,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .color,
                               ),
                             ),
                           ],
