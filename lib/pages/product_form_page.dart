@@ -103,7 +103,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
           ],
           leading: const IconButtonLeadingAppBar(),
           title: const Text("Produto"),
-          ),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -132,8 +132,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
                               readOnly: true,
                               textInputAction: TextInputAction.none,
                               decoration: const InputDecoration(
-                                labelText: "Tipo",
-                              ),
+                                  labelText: "Tipo",
+                                  enabledBorder: OutlineInputBorder()),
                               onTap: () => openScreenCategories(),
                             ),
                           ),

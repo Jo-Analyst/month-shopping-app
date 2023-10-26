@@ -86,6 +86,10 @@ class _ProductListPageState extends State<ProductListPage> {
                             Text(
                               "Adicione um ou mais produtos.",
                               style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .color,
                                 fontSize: Theme.of(context)
                                     .textTheme
                                     .displayLarge!

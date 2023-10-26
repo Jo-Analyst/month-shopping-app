@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(fontSize: 23),
+    bodyLarge: TextStyle(
+      fontSize: 23,
+      color: Colors.black,
+    ),
     displayLarge: TextStyle(fontSize: 18, color: Colors.white),
     displaySmall: TextStyle(color: Color.fromARGB(194, 13, 23, 37)),
     titleLarge: TextStyle(color: Colors.grey),
@@ -23,21 +26,22 @@ final darkTheme = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(color: Colors.white),
-    focusedBorder: OutlineInputBorder(
+    focusedBorder: UnderlineInputBorder(
       borderSide: BorderSide(
         color: Colors.white,
       ),
     ),
-    enabledBorder: OutlineInputBorder(
+    enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(
         color: Colors.white, // Cor da borda quando o campo está desabilitado
       ),
     ),
   ),
-  textSelectionTheme: const TextSelectionThemeData(
-      cursorColor: Colors.red, // Define a cor do cursor
-      selectionHandleColor: Colors.green, // Define a cor do handle de seleção
-      selectionColor: Colors.amber),
+  // textSelectionTheme: const TextSelectionThemeData(
+  //   cursorColor: Colors.red, // Define a cor do cursor
+  //   selectionHandleColor: Colors.green, // Define a cor do handle de seleção
+  //   selectionColor: Colors.amber,
+  // ),
   listTileTheme: const ListTileThemeData(
     titleTextStyle: TextStyle(color: Colors.white),
     subtitleTextStyle: TextStyle(color: Colors.white),

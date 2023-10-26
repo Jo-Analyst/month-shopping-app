@@ -30,7 +30,7 @@ Future<Map<String, dynamic>?> showDialogProductForm(
         content: Form(
             key: globalkey,
             child: SizedBox(
-              height: 170,
+              height: 172,
               child: Column(
                 children: [
                   TextFormField(
@@ -39,6 +39,14 @@ Future<Map<String, dynamic>?> showDialogProductForm(
                     textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
                       labelText: "Produto",
+                      labelStyle: TextStyle(color: Colors.black),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      floatingLabelStyle: TextStyle(color: Colors.black),
                     ),
                     onChanged: (value) => name = value,
                     onFieldSubmitted: (_) => addProduct(context),
@@ -50,6 +58,9 @@ Future<Map<String, dynamic>?> showDialogProductForm(
                       return null;
                     },
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   TextFormField(
                     controller: unitController,
                     inputFormatters: [UpperCaseTextFormatter()],
@@ -57,6 +68,14 @@ Future<Map<String, dynamic>?> showDialogProductForm(
                     textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
                       labelText: "Unidade de medida",
+                      labelStyle: TextStyle(color: Colors.black),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
+                      floatingLabelStyle: TextStyle(color: Colors.black),
                     ),
                     onChanged: (value) => unit = value,
                     onFieldSubmitted: (_) => addProduct(context),
@@ -74,9 +93,14 @@ Future<Map<String, dynamic>?> showDialogProductForm(
         actions: [
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
+            child: ElevatedButton( style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
               child: Text(
                 nameEditing == null ? "Adicionar" : "Alterar",
+                style: TextStyle(
+                    fontSize:
+                        Theme.of(context).textTheme.displayLarge!.fontSize),
               ),
               onPressed: () => addProduct(context),
             ),

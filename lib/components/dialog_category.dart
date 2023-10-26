@@ -20,6 +20,7 @@ Future<String?> showDialogCategory(
       return AlertDialog(
         title: const Text(
           "Novo",
+          style: TextStyle(color: Colors.black),
         ),
         content: Form(
           key: globalkey,
@@ -28,7 +29,11 @@ Future<String?> showDialogCategory(
             textCapitalization: TextCapitalization.sentences,
             autofocus: true,
             decoration: const InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.black),
+              ),
               labelText: "Categoria",
+              floatingLabelStyle: TextStyle(color: Colors.black),
             ),
             onChanged: (value) => description = value,
             onFieldSubmitted: (value) => addCategory(context),
@@ -45,8 +50,14 @@ Future<String?> showDialogCategory(
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              child: const Text(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
+              child: Text(
                 "Salvar",
+                style: TextStyle(
+                    fontSize:
+                        Theme.of(context).textTheme.displayLarge!.fontSize),
               ),
               onPressed: () => addCategory(context),
             ),

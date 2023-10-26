@@ -121,6 +121,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                     },
                               icon: Icon(
                                 isValueInSearch ? Icons.close : Icons.search,
+                                color: const Color.fromARGB(255, 111, 111, 111),
                               ),
                             ),
                           ),
