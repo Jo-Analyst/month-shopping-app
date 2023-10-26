@@ -109,7 +109,6 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                           controller: searchController,
                           decoration: InputDecoration(
                             labelText: "Busque a categoria aqui",
-                            border: const OutlineInputBorder(),
                             suffixIcon: IconButton(
                               onPressed: !isValueInSearch
                                   ? null
@@ -137,6 +136,8 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                             });
                           },
                           style: TextStyle(
+                            color:
+                                Theme.of(context).textTheme.displayLarge!.color,
                             fontSize: Theme.of(context)
                                 .textTheme
                                 .displayLarge!
@@ -153,12 +154,16 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                   const Icon(
                                     Icons.category,
                                     size: 80,
-                                    color:  Color.fromARGB(255, 73, 133, 206),
+                                    color: Color.fromARGB(255, 73, 133, 206),
                                   ),
                                   const SizedBox(height: 10),
                                   Text(
                                     "Adicione uma ou mais categorias",
                                     style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .color,
                                       fontSize: Theme.of(context)
                                           .textTheme
                                           .displayLarge!
@@ -173,71 +178,69 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
                               child: Card(
+                                elevation: 4,
                                 child: ListView(
                                   children: categories.map(
                                     (category) {
                                       index++;
-                                      return Container(
-                                        color: (index % 2 > 0)
-                                            ? const Color.fromARGB(
-                                                25, 73, 133, 206)
-                                            : Colors.white,
-                                        child: Slidable(
-                                          endActionPane: ActionPane(
-                                            motion: const StretchMotion(),
-                                            children: [
-                                              SlidableAction(
+                                      return Slidable(
+                                        endActionPane: ActionPane(
+                                          motion: const StretchMotion(),
+                                          children: [
+                                            SlidableAction(
+                                              onPressed: (_) =>
+                                                  saveNewCategory(category),
+                                              backgroundColor: Colors.orange,
+                                              icon: Icons.edit,
+                                              foregroundColor: Colors.white,
+                                            ),
+                                            Visibility(
+                                              visible: widget.isScreenProducts,
+                                              child: SlidableAction(
                                                 onPressed: (_) =>
-                                                    saveNewCategory(category),
-                                                backgroundColor: Colors.orange,
-                                                icon: Icons.edit,
-                                                foregroundColor: Colors.white,
+                                                    deleteCategory(
+                                                        category["id"]),
+                                                backgroundColor: Colors.red,
+                                                icon: Icons.delete,
                                               ),
-                                              Visibility(
-                                                visible:
-                                                    widget.isScreenProducts,
-                                                child: SlidableAction(
-                                                  onPressed: (_) =>
-                                                      deleteCategory(
-                                                          category["id"]),
-                                                  backgroundColor: Colors.red,
-                                                  icon: Icons.delete,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              InkWell(
-                                                onTap: widget.isScreenProducts
-                                                    ? null
-                                                    : () =>
-                                                        Navigator.of(context)
-                                                            .pop(category),
-                                                child: Container(
-                                                  color: (index % 2 == 0)
-                                                      ? const Color.fromARGB(
-                                                          25, 73, 133, 206)
-                                                      : Colors.white,
-                                                  child: ListTile(
-                                                    minLeadingWidth: 0,
-                                                    leading: const Icon(Icons
-                                                        .category_outlined),
-                                                    title: Text(
-                                                      category["type_category"],
-                                                      style: TextStyle(
-                                                        fontSize:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .displayLarge!
-                                                                .fontSize,
-                                                      ),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: widget.isScreenProducts
+                                                  ? null
+                                                  : () => Navigator.of(context)
+                                                      .pop(category),
+                                              child: Container(
+                                                color: (index % 2 > 0)
+                                                    ? Theme.of(context)
+                                                        .textTheme
+                                                        .displayMedium!
+                                                        .color
+                                                    : Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge!
+                                                        .color,
+                                                child: ListTile(
+                                                  minLeadingWidth: 0,
+                                                  leading: const Icon(
+                                                      Icons.category_outlined),
+                                                  title: Text(
+                                                    category["type_category"],
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .displayLarge!
+                                                              .fontSize,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                       );
                                     },

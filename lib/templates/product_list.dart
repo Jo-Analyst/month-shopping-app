@@ -54,9 +54,9 @@ class ProductsList extends StatelessWidget {
                   });
                 },
                 child: Container(
-                  color: (index % 2 > 0)
-                      ? const Color.fromARGB(25, 73, 133, 206)
-                      : Colors.grey,
+                  color: (index % 2 == 0)
+                      ? Theme.of(context).textTheme.displayMedium!.color
+                      : Theme.of(context).textTheme.titleLarge!.color,
                   child: ListTile(
                     leading: const CircleAvatar(
                       backgroundColor: Colors.black54,
