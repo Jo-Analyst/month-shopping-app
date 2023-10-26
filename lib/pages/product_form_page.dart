@@ -103,9 +103,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
           ],
           leading: const IconButtonLeadingAppBar(),
           title: const Text("Produto"),
-          backgroundColor: Theme.of(context).primaryColor,
-          toolbarHeight: 80,
-        ),
+          ),
         body: SingleChildScrollView(
           child: Column(
             children: [

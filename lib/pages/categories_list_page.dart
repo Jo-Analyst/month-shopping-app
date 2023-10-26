@@ -153,7 +153,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                   const Icon(
                                     Icons.category,
                                     size: 80,
-                                    color: Colors.black87,
+                                    color:  Color.fromARGB(255, 73, 133, 206),
                                   ),
                                   const SizedBox(height: 10),
                                   Text(

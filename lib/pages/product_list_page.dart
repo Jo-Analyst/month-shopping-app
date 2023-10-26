@@ -80,7 +80,7 @@ class _ProductListPageState extends State<ProductListPage> {
                             const Icon(
                               FontAwesomeIcons.box,
                               size: 80,
-                              color: Colors.black87,
+                              color: Color.fromARGB(255, 73, 133, 206),
                             ),
                             const SizedBox(height: 10),
                             Text(

@@ -9,7 +9,6 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       actions: [action!],
-      backgroundColor: Theme.of(context).primaryColor,
       title: Text(
         title,
         style: TextStyle(

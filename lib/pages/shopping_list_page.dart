@@ -139,7 +139,6 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
                       onPressed: () => openScreenListPurchases(),
                     ),
                   ],
-                  backgroundColor: Theme.of(context).primaryColor,
                   title: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
