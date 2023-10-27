@@ -22,7 +22,9 @@ class ShoppingListApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Shopping List',
-        theme: darkTheme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        themeMode: ThemeMode.dark,
         home: const ScreenAppPage(),
       ),
     );
