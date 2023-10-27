@@ -8,7 +8,6 @@ import 'package:month_shopping_app/themes/app_theme.dart';
 import 'package:month_shopping_app/utils/dialog_exit_app.dart';
 import 'package:month_shopping_app/utils/permission_use_app.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 class ScreenAppPage extends StatefulWidget {
   const ScreenAppPage({super.key});
