@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:month_shopping_app/models/theme_model.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
@@ -20,17 +21,24 @@ class _ShoppingListAppState extends State<ShoppingListApp> {
   @override
   void initState() {
     super.initState();
+    toggleTheme();
     AppTheme.instance.addListener(() {
       setState(() {});
     });
-    
+  }
+
+  void toggleTheme() async {
+    final theme = await ThemeModel.find();
+    if (theme.isNotEmpty) {
+      AppTheme.instance.isDarkTheme = theme[0]["is_dark"] == 0 ? false : true;
+      setState(() {});
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        
         ChangeNotifierProvider(create: (_) => CategoryProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => ShoppingListProvider()),

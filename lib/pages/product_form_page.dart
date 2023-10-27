@@ -37,7 +37,9 @@ class _ProductFormPageState extends State<ProductFormPage> {
       ),
     );
     if (categorySelected != null) {
-      typeCategory = categorySelected["type_category"];
+      setState(() {
+        typeCategory = categorySelected["type_category"];
+      });
       categoryController.text = typeCategory;
       categoryId = categorySelected["id"];
     }

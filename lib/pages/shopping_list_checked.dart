@@ -18,19 +18,9 @@ class ShoppingListChecked extends StatefulWidget {
 class _ShoppingListCheckedState extends State<ShoppingListChecked> {
   List<Map<String, dynamic>> shoppingListChecked = [];
 
-  // void loadingShoppingChecked() async {
-  //   final shoppingProvider =
-  //       Provider.of<ShoppingListProvider>(context, listen: false);
-  //   await shoppingProvider.loadShoppingIsChecked();
-  //   setState(() {
-  //     shoppingListChecked = shoppingProvider.itemsChecked;
-  //   });
-  // }
-
-  @override
+    @override
   void initState() {
     super.initState();
-    // loadingShoppingChecked();
     shoppingListChecked = widget.shoppingListChecked;
   }
 
