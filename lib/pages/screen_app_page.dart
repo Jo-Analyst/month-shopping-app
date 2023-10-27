@@ -4,9 +4,11 @@ import 'package:month_shopping_app/config/backup.dart';
 import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/pages/product_list_page.dart';
 import 'package:month_shopping_app/pages/shopping_list_page.dart';
+import 'package:month_shopping_app/themes/app_theme.dart';
 import 'package:month_shopping_app/utils/dialog_exit_app.dart';
 import 'package:month_shopping_app/utils/permission_use_app.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 class ScreenAppPage extends StatefulWidget {
   const ScreenAppPage({super.key});
@@ -77,6 +79,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             if (screenShoppingListActived) {
+              AppTheme.instance.toggleTheme();
             } else {
               Navigator.of(context).push(
                 MaterialPageRoute(
