@@ -13,7 +13,6 @@ class AppTheme extends ChangeNotifier {
 
   void toggleTheme() {
     isDarkTheme = !isDarkTheme;
-    print(themeMode);
     notifyListeners();
   }
 
