@@ -76,101 +76,106 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 15,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Compras checadas",
-              style: TextStyle(
-                fontSize: Theme.of(context).textTheme.displayLarge!.fontSize,
-                fontWeight: FontWeight.w600,
+      body: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 15,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Compras checadas",
+                style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.displayLarge!.fontSize,
+                  fontWeight: FontWeight.w600,
+                  color: Theme.of(context).textTheme.displayLarge!.color,
+                ),
               ),
-            ),
-            const Divider(
-              height: 10,
-              // thickness: 2,
-              color: Colors.black,
-            ),
-            Consumer<ShoppingListProvider>(
-              builder: (context, shoppingListProvider, _) {
-                shoppingListChecked = shoppingListProvider.itemsChecked;
-
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height - 162,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: shoppingListChecked.length,
-                    itemBuilder: (_, index) {
-                      final shoppe = shoppingListChecked[index];
-                      return Dismissible(
-                        key: Key(shoppe["shoppe_list_id"].toString()),
-                        background: Container(
-                          color: Colors.orange,
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 10),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        ),
-                        direction: DismissDirection.endToStart,
-                        onDismissed: (direction) async {
-                          await shoppingListProvider.unverifyList(shoppe);
-                          if (shoppingListProvider.itemsChecked.isEmpty) {
-                            closeScreen();
-                          }
-                        },
-                        child: Container(
-                          color: (index % 2 == 0)
-                              ? const Color.fromARGB(25, 73, 133, 206)
-                              : Colors.white,
-                          child: ListTile(
-                            leading: const Icon(
-                              Icons.shopping_bag_outlined,
-                              size: 30,
-                              color: Colors.black,
+              const Divider(
+                height: 10,
+                // thickness: 2,
+                color: Colors.black,
+              ),
+              Consumer<ShoppingListProvider>(
+                builder: (context, shoppingListProvider, _) {
+                  shoppingListChecked = shoppingListProvider.itemsChecked;
+      
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height - 163,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: shoppingListChecked.length,
+                      itemBuilder: (_, index) {
+                        final shoppe = shoppingListChecked[index];
+                        return Dismissible(
+                          key: Key(shoppe["shoppe_list_id"].toString()),
+                          background: Container(
+                            color: Colors.orange,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.only(right: 10),
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
                             ),
-                            title: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
-                                style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .fontSize,
+                          ),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) async {
+                            await shoppingListProvider.unverifyList(shoppe);
+                            if (shoppingListProvider.itemsChecked.isEmpty) {
+                              closeScreen();
+                            }
+                          },
+                          child: Container(
+                            color: (index % 2 == 0)
+                                ? Theme.of(context)
+                                    .textTheme
+                                    .displayMedium!
+                                    .color
+                                : Theme.of(context).textTheme.titleLarge!.color,
+                            child: ListTile(
+                              leading: const Icon(
+                                Icons.shopping_bag_outlined,
+                                size: 30,
+                              ),
+                              title: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "${shoppe["quantity"]} ${shoppe["unit"]} de ${shoppe["name"]}",
+                                  style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .fontSize,
+                                  ),
                                 ),
                               ),
-                            ),
-                            subtitle: Text(
-                              changeTheDateWriting(shoppe["date_shoppe"]),
-                              style: TextStyle(
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .fontSize,
+                              subtitle: Text(
+                                changeTheDateWriting(shoppe["date_shoppe"]),
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .fontSize,
+                                    color: Colors.grey),
+                              ),
+                              trailing: const Icon(
+                                Icons.check,
+                                size: 30,
+                                color: Colors.green,
                               ),
                             ),
-                            trailing: const Icon(
-                              Icons.check,
-                              size: 30,
-                              color: Colors.green,
-                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ],
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
