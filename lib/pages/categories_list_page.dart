@@ -106,6 +106,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                       Container(
                         margin: const EdgeInsets.only(top: 10),
                         child: TextFormField(
+                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
                           controller: searchController,
                           decoration: InputDecoration(
                             labelText: "Busque a categoria aqui",
