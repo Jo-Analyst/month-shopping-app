@@ -120,7 +120,7 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                     horizontal: 10,
                     vertical: 25,
                   ),
-                  height: MediaQuery.of(context).size.height * 0.89,
+                  height: MediaQuery.of(context).size.height * 0.85,
                   child: products.isEmpty
                       ? const Center(
                           child: Text(

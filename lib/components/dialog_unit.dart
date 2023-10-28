@@ -24,12 +24,17 @@ Future<String?> showDialogUnit(BuildContext context) async {
             decoration: const InputDecoration(
               labelText: "Unidade",
               focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black),
+                borderSide: BorderSide(
+                  color: Colors.black,
+                ),
               ),
-              floatingLabelStyle: TextStyle(color: Colors.black),
+              floatingLabelStyle: TextStyle(
+                color: Colors.black,
+              ),
             ),
             onChanged: (value) => unit = value.toUpperCase().trim(),
             onFieldSubmitted: (_) => updateUnit(context),
+            style: const TextStyle(color: Colors.black),
             validator: (value) {
               if (value.toString().trim().isEmpty) {
                 return "Informe a unidade";

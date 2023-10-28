@@ -18,7 +18,7 @@ class ShoppingListChecked extends StatefulWidget {
 class _ShoppingListCheckedState extends State<ShoppingListChecked> {
   List<Map<String, dynamic>> shoppingListChecked = [];
 
-    @override
+  @override
   void initState() {
     super.initState();
     shoppingListChecked = widget.shoppingListChecked;
@@ -91,9 +91,9 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
               Consumer<ShoppingListProvider>(
                 builder: (context, shoppingListProvider, _) {
                   shoppingListChecked = shoppingListProvider.itemsChecked;
-      
+
                   return SizedBox(
-                    height: MediaQuery.of(context).size.height - 163,
+                    height: MediaQuery.of(context).size.height - 170,
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: shoppingListChecked.length,

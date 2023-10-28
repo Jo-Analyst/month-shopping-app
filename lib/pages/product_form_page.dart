@@ -132,7 +132,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       Row(
                         children: [
                           SizedBox(
-                            width: MediaQuery.of(context).size.width * .8 - 15,
+                            width: MediaQuery.of(context).size.width * .8 - 17,
                             child: TextFormField(
                               controller: categoryController,
                               readOnly: true,
@@ -216,7 +216,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
                         color: Theme.of(context).primaryColor,
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 2 + 76,
+                        height: MediaQuery.of(context).size.height / 2,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: products.length,

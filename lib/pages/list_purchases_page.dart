@@ -158,49 +158,62 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                     ),
                   )
                 : Column(
-                    children: shopping.map(
-                      (shoppe) {
-                        return Column(
-                          children: [
-                            Slidable(
-                              endActionPane: ActionPane(
-                                motion: const StretchMotion(),
-                                children: [
-                                  SlidableAction(
-                                    onPressed: (_) {
-                                      setState(() {
-                                        shopping.removeWhere(
-                                          (shopp) =>
-                                              shopp["product_id"] ==
-                                              shoppe["product_id"],
-                                        );
-                                        if (widget.shopping.isNotEmpty) {
-                                          deletedItems.add(shoppe);
-                                        }
-                                      });
-                                    },
-                                    backgroundColor: Colors.red,
-                                    icon: Icons.delete,
+                    children: shopping
+                        .map(
+                          (shoppe) => Slidable(
+                            endActionPane: ActionPane(
+                              motion: const StretchMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (_) {
+                                    setState(() {
+                                      shopping.removeWhere(
+                                        (shopp) =>
+                                            shopp["product_id"] ==
+                                            shoppe["product_id"],
+                                      );
+                                      if (widget.shopping.isNotEmpty) {
+                                        deletedItems.add(shoppe);
+                                      }
+                                    });
+                                  },
+                                  backgroundColor: Colors.red,
+                                  icon: Icons.delete,
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: const Icon(
+                                    FontAwesomeIcons.box,
+                                    size: 25,
                                   ),
-                                ],
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        FontAwesomeIcons.box,
-                                        size: 25,
+                                  title: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      shoppe["name"],
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .fontSize,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .color,
                                       ),
-                                      const SizedBox(width: 5),
+                                    ),
+                                  ),
+                                  subtitle: Row(
+                                    children: [
                                       FittedBox(
                                         fit: BoxFit.scaleDown,
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          shoppe["name"],
-                                          textAlign: TextAlign.left,
+                                          shoppe["unit"].toString(),
                                           style: TextStyle(
                                             fontSize: Theme.of(context)
                                                 .textTheme
@@ -213,12 +226,6 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
                                       InkWell(
                                         onTap: () async {
                                           final unit =
@@ -230,18 +237,26 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                           }
                                         },
                                         child: Container(
-                                          padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(width: 1),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(10),
-                                            ),
+                                          margin:
+                                              const EdgeInsets.only(left: 8),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            size: 20,
                                           ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  trailing: SizedBox(
+                                    width: 55,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 25,
                                           child: FittedBox(
                                             fit: BoxFit.scaleDown,
                                             child: Text(
-                                              shoppe["unit"].toString(),
+                                              shoppe["quantity"].toString(),
                                               style: TextStyle(
                                                 fontSize: Theme.of(context)
                                                     .textTheme
@@ -252,74 +267,49 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                                                     .displayLarge!
                                                     .color,
                                               ),
+                                              textAlign: TextAlign.right,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 40,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                shoppe["quantity"].toString(),
-                                                style: TextStyle(
-                                                  fontSize: Theme.of(context)
-                                                      .textTheme
-                                                      .displayLarge!
-                                                      .fontSize,
-                                                  color: Theme.of(context)
-                                                      .textTheme
-                                                      .displayLarge!
-                                                      .color,
-                                                ),
-                                                textAlign: TextAlign.right,
+                                        Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () => setState(() {
+                                                if (shoppe["quantity"] < 99) {
+                                                  shoppe["quantity"]++;
+                                                }
+                                              }),
+                                              child: const Icon(
+                                                Icons.keyboard_arrow_up,
+                                                size: 28,
                                               ),
                                             ),
-                                          ),
-                                          Column(
-                                            children: [
-                                              InkWell(
-                                                onTap: () => setState(() {
-                                                  shoppe["quantity"]++;
-                                                }),
-                                                child: const Icon(
-                                                  Icons.keyboard_arrow_up,
-                                                  size: 28,
-                                                ),
+                                            InkWell(
+                                              onTap: () => setState(() {
+                                                if (shoppe["quantity"] > 1) {
+                                                  shoppe["quantity"]--;
+                                                }
+                                              }),
+                                              child: const Icon(
+                                                Icons.keyboard_arrow_down,
+                                                size: 28,
                                               ),
-                                              InkWell(
-                                                onTap: () => setState(() {
-                                                  if (shoppe["quantity"] > 1) {
-                                                    shoppe["quantity"]--;
-                                                  }
-                                                }),
-                                                child: const Icon(
-                                                  Icons.keyboard_arrow_down,
-                                                  size: 28,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Divider(
+                                  color: Theme.of(context).primaryColor,
+                                  height: 2,
+                                )
+                              ],
                             ),
-                            Divider(
-                              color: Theme.of(context).primaryColor,
-                              height: 2,
-                            )
-                          ],
-                        );
-                      },
-                    ).toList(),
+                          ),
+                        )
+                        .toList(),
                   )
           ],
         ),

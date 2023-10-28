@@ -31,7 +31,7 @@ Future<Map<String, dynamic>?> showDialogProductForm(
         content: Form(
             key: globalkey,
             child: SizedBox(
-              height: 172,
+              height: 174,
               child: Column(
                 children: [
                   TextFormField(

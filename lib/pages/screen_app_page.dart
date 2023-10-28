@@ -74,7 +74,6 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
         extendBody: true,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
-          // backgroundColor: Colors.black87,
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
             if (screenShoppingListActived) {
@@ -90,7 +89,11 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
             }
           },
           child: Icon(
-            screenShoppingListActived ? Icons.brightness_6_sharp : Icons.add,
+            screenShoppingListActived
+                ? AppTheme.instance.isDarkTheme
+                    ? Icons.brightness_5_sharp
+                    : Icons.brightness_2_outlined
+                : Icons.add,
             size: 35,
           ),
         ),

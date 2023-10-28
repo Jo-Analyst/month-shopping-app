@@ -64,7 +64,7 @@ class _ProductListPageState extends State<ProductListPage> {
             horizontal: 10,
             vertical: 25,
           ),
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.75,
           child: Consumer<ProductProvider>(
             builder: (_, productProvider, __) {
               products = productProvider.items;

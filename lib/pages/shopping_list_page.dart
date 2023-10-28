@@ -115,7 +115,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
           ? Center(
               child: loadingThreeRotatingDots(context, 50),
             )
-          : ListView(
+          : Column(
               children: [
                 AppBar(
                   actions: [
