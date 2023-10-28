@@ -1,4 +1,4 @@
-# month_shopping_app
+# Month Shopping APP
 
 Projeto criando com intuito de auxiliar na compra do mês
 
