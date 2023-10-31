@@ -142,21 +142,29 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
             shopping.isEmpty
                 ? SizedBox(
                     height: MediaQuery.of(context).size.height - 150,
-                    child: Center(
-                      child: Text(
-                        "Não há produtos listados para a compra",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: Theme.of(context)
-                              .textTheme
-                              .displayLarge!
-                              .fontSize,
-                          color:
-                              Theme.of(context).textTheme.displayLarge!.color,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          FontAwesomeIcons.box,
+                          size: 50,
+                          color: Color.fromARGB(255, 73, 133, 206),
                         ),
-                      ),
-                    ),
-                  )
+                        const SizedBox(height: 10),
+                        Text(
+                          "Não há produtos listados para a compra",
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .fontSize,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .color),
+                        ),
+                      ],
+                    ))
                 : Column(
                     children: shopping
                         .map(

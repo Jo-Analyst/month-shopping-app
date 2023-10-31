@@ -122,11 +122,28 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                   ),
                   height: MediaQuery.of(context).size.height * 0.85,
                   child: products.isEmpty
-                      ? const Center(
-                          child: Text(
-                            "Não há produtos cadastrado.",
-                            style: TextStyle(fontSize: 18),
-                          ),
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              FontAwesomeIcons.box,
+                              size: 50,
+                              color: Color.fromARGB(255, 73, 133, 206),
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              "Não há produtos cadastrado.",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .fontSize,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .color),
+                            ),
+                          ],
                         )
                       : ListView(
                           children: products
