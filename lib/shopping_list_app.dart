@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:month_shopping_app/introScreen.dart';
 import 'package:month_shopping_app/models/theme_model.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
@@ -51,7 +52,8 @@ class _ShoppingListAppState extends State<ShoppingListApp> {
         theme: lightTheme,
         darkTheme: darkTheme,
         themeMode: AppTheme.instance.themeMode,
-        home: const ScreenAppPage(),
+        home: const IntroScreen(),
+        routes: {"/home": (context) => const ScreenAppPage()},
       ),
     );
   }
