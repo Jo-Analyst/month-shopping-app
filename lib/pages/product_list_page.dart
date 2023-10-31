@@ -17,7 +17,8 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   List<Map<String, dynamic>> products = [];
-  bool isLoading = true;
+  bool isLoading = true, isValueInSearch = false;
+  final searchController = TextEditingController();
 
   @override
   void initState() {
@@ -37,158 +38,230 @@ class _ProductListPageState extends State<ProductListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        AppBar(
-          title: Text(
-            "Produtos",
-            style: TextStyle(
-              fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          AppBar(
+            title: Text(
+              "Produtos",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
+              ),
             ),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const CategoriesListPage(
-                    isScreenProducts: true,
+            actions: [
+              IconButton(
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const CategoriesListPage(
+                      isScreenProducts: true,
+                    ),
                   ),
                 ),
+                icon: const Icon(Icons.category_outlined),
               ),
-              icon: const Icon(Icons.category_outlined),
-            ),
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 25,
+            ],
           ),
-          height: MediaQuery.of(context).size.height * 0.75,
-          child: Consumer<ProductProvider>(
-            builder: (_, productProvider, __) {
-              products = productProvider.items;
+          Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 25,
+            ),
+            // height: MediaQuery.of(context).size.height * .2,
+            child: Consumer<ProductProvider>(
+              builder: (_, productProvider, __) {
+                products = productProvider.items;
 
-              return isLoading
-                  ? Center(
-                      child: loadingThreeRotatingDots(context, 50),
-                    )
-                  : products.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              FontAwesomeIcons.box,
-                              size: 80,
-                              color: Color.fromARGB(255, 73, 133, 206),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Adicione um ou mais produtos.",
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .color,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .fontSize,
+                return isLoading
+                    ? Center(
+                        child: loadingThreeRotatingDots(context, 50),
+                      )
+                    : Column(
+                        children: [
+                          TextFormField(
+                            onTapOutside: (_) =>
+                                FocusScope.of(context).unfocus(),
+                            controller: searchController,
+                            decoration: InputDecoration(
+                              labelText: "Busque o produto aqui",
+                              suffixIcon: IconButton(
+                                onPressed: !isValueInSearch
+                                    ? null
+                                    : () {
+                                        if (isValueInSearch) {
+                                          searchController.text = "";
+                                          isValueInSearch = false;
+                                          loadProducts();
+                                        }
+                                      },
+                                icon: Icon(
+                                  isValueInSearch ? Icons.close : Icons.search,
+                                  color:
+                                      const Color.fromARGB(255, 111, 111, 111),
+                                ),
                               ),
                             ),
-                          ],
-                        )
-                      : ListView(
-                          children: products
-                              .map(
-                                (product) => Card(
-                                  elevation: 8,
-                                  child: Slidable(
-                                    endActionPane: ActionPane(
-                                      motion: const StretchMotion(),
-                                      children: [
-                                        SlidableAction(
-                                          onPressed: (_) {
-                                            Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                builder: (_) => ProductFormPage(
-                                                  item: product,
+                            onChanged: (value) {
+                              setState(() {
+                                final productProvider =
+                                    Provider.of<ProductProvider>(
+                                  context,
+                                  listen: false,
+                                );
+                                productProvider.searchProduct(value);
+                                isValueInSearch = value.isNotEmpty;
+                              });
+                            },
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .color,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .fontSize,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 10),
+                            height: MediaQuery.of(context).size.height - 280,
+                            child: products.isEmpty
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        FontAwesomeIcons.box,
+                                        size: 80,
+                                        color:
+                                            Color.fromARGB(255, 73, 133, 206),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Text(
+                                        "Adicione um ou mais produtos.",
+                                        style: TextStyle(
+                                          color: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .color,
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .displayLarge!
+                                              .fontSize,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SingleChildScrollView(
+                                    child: Column(
+                                      children: products
+                                          .map(
+                                            (product) => Card(
+                                              elevation: 8,
+                                              child: Slidable(
+                                                endActionPane: ActionPane(
+                                                  motion: const StretchMotion(),
+                                                  children: [
+                                                    SlidableAction(
+                                                      onPressed: (_) {
+                                                        Navigator.of(context)
+                                                            .push(
+                                                          MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                ProductFormPage(
+                                                              item: product,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      backgroundColor:
+                                                          Colors.orange,
+                                                      icon: Icons.edit,
+                                                      foregroundColor:
+                                                          Colors.white,
+                                                    ),
+                                                    SlidableAction(
+                                                      onPressed: (_) async {
+                                                        final confirmAction =
+                                                            await showDialogDelete(
+                                                                    context,
+                                                                    "Deseja mesmo excluir o produto?") ??
+                                                                false;
+
+                                                        if (confirmAction) {
+                                                          await productProvider
+                                                              .delete(product[
+                                                                  "id"]);
+                                                        }
+                                                      },
+                                                      backgroundColor:
+                                                          Colors.red,
+                                                      icon: Icons.delete,
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: ListTile(
+                                                  minLeadingWidth: 0,
+                                                  leading: const Icon(
+                                                    FontAwesomeIcons.box,
+                                                    size: 25,
+                                                  ),
+                                                  title: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      product["name"],
+                                                      style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyLarge!
+                                                                .fontSize,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  subtitle: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                        product[
+                                                            "type_category"],
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              Theme.of(context)
+                                                                  .textTheme
+                                                                  .displayLarge!
+                                                                  .fontSize,
+                                                          color: Colors.grey,
+                                                        )),
+                                                  ),
+                                                  trailing: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      product["unit"],
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          backgroundColor: Colors.orange,
-                                          icon: Icons.edit,
-                                          foregroundColor: Colors.white,
-                                        ),
-                                        SlidableAction(
-                                          onPressed: (_) async {
-                                            final confirmAction =
-                                                await showDialogDelete(context,
-                                                        "Deseja mesmo excluir o produto?") ??
-                                                    false;
-
-                                            if (confirmAction) {
-                                              await productProvider
-                                                  .delete(product["id"]);
-                                            }
-                                          },
-                                          backgroundColor: Colors.red,
-                                          icon: Icons.delete,
-                                        ),
-                                      ],
-                                    ),
-                                    child: ListTile(
-                                      minLeadingWidth: 0,
-                                      leading: const Icon(
-                                        FontAwesomeIcons.box,
-                                        size: 25,
-                                      ),
-                                      title: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          product["name"],
-                                          style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge!
-                                                .fontSize,
-                                          ),
-                                        ),
-                                      ),
-                                      subtitle: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(product["type_category"],
-                                            style: TextStyle(
-                                              fontSize: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .fontSize,
-                                              color: Colors.grey,
-                                            )),
-                                      ),
-                                      trailing: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          product["unit"],
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
+                                            ),
+                                          )
+                                          .toList(),
                                     ),
                                   ),
-                                ),
-                              )
-                              .toList(),
-                        );
-            },
+                          ),
+                        ],
+                      );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:month_shopping_app/components/icon_button_leading_app_bar.dart';
+import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/utils/loading.dart';
 import 'package:provider/provider.dart';
@@ -101,6 +102,19 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
               ),
             ),
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const ProductFormPage(item: {}),
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.add,
+              size: 30,
+            ),
+          ),
         ],
         title: Text(
           "Produtos",
@@ -121,107 +135,114 @@ class _ProductListShoppingPageState extends State<ProductListShoppingPage> {
                     vertical: 25,
                   ),
                   height: MediaQuery.of(context).size.height * 0.85,
-                  child: products.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              FontAwesomeIcons.box,
-                              size: 50,
-                              color: Color.fromARGB(255, 73, 133, 206),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              "Não há produtos cadastrado.",
-                              style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .fontSize,
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge!
-                                      .color),
-                            ),
-                          ],
-                        )
-                      : ListView(
-                          children: products
-                              .map(
-                                (product) => Card(
-                                  elevation: 8,
-                                  child: ListTile(
-                                    onLongPress: () => selectProducts(product),
-                                    onTap: () {
-                                      if (productsSelected.isNotEmpty) {
-                                        selectProducts(product);
-                                        return;
-                                      }
-
-                                      Navigator.of(context).pop([
-                                        {
-                                          "product_id": product["id"],
-                                          "name": product["name"],
-                                          "category_id": product["category_id"],
-                                          "type_category":
-                                              product["type_category"],
-                                          "quantity": 1,
-                                          "unit": product["unit"],
-                                        }
-                                      ]);
-                                    },
-                                    selected: productsSelected.any(
-                                        (productSelect) =>
-                                            productSelect["product_id"] ==
-                                            product["id"]),
-                                    selectedTileColor:
-                                        Theme.of(context).primaryColor,
-                                    selectedColor: Colors.white,
-                                    minLeadingWidth: 0,
-                                    leading: const Icon(
-                                      FontAwesomeIcons.box,
-                                      size: 25,
-                                    ),
-                                    title: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        product["name"],
-                                        style: TextStyle(
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .fontSize,
-                                        ),
-                                      ),
-                                    ),
-                                    subtitle: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        product["type_category"],
-                                        style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .displayLarge!
-                                                .fontSize,
-                                            color: Colors.grey),
-                                      ),
-                                    ),
-                                    trailing: FittedBox(
-                                      fit: BoxFit.scaleDown,
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        product["unit"],
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                  child: Consumer<ProductProvider>(
+                    builder: (context, productProvider, _) {
+                      products = productProvider.items;
+                      return products.isEmpty
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  FontAwesomeIcons.box,
+                                  size: 50,
+                                  color: Color.fromARGB(255, 73, 133, 206),
                                 ),
-                              )
-                              .toList()),
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Não há produtos cadastrado.",
+                                  style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .fontSize,
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .color),
+                                ),
+                              ],
+                            )
+                          : ListView(
+                              children: products
+                                  .map(
+                                    (product) => Card(
+                                      elevation: 8,
+                                      child: ListTile(
+                                        onLongPress: () =>
+                                            selectProducts(product),
+                                        onTap: () {
+                                          if (productsSelected.isNotEmpty) {
+                                            selectProducts(product);
+                                            return;
+                                          }
+
+                                          Navigator.of(context).pop([
+                                            {
+                                              "product_id": product["id"],
+                                              "name": product["name"],
+                                              "category_id":
+                                                  product["category_id"],
+                                              "type_category":
+                                                  product["type_category"],
+                                              "quantity": 1,
+                                              "unit": product["unit"],
+                                            }
+                                          ]);
+                                        },
+                                        selected: productsSelected.any(
+                                            (productSelect) =>
+                                                productSelect["product_id"] ==
+                                                product["id"]),
+                                        selectedTileColor:
+                                            Theme.of(context).primaryColor,
+                                        selectedColor: Colors.white,
+                                        minLeadingWidth: 0,
+                                        leading: const Icon(
+                                          FontAwesomeIcons.box,
+                                          size: 25,
+                                        ),
+                                        title: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            product["name"],
+                                            style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .fontSize,
+                                            ),
+                                          ),
+                                        ),
+                                        subtitle: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            product["type_category"],
+                                            style: TextStyle(
+                                                fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .displayLarge!
+                                                    .fontSize,
+                                                color: Colors.grey),
+                                          ),
+                                        ),
+                                        trailing: FittedBox(
+                                          fit: BoxFit.scaleDown,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            product["unit"],
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList());
+                    },
+                  ),
                 ),
               ],
             ),

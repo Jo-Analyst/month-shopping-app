@@ -45,8 +45,8 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
         Provider.of<CategoryProvider>(context, listen: false);
     final productProvider =
         Provider.of<ProductProvider>(context, listen: false);
-    bool confirmAction = await showDialogDelete(
-            context, "Deseja mesmo excluir esta categoria?") ??
+    bool confirmAction = await showDialogDelete(context,
+            "Ao excluir a categoria, removerá produtos relacionados a ela. Deseja continuar?") ??
         false;
 
     if (!confirmAction) return;
