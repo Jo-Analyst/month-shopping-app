@@ -12,7 +12,7 @@ Widget loading(BuildContext context, double size) {
 
 Widget loadingThreeRotatingDots(BuildContext context, double size) {
   return LoadingAnimationWidget.threeRotatingDots(
-    color: Theme.of(context).primaryColor,
+    color: const Color.fromARGB(255, 73, 133, 206),
     size: size,
   );
 }

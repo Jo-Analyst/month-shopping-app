@@ -61,21 +61,23 @@ class _ProductListPageState extends State<ProductListPage> {
               ),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 25,
-            ),
-            // height: MediaQuery.of(context).size.height * .2,
-            child: Consumer<ProductProvider>(
-              builder: (_, productProvider, __) {
-                products = productProvider.items;
+          isLoading
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height - 160,
+                  child: Center(
+                    child: loadingThreeRotatingDots(context, 50),
+                  ),
+                )
+              : Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 25,
+                  ),
+                  child: Consumer<ProductProvider>(
+                    builder: (_, productProvider, __) {
+                      products = productProvider.items;
 
-                return isLoading
-                    ? Center(
-                        child: loadingThreeRotatingDots(context, 50),
-                      )
-                    : Column(
+                      return Column(
                         children: [
                           TextFormField(
                             onTapOutside: (_) =>
@@ -257,9 +259,9 @@ class _ProductListPageState extends State<ProductListPage> {
                           ),
                         ],
                       );
-              },
-            ),
-          ),
+                    },
+                  ),
+                ),
         ],
       ),
     );

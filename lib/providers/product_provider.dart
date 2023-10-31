@@ -4,7 +4,7 @@ import 'package:month_shopping_app/utils/search_list.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<Map<String, dynamic>> _items = [];
-  List<Map<String, dynamic>> itemsFiltered = [];
+  final List<Map<String, dynamic>> _itemsFiltered = [];
   List<Map<String, dynamic>> get items {
     return [
       ..._items
@@ -15,12 +15,17 @@ class ProductProvider extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    _items.clear();
+    _clearItems();
     final products = await ProductModel.findAll();
     for (var product in products) {
       _items.add(product);
     }
-    itemsFiltered.addAll(products);
+    _itemsFiltered.addAll(products);
+  }
+
+  void _clearItems() {
+    _items.clear();
+    _itemsFiltered.clear();
   }
 
   Future<void> delete(int id) async {
@@ -31,12 +36,12 @@ class ProductProvider extends ChangeNotifier {
 
   void _deleteItemById(int id) {
     _items.removeWhere((items) => items["id"] == id);
-    itemsFiltered.removeWhere((item) => item["id"] == id);
+    _itemsFiltered.removeWhere((item) => item["id"] == id);
   }
 
   void deleteItemByCategoryId(int categoryId) {
     _items.removeWhere((item) => item["category_id"] == categoryId);
-    itemsFiltered.removeWhere((item) => item["category_id"] == categoryId);
+    _itemsFiltered.removeWhere((item) => item["category_id"] == categoryId);
     notifyListeners();
   }
 
@@ -57,14 +62,14 @@ class ProductProvider extends ChangeNotifier {
       };
 
       _items.add(data);
-      itemsFiltered.add(data);
+      _itemsFiltered.add(data);
     }
     notifyListeners();
   }
 
   Future<void> searchProduct(String type) async {
     _items.clear();
-    _items = searchItems(type, itemsFiltered, "name");
+    _items = searchItems(type, _itemsFiltered, "name");
     notifyListeners();
   }
 }

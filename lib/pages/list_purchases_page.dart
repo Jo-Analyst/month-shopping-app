@@ -147,7 +147,7 @@ class _LisPurchasesPageState extends State<LisPurchasesPage> {
                       children: [
                         const Icon(
                           FontAwesomeIcons.box,
-                          size: 50,
+                          size: 80,
                           color: Color.fromARGB(255, 73, 133, 206),
                         ),
                         const SizedBox(height: 10),

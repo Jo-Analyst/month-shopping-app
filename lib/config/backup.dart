@@ -17,7 +17,6 @@ class Backup {
       await ourDbFile.copy("$pathStorage/month_shopping_app.db");
       Share.shareFiles(["$pathStorage/month_shopping_app.db"],
           text: "Backup concluído!");
-      // await Mail.sendEmailWithAttachment("$pathStorage/appkaykebarbearia.db");
     } catch (e) {
       return e.toString();
     }
@@ -26,7 +25,7 @@ class Backup {
 
   static Future<String?> restore() async {
     try {
-      File saveDBFile = File("$pathStorage/appkaykebarbearia.db");
+      File saveDBFile = File("$pathStorage/month_shopping_app.db");
 
       await saveDBFile.copy(pathDB);
     } catch (e) {
