@@ -1,10 +1,9 @@
 import 'dart:io';
 
-// import 'package:app_kayke_barbearia/app/utils/mail.dart';
 import 'package:share/share.dart';
 
 class Backup {
-  static String pathStorage = '/storage/emulated/0/month-shopping-app';
+  static String pathStorage = '/storage/emulated/0/.month-shopping-app';
   static String pathDB =
       '/data/user/0/com.example.month_shopping_app/databases/month_shopping_app.db';
 
