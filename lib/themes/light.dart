@@ -9,6 +9,7 @@ final lightTheme = ThemeData(
     displayMedium: TextStyle(color: Colors.white),
     titleLarge: TextStyle(color: Colors.grey),
     titleMedium: TextStyle(color: Color.fromARGB(255, 73, 133, 206)),
+    bodyMedium: TextStyle(color: Colors.white)
   ),
   primaryColor: const Color.fromARGB(255, 73, 133, 206),
   inputDecorationTheme: const InputDecorationTheme(

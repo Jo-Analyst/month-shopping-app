@@ -16,3 +16,10 @@ Widget loadingThreeRotatingDots(BuildContext context, double size) {
     size: size,
   );
 }
+
+Widget loadingFourRotatingDots(BuildContext context, double size) {
+  return LoadingAnimationWidget.fourRotatingDots(
+    color: Colors.white,
+    size: size,
+  );
+}

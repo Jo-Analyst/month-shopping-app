@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:month_shopping_app/pages/categories_list_page.dart';
 import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/utils/dialog.dart';
@@ -48,18 +47,6 @@ class _ProductListPageState extends State<ProductListPage> {
                 fontSize: Theme.of(context).textTheme.bodyLarge!.fontSize,
               ),
             ),
-            actions: [
-              IconButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const CategoriesListPage(
-                      isScreenProducts: true,
-                    ),
-                  ),
-                ),
-                icon: const Icon(Icons.category_outlined),
-              ),
-            ],
           ),
           isLoading
               ? SizedBox(

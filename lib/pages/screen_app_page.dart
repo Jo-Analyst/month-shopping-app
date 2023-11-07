@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:month_shopping_app/components/drawer.dart';
 import 'package:month_shopping_app/config/backup.dart';
 import 'package:month_shopping_app/pages/product_form_page.dart';
 import 'package:month_shopping_app/pages/product_list_page.dart';
@@ -62,6 +63,7 @@ class _ScreenAppPageState extends State<ScreenAppPage> {
     return WillPopScope(
       onWillPop: screen,
       child: Scaffold(
+        drawer: const DrawerComponet(),
         body: AnimatedSwitcher(
           duration: const Duration(seconds: 1),
           reverseDuration: const Duration(milliseconds: 2),
