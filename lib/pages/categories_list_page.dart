@@ -9,9 +9,9 @@ import 'package:month_shopping_app/utils/loading.dart';
 import 'package:provider/provider.dart';
 
 class CategoriesListPage extends StatefulWidget {
-  final bool isScreenProducts;
+  final bool comesFromTheProductsScreen;
   const CategoriesListPage({
-    required this.isScreenProducts,
+    required this.comesFromTheProductsScreen,
     super.key,
   });
 
@@ -197,7 +197,8 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                               foregroundColor: Colors.white,
                                             ),
                                             Visibility(
-                                              visible: widget.isScreenProducts,
+                                              visible: !widget
+                                                  .comesFromTheProductsScreen,
                                               child: SlidableAction(
                                                 onPressed: (_) =>
                                                     deleteCategory(
@@ -211,7 +212,8 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                         child: Column(
                                           children: [
                                             InkWell(
-                                              onTap: widget.isScreenProducts
+                                              onTap: widget
+                                                      .comesFromTheProductsScreen
                                                   ? null
                                                   : () => Navigator.of(context)
                                                       .pop(category),

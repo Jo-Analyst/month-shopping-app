@@ -59,7 +59,7 @@ class _BackupPageState extends State<BackupPage> {
       ContentMessage(
         title: actionName != null
             ? "A restauração foi realizada com sucesso."
-            : "O backup foi realizado com sucesso. O arquivo de backup encontra no armazenamento interno do seu dispostivo. Url: /App Kayke Barbearia/appkaykebarbearia.db",
+            : "O backup foi realizado com sucesso.",
         icon: Icons.info,
       ),
       null,

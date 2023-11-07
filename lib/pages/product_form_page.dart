@@ -33,7 +33,8 @@ class _ProductFormPageState extends State<ProductFormPage> {
   void openScreenCategories() async {
     final categorySelected = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => const CategoriesListPage(isScreenProducts: false),
+        builder: (_) =>
+            const CategoriesListPage(comesFromTheProductsScreen: true),
       ),
     );
     if (categorySelected != null) {

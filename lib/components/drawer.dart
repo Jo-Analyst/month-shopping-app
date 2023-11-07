@@ -19,7 +19,7 @@ class DrawerComponet extends StatelessWidget {
     return Drawer(
       elevation: 8,
       backgroundColor: Theme.of(context).textTheme.bodyMedium!.color,
-        child: ListView(
+      child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
@@ -48,7 +48,7 @@ class DrawerComponet extends StatelessWidget {
               ),
             ),
             onTap: () => openScreen(
-              const CategoriesListPage(isScreenProducts: false),
+              const CategoriesListPage(comesFromTheProductsScreen: false),
             ),
           ),
           ListTile(
