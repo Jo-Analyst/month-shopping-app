@@ -212,7 +212,7 @@ class _CategoriesListPageState extends State<CategoriesListPage> {
                                         child: Column(
                                           children: [
                                             InkWell(
-                                              onTap: widget
+                                              onTap: !widget
                                                       .comesFromTheProductsScreen
                                                   ? null
                                                   : () => Navigator.of(context)
