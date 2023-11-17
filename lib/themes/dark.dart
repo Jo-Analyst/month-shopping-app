@@ -7,7 +7,8 @@ final darkTheme = ThemeData(
     displaySmall: TextStyle(color: Color.fromARGB(194, 13, 23, 37)),
     titleLarge: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
     titleMedium: TextStyle(color: Colors.white),
-    bodyMedium: TextStyle(color: Color.fromARGB(255, 98, 97, 97))
+    bodyMedium: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
+    bodySmall: TextStyle(color: Colors.white)
   ),
   primaryColor: const Color.fromARGB(113, 141, 137, 137),
   appBarTheme: const AppBarTheme(

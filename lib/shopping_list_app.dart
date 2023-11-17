@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:month_shopping_app/config/db.dart';
 import 'package:month_shopping_app/intro_screen.dart';
 import 'package:month_shopping_app/models/theme_model.dart';
+import 'package:month_shopping_app/pages/use_init_app_on_device.dart';
 import 'package:month_shopping_app/providers/category_provider.dart';
 import 'package:month_shopping_app/providers/product_provider.dart';
 import 'package:month_shopping_app/providers/shopping_list_provider.dart';
@@ -30,6 +32,7 @@ class _ShoppingListAppState extends State<ShoppingListApp> {
   }
 
   void toggleTheme() async {
+    if (!DB.existsDB()) return;
     final theme = await ThemeModel.find();
     if (theme.isNotEmpty) {
       AppTheme.instance.isDarkTheme = theme[0]["is_dark"] == 0 ? false : true;
@@ -53,7 +56,10 @@ class _ShoppingListAppState extends State<ShoppingListApp> {
         darkTheme: darkTheme,
         themeMode: AppTheme.instance.themeMode,
         home: const IntroScreen(),
-        routes: {"/home": (context) => const ScreenAppPage()},
+        routes: {
+          "/home": (context) => const ScreenAppPage(),
+          "/init": (context) => const UseInitAppOnDevice(),
+        },
       ),
     );
   }

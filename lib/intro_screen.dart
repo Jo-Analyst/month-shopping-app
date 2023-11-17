@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:month_shopping_app/config/db.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -24,7 +25,7 @@ class _IntroScreenState extends State<IntroScreen> {
   void _navigateToHome() {
     Timer(const Duration(seconds: 2), () async {
       final confirmExit =
-          await Navigator.of(context).pushReplacementNamed('/home');
+          await Navigator.of(context).pushReplacementNamed(DB.existsDB() ? '/home' : '/init');
 
       if (confirmExit == true) {
         screen();

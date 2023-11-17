@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:share/share.dart';
+import 'package:month_shopping_app/utils/path.dart';
+
+
 
 class Backup {
-  static String pathStorage = '/storage/emulated/0/.month-shopping-app';
   static String pathDB =
       '/data/user/0/com.example.month_shopping_app/databases/month_shopping_app.db';
 
@@ -14,17 +15,15 @@ class Backup {
       Directory? folderPathForDbFile = Directory(pathStorage);
       await folderPathForDbFile.create();
       await ourDbFile.copy("$pathStorage/month_shopping_app.db");
-      Share.shareFiles(["$pathStorage/month_shopping_app.db"],
-          text: "Backup concluído!");
     } catch (e) {
       return e.toString();
     }
     return null;
   }
 
-  static Future<String?> restore() async {
+  static Future<String?> restore(String filePath) async {
     try {
-      File saveDBFile = File("$pathStorage/month_shopping_app.db");
+      File saveDBFile = File(filePath);
 
       await saveDBFile.copy(pathDB);
     } catch (e) {

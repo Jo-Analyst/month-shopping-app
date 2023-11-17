@@ -1,11 +1,10 @@
 import 'package:month_shopping_app/config/backup.dart';
-// import 'package:app_kayke_barbearia/app/utils/content_message.dart';
-import 'package:flutter/material.dart';
 import 'package:month_shopping_app/utils/content_message.dart';
 import 'package:month_shopping_app/utils/loading.dart';
 import 'package:month_shopping_app/utils/permission_use_app.dart';
+import 'package:month_shopping_app/utils/share.dart';
 import 'package:month_shopping_app/utils/snackbar.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/material.dart';
 
 class BackupPage extends StatefulWidget {
   const BackupPage({super.key});
@@ -22,31 +21,21 @@ class _BackupPageState extends State<BackupPage> {
     Message.showMessage(context, content, color, 7000);
   }
 
-  Future<void> performAction(Function() action, String? actionName) async {
-    if (!await isGrantedRequestPermissionStorage()) {
-      openAppSettings();
-      return;
-    }
-    if (actionName == null) {
-      isLoadingBackup = true;
-    } else {
-      isLoadingRestore = true;
-    }
+  Future<void> toGenerateBackup() async {
+    if (!await isGranted()) return;
+
+    isLoadingBackup = true;
+
     setState(() {});
-    final response = await action();
-    if (actionName == null) {
-      isLoadingBackup = false;
-    } else {
-      isLoadingRestore = false;
-    }
+    final response = await Backup.toGenerate();
+    isLoadingBackup = false;
     setState(() {});
 
     if (response != null) {
       showMessage(
-        ContentMessage(
-          title: actionName == null
-              ? "Houve um problema ao realizar o backup. Tente novamente. Caso o problema persista, acione o suporte."
-              : "Houve um problema ao realizar a restauração. Verifique se há arquivo de backup no caminho predefinido pelo app e tente novamente. Caso o problema persista, acione o suporte.",
+        const ContentMessage(
+          title:
+              "Houve um problema ao realizar o backup. Tente novamente. Caso o problema persista, acione o suporte.",
           icon: Icons.error,
         ),
         Colors.orange,
@@ -56,25 +45,21 @@ class _BackupPageState extends State<BackupPage> {
     }
 
     showMessage(
-      ContentMessage(
-        title: actionName != null
-            ? "A restauração foi realizada com sucesso."
-            : "O backup foi realizado com sucesso.",
+      const ContentMessage(
+        title: "Backup foi realizado com sucesso.",
         icon: Icons.info,
       ),
       null,
     );
+
+    ShareUtils.share();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Backup e restauração"),
-          leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left, size: 35),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+          title: const Text("Backup"),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(
@@ -84,11 +69,24 @@ class _BackupPageState extends State<BackupPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                Icons.backup,
+                size: 100,
+                color: Theme.of(context).textTheme.bodySmall!.color,
+              ),
+              Text(
+                "Para a segurança do seu sistema, gere o backup para uma futura restauração.",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Theme.of(context).textTheme.bodySmall!.color,
+                ),
+                textAlign: TextAlign.justify,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 child: ElevatedButton(
                   onPressed: () async {
-                    await performAction(Backup.toGenerate, null);
+                    await toGenerateBackup();
                   },
                   child: Container(
                     alignment: Alignment.center,
@@ -110,32 +108,30 @@ class _BackupPageState extends State<BackupPage> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await performAction(Backup.restore, "restauração");
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(10),
-                    child: isLoadingRestore
-                        ? loadingFourRotatingDots(context, 20)
-                        : const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.restore),
-                              SizedBox(width: 10),
-                              Text(
-                                "Restauração",
-                                style: TextStyle(fontSize: 20),
-                              )
-                            ],
-                          ),
-                  ),
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.symmetric(vertical: 10),
+              //   child: ElevatedButton(
+              //     onPressed: () => {},
+              //     child: Container(
+              //       width: double.infinity,
+              //       alignment: Alignment.center,
+              //       padding: const EdgeInsets.all(10),
+              //       child: isLoadingRestore
+              //           ? loadingFourRotatingDots(context, 20)
+              //           : const Row(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: [
+              //                 Icon(Icons.restore),
+              //                 SizedBox(width: 10),
+              //                 Text(
+              //                   "Restauração",
+              //                   style: TextStyle(fontSize: 20),
+              //                 )
+              //               ],
+              //             ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ));

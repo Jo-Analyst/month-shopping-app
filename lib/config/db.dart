@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:sqflite/sqflite.dart' as sql;
 import 'package:path/path.dart' as path;
 
@@ -24,5 +26,12 @@ class DB {
       },
       version: 1,
     );
+  }
+
+  static bool existsDB() {
+    File file = File(
+        '/data/user/0/com.example.month_shopping_app/databases/month_shopping_app.db');
+
+    return file.existsSync();
   }
 }
