@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final darkTheme = ThemeData(
+  useMaterial3: false,
   textTheme: const TextTheme(
     bodyLarge: TextStyle(fontSize: 23, color: Colors.black),
     displayLarge: TextStyle(fontSize: 18, color: Colors.white),

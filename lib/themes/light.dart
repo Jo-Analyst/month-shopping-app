@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
+  useMaterial3: false,
   textTheme: const TextTheme(
       bodyLarge:
           TextStyle(fontSize: 23, color: Color.fromARGB(255, 73, 133, 206)),
