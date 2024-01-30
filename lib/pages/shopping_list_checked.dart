@@ -145,11 +145,15 @@ class _ShoppingListCheckedState extends State<ShoppingListChecked> {
                               subtitle: Text(
                                 changeTheDateWriting(shoppe["date_shoppe"]),
                                 style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .displayLarge!
-                                        .fontSize,
-                                    color: Colors.grey),
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .displayLarge!
+                                      .fontSize,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
+                                      .color,
+                                ),
                               ),
                               trailing: const Icon(
                                 Icons.check,

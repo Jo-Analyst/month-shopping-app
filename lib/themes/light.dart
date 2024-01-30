@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 final lightTheme = ThemeData(
   useMaterial3: false,
   textTheme: const TextTheme(
-      bodyLarge:
-          TextStyle(fontSize: 23, color: Color.fromARGB(255, 73, 133, 206)),
-      displayLarge: TextStyle(fontSize: 18, color: Colors.black),
-      displaySmall: TextStyle(color: Color.fromARGB(25, 73, 133, 206)),
-      displayMedium: TextStyle(color: Colors.white),
-      titleLarge: TextStyle(color: Colors.grey),
-      titleMedium: TextStyle(color: Color.fromARGB(255, 73, 133, 206)),
-      bodyMedium: TextStyle(color: Colors.white),
-      bodySmall: TextStyle(color:  Color.fromARGB(255, 73, 133, 206))),
+    bodyLarge:
+        TextStyle(fontSize: 23, color: Color.fromARGB(255, 73, 133, 206)),
+    displayLarge: TextStyle(fontSize: 18, color: Colors.black),
+    displaySmall: TextStyle(color: Color.fromARGB(25, 73, 133, 206)),
+    displayMedium: TextStyle(color: Colors.white),
+    titleLarge: TextStyle(color: Colors.grey),
+    titleMedium: TextStyle(color: Color.fromARGB(255, 73, 133, 206)),
+    bodyMedium: TextStyle(color: Colors.white),
+    bodySmall: TextStyle(color: Color.fromARGB(255, 73, 133, 206)),
+    headlineSmall: TextStyle(color: Colors.black45),
+  ),
   primaryColor: const Color.fromARGB(255, 73, 133, 206),
   inputDecorationTheme: const InputDecorationTheme(
     enabledBorder: UnderlineInputBorder(),

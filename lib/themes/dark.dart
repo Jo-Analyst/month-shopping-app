@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 final darkTheme = ThemeData(
   useMaterial3: false,
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(fontSize: 23, color: Colors.black),
-    displayLarge: TextStyle(fontSize: 18, color: Colors.white),
-    displaySmall: TextStyle(color: Color.fromARGB(194, 13, 23, 37)),
-    titleLarge: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
-    titleMedium: TextStyle(color: Colors.white),
-    bodyMedium: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
-    bodySmall: TextStyle(color: Colors.white)
-  ),
+      bodyLarge: TextStyle(fontSize: 23, color: Colors.black),
+      displayLarge: TextStyle(fontSize: 18, color: Colors.white),
+      displaySmall: TextStyle(color: Color.fromARGB(194, 13, 23, 37)),
+      titleLarge: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
+      titleMedium: TextStyle(color: Colors.white),
+      bodyMedium: TextStyle(color: Color.fromARGB(255, 98, 97, 97)),
+      bodySmall: TextStyle(color: Colors.white),
+      headlineSmall: TextStyle(color: Colors.white54)),
   primaryColor: const Color.fromARGB(113, 141, 137, 137),
   appBarTheme: const AppBarTheme(
     color: Color.fromARGB(113, 141, 137, 137),
